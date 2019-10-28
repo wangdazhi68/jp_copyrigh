@@ -1,24 +1,74 @@
 @charset "utf-8";
+
 /* CSS Document */
-body{
-  margin:0;
-  padding:0;
-  font-family:'Helvetica',"Arial","微软雅黑","宋体";
-  font-size:16px;
-  color:#000000;
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Gothic', 'Helvetica', "Arial", "微软雅黑", "宋体";
+    font-size: 16px;
+    color: #000000;
 }
-h1,h2,h3,h4,h5,ul,ol,li,dl,dt,dd,p,img,strong,b,i{
-  margin:0;
-  padding:0;
-  list-style:none;
-  border:0;
-  font-weight:normal;
-  font-size: 100%;
+
+
+/* 非衬线体（游ゴシック）通常可以做如下设置：*/
+
+body {
+    font-family: "-apple-system", BlinkMacSystemFont, "Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif";
 }
-a{
-  color:#999;
-  text-decoration:none;
+
+
+/* 但是上面的设置中，由于mac上不支持regular，所以，mac上看着会粗一些。*/
+
+
+/* 下面的设置是直接将windows用的字体改成medium。这样默认文字的粗细在两个操作系统上是一样的 */
+
+body {
+    font-family: "-apple-system", BlinkMacSystemFont, "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif";
 }
-h1 img{
-  vertical-align:baseline;
+
+
+/* 衬线体（游明朝）的设置：*/
+
+
+/* body {
+    font-family: Georgia, "游明朝", "Yu Mincho", "游明朝体", YuMincho, "ヒラギノ明朝 Pro", "Hiragino Mincho ProN", "MS P明朝", "MS PMincho", HGS明朝E, "MS Mincho", serif;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+p,
+img,
+strong,
+b,
+i {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 0;
+    font-weight: normal;
+    font-size: 100%;
+}
+
+a {
+    color: #999;
+    text-decoration: none;
+}
+
+h1 img {
+    vertical-align: baseline;
+}
+
+body {
+    padding-right: 0 !important;
+    overflow-y: auto !important;
 }

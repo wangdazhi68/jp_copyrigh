@@ -22,7 +22,6 @@ const service = axios.create({
     // request拦截器
 service.interceptors.request.use(
     config => {
-        console.log(config)
         let localdata = Vue.prototype.$getlocalStorage('userinfo')
         if (config.url == "/register/sendValidateCode") {
             console.log('不需要加token')
@@ -47,7 +46,7 @@ service.interceptors.response.use(
                 store.commit('setuserinfo', '')
                 localStorage.removeItem('userinfo')
                 router.replace({
-                    path: '/login/login',
+                    path: '/page/index',
                     query: { redirect: router.currentRoute.fullPath }
                 })
             }

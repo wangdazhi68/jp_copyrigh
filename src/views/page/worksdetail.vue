@@ -1,72 +1,72 @@
 <template>
     <div>
-        <div class="h3-title">作品列表 > 作品详情</div>
+        <div class="h3-title">資料リスト > 詳細情報</div>
         <div class="section">
-            <h4>作品信息</h4>
+            <h4>資料情報</h4>
             <div class="one">
                 <dl>
-                    <dt>申请人：</dt>
+                    <dt>申請者：</dt>
                     <dd>{{dataobj.realName}}</dd>
                 </dl>
                 <dl>
-                    <dt>证件类型：</dt>
-                    <dd>{{dataobj.identityType}}</dd>
+                    <dt>識別情報：</dt>
+                    <dd>{{identityType}}</dd>
                 </dl>
                 <dl>
-                    <dt>证件号：</dt>
+                    <dt>識別番号：</dt>
                     <dd>{{dataobj.identityId}}</dd>
                 </dl>
             </div>
             <div class="two">
                 <dl>
-                    <dt>作品名称：</dt>
+                    <dt>資料の名称：</dt>
                     <dd>{{dataobj.workName}}</dd>
                 </dl>
             </div>
-            <div class="one">
+            <!-- <div class="one">
                 <dl>
                     <dt>创作性质：</dt>
-                    <dd>{{dataobj.workNature}}</dd>
+                    <dd>{{workNature}}</dd>
                 </dl>
                 <dl>
                     <dt>作品类型：</dt>
-                    <dd>{{dataobj.workType}}</dd>
+                    <dd>{{workType}}</dd>
                 </dl>
                 <dl>
                     <dt>作品创作类型：</dt>
-                    <dd>{{dataobj.creationType}}</dd>
+                    <dd>{{creationType}}</dd>
                 </dl>
-            </div>
+            </div> -->
             <div class="two">
                 <dl>
-                    <dt>作品说明：</dt>
+                    <dt>資料の説明：</dt>
                     <dd>{{dataobj.workSpec}}</dd>
                 </dl>
             </div>
         </div>
         <div class="section">
-            <h4>作品确权信息</h4>
+            <h4>資料の権利情報</h4>
             <div class="two">
                 <dl>
-                    <dt>作品编号：</dt>
+                    <dt>資料番号：</dt>
                     <dd>{{dataobj.workNo}}</dd>
                 </dl>
             </div>
             <div class="two">
                 <dl>
-                    <dt>文件hash值：</dt>
+                    <dt>hash値：</dt>
                     <dd>{{dataobj.hashCode}}</dd>
                 </dl>
             </div>
             <div class="two">
                 <dl>
-                    <dt>申请确权时间：</dt>
+                    <dt>申請日時：</dt>
                     <dd>{{dataobj.confirmTime}}</dd>
                 </dl>
             </div>
         </div>
         <div class="section">
-            <h4>可信时间戳认证证书</h4>
+            <h4>タイムスタンプ認証証書</h4>
             <div class="certificate">
                 <div class="demo-image__preview">
                     <el-image 
@@ -75,7 +75,7 @@
                         :preview-src-list="srcList">
                     </el-image>
                 </div>
-                <span @click="download" class="download">下载证书 >></span>
+                <span @click="download" class="download">認証証書をダウンロードする >></span>
             </div>
         </div>
     </div>
@@ -88,13 +88,140 @@ export default {
             id:'',
             dataobj:{},
             url:'',
-            srcList:[]
+            srcList:[],
+            workstype:[
+                {
+                    value:101,
+                    label:'小说'
+                },
+                {
+                    value:107,
+                    label:'著作'
+                },
+                {
+                    value:116,
+                    label:'音乐'
+                },
+                {
+                    value:121,
+                    label:'方案'
+                },
+                {
+                    value:127,
+                    label:'美术'
+                },
+                {
+                    value:135,
+                    label:'工艺美术品设计'
+                },
+                {
+                    value:140,
+                    label:'建筑设计'
+                },
+                {
+                    value:141,
+                    label:'工程设计图'
+                },
+                {
+                    value:142,
+                    label:'产品设计图'
+                },
+                {
+                    value:145,
+                    label:'软件'
+                },
+                {
+                    value:146,
+                    label:'商业秘密'
+                },
+                {
+                    value:147,
+                    label:'摄影作品'
+                },
+                {
+                    value:150,
+                    label:'其他'
+                }
+
+            ],
+            creationtype:[
+                {
+                    value:101,
+                    text:'独立作品'
+                },
+                {
+                    value:102,
+                    text:'合作作品'
+                },
+                {
+                    value:103,
+                    text:'职务创作'
+                },
+                {
+                    value:104,
+                    text:'委托创作'
+                }
+            ],
+            naturetype:[
+                {
+                    value:101,
+                    text:'原创'
+                },
+                {
+                    value:102,
+                    text:'衍生作品' 
+                }
+            ],
         };
     },
 
     components: {},
 
-    computed: {},
+    computed: {
+        workNature(){
+            for( let item of this.naturetype){
+                if(parseInt(this.dataobj.workNature)==item.value){
+                    return item.text
+                }
+            }
+        },
+        creationType(){
+            for( let item of this.creationtype){
+                if(parseInt(this.dataobj.creationType)==item.value){
+                    return item.text
+                }
+            }
+        },
+        workType(){
+            for( let item of this.workstype){
+                if(parseInt(this.dataobj.workType)==item.value){
+                    return item.label
+                }
+            }
+        },
+        identityType(){
+             switch(this.dataobj.identityType){
+                 case '101':
+                    return '身份证'
+                    break;
+                case '102':
+                    return '军官证'
+                    break;
+                case '103':
+                    return '护照'
+                    break;
+                case '104':
+                    return '士兵证'
+                    break;
+                case '111':
+                    return '组织机构代码或统一社会信用代码'
+                    break;
+                case '999':
+                    return '其它'
+                    break;
+             }
+        }
+    },
 
     created() {
         console.log(this.$route.params.id)
@@ -127,7 +254,7 @@ export default {
                 }
             })
             .catch(err => {
-                that.$message.error("请求数据出错，请刷新重试");
+                that.$message.error(err);
                 console.log(err);
             });
         },
@@ -206,7 +333,7 @@ export default {
 .download{
     position: absolute;
     top:20px;
-    right:25%;
+    right:10%;
     color:#7499F5;
     font-size: 16px;
     cursor: pointer;

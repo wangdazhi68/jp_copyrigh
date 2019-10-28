@@ -1,23 +1,23 @@
 <template>
     <div>
-        <div class="h3-title">验证时间戳</div>
+        <div class="h3-title">タイムスタンプを認証する</div>
         <div class="form">
             <dl>
                 <!-- 选择需要验证的文件 -->
-                <dt>検証するファイルを選択：</dt>
+                <dt>認証対象ファイル：</dt>
                 <dd>
                     <input type="file" ref="fileone" name="" class="upfile" @change="addone">
-                    <input class="lookipt" type="text" disabled="" v-model="name1">
-                    <span class="choosebtn" @click="$refs.fileone.click()">ファイルを選択</span>
+                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="認証するファイルを選択してください">
+                    <span class="choosebtn" @click="$refs.fileone.click()">ファイルを選択する</span>
                 </dd>
             </dl>
             <dl>
                 <!-- 选择时间戳证书 -->
-                <dt>タイムスタンプ証明書を選択（*.tsa）：</dt>
+                <dt>認証証書（*.tsa）：</dt>
                 <dd>
                     <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo">
-                    <input class="lookipt" type="text" disabled="" v-model="name2">
-                    <span class="choosebtn" @click="$refs.filetwo.click()">ファイルを選択</span>
+                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="認証証書を選択してください">
+                    <span class="choosebtn" @click="$refs.filetwo.click()">ファイルを選択する</span>
                 </dd>
             </dl>
             <dl>
@@ -55,7 +55,17 @@ export default {
 
     computed: {},
 
-    created() {},
+    created() {
+        this.$alert('モジュール機能はまだ開発されていません。しばらくお待ちください', 'フレンドリーリマインダー', {
+          confirmButtonText: 'わかった'
+        //   callback: action => {
+        //     this.$message({
+        //       type: 'info',
+        //       message: `action: ${ action }`
+        //     });
+        //   }
+        });
+    },
 
     mounted() {},
 
@@ -65,7 +75,7 @@ export default {
             this.fileName=inputDOM.files;
             let size = Math.floor(this.fileName[0].size / 1024);
             if(size > 10 * 1024 * 1024){
-                alert("请选择10M以内的图片！");
+                alert("10M以内のファイルを選択してください！");
                 return false;
             }
             this.name1 = inputDOM.files[0].name;
@@ -77,12 +87,12 @@ export default {
             let spl = fname.split(".");
             let suffix=spl[spl.length-1];
             if(suffix!='tsa'){
-               alert("请选择后缀为tsa格式的文件！");
+               alert("拡張子がtsaのファイルを選択してください！");
                 return false; 
             }
             let size = Math.floor(this.tsa[0].size / 1024);
             if(size > 10 * 1024 * 1024){
-                alert("请选择10M以内的文件！");
+                alert("10M以内のファイルを選択してください！");
                 return false;
             }
             this.name2 = inputDOM.files[0].name;

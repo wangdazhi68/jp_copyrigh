@@ -2,13 +2,13 @@
     <div class="wrap">
         <div class="header">
             <div class="logo">
-                <img src="@/assets/images/logo1.png" alt="联合信任" />
+                <img @click="$router.push({name:'lgindex'})" src="@/assets/images/logo1.png" alt="联合信任" />
             </div>
             <div class="userinfo">
-                <span class="account">15904095152</span>
-                <span class="epwd">修改密码</span>
+                <span class="account">{{loginCode}}</span>
+                <span class="epwd">パスワードを変更する</span>
                 <b class="sline">|</b>
-                <span class="logout">退出</span>
+                <span class="logout" @click="logout()">出口</span>
             </div>
         </div>
         <el-dialog
@@ -27,13 +27,28 @@
                 class="demo-ruleForm"
             >
                 <el-form-item label="输入旧密码" prop="pass">
-                    <el-input type="password" v-model="pwdForm.pass" autocomplete="off" show-password></el-input>
+                    <el-input
+                        type="password"
+                        v-model="pwdForm.pass"
+                        autocomplete="off"
+                        show-password
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="输入新密码" prop="checkPass">
-                    <el-input type="password" v-model="pwdForm.checkPass" autocomplete="off" show-password></el-input>
+                    <el-input
+                        type="password"
+                        v-model="pwdForm.checkPass"
+                        autocomplete="off"
+                        show-password
+                    ></el-input>
                 </el-form-item>
                 <el-form-item label="确认新密码" prop="checkPass">
-                    <el-input type="password" v-model="pwdForm.checkPass" autocomplete="off" show-password></el-input>
+                    <el-input
+                        type="password"
+                        v-model="pwdForm.checkPass"
+                        autocomplete="off"
+                        show-password
+                    ></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -48,70 +63,92 @@
 export default {
     data() {
         var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
+            if (!value) {
+                return callback(new Error("年龄不能为空"));
             }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
-      return {
-        edipwd:false,
-        pwdForm: {
-          pass: '',
-          checkPass: '',
-          age: ''
-        },
-        rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
-          ]
-        }
-      };
+            setTimeout(() => {
+                if (!Number.isInteger(value)) {
+                    callback(new Error("请输入数字值"));
+                } else {
+                    if (value < 18) {
+                        callback(new Error("必须年满18岁"));
+                    } else {
+                        callback();
+                    }
+                }
+            }, 1000);
+        };
+        var validatePass = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("请输入密码"));
+            } else {
+                if (this.ruleForm.checkPass !== "") {
+                    this.$refs.ruleForm.validateField("checkPass");
+                }
+                callback();
+            }
+        };
+        var validatePass2 = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("请再次输入密码"));
+            } else if (value !== this.ruleForm.pass) {
+                callback(new Error("两次输入密码不一致!"));
+            } else {
+                callback();
+            }
+        };
+        return {
+            edipwd: false,
+            loginCode:'',
+            pwdForm: {
+                pass: "",
+                checkPass: "",
+                age: ""
+            },
+            rules: {
+                pass: [{ validator: validatePass, trigger: "blur" }],
+                checkPass: [{ validator: validatePass2, trigger: "blur" }],
+                age: [{ validator: checkAge, trigger: "blur" }]
+            }
+        };
     },
 
     components: {},
 
     computed: {},
 
-    created() {},
+    created() {
+        let localdata = this.$getlocalStorage("userinfo");
+        if (localdata) {
+            this.loginCode = localdata.loginCode;
+            this.loginstate = true;
+        }
+    },
 
     mounted() {},
 
-    methods: {}
+    methods: {
+        logout() {
+            this.$store.commit("setuserinfo", "");
+            localStorage.removeItem("userinfo");
+            this.$router.replace({ name: "lgindex" });
+            this.loginstate = false;
+            var that = this;
+            that.$request({
+                method: "get",
+                headers: {
+                    "content-type": "application/json;charset=UTF-8"
+                },
+                url: "/login/logout"
+            })
+                .then(res => {
+                    return true;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
 };
 </script>
 <style scoped>
@@ -132,6 +169,7 @@ export default {
 }
 .logo img {
     margin-top: 26px;
+    cursor: pointer;
 }
 .userinfo {
     float: right;

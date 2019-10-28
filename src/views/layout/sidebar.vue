@@ -21,17 +21,17 @@ export default {
         return {
             nav:[
                 {
-                    title:"申请时间戳",
+                    title:"タイムスタンプを申請する",
                     path:"/page/applytime",
                     child:[
                         {
-                            title:"申请时间戳",
+                            title:"タイムスタンプを申請する",
                             path:"/page/applysuccess" 
                         }
                     ]
                 },
                 {
-                    title:"作品列表",
+                    title:"資料リスト",
                     path:"/page/workslist",
                     child:[
                         {
@@ -41,7 +41,7 @@ export default {
                     ]
                 },
                 {
-                    title:"验证时间戳",
+                    title:"タイムスタンプを認証する",
                     path:"/page/verification",
                     child:[
                         {
@@ -51,7 +51,7 @@ export default {
                     ]
                 },
                 {
-                    title:"查询账户",
+                    title:"アカウント照会",
                     path:"/page/userinfo"
                 }
             ],

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="h3-title">账户查询</div>
+        <div class="h3-title">アカウント照会</div>
         <div class="section">
-            <h4>账号信息</h4>
+            <h4>アカウント情報</h4>
             <div class="table">
                 <ul>
                     <li>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="section">
-            <h4>账户信息</h4>
+            <h4>アカウント情報</h4>
             <div class="account-num">
                 <ul>
                     <li>
@@ -73,7 +73,7 @@
                 </ul>
             </div>
             <div class="filter">
-                <h5>请输入需查询使用情况的起始时间：</h5>
+                <h5>照会する期間を選択してください:</h5>
                 <div class="block">
                     <el-date-picker
                         style="width:150px;"
@@ -99,14 +99,14 @@
             </div>
             <div class="table">
                 <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="date" label="番号付け" width="150"></el-table-column>
+                    <el-table-column prop="date" label="資料番号" width="150"></el-table-column>
                     <el-table-column
                         prop="name"
                         :show-overflow-tooltip="true"
-                        label="作品の概要"
-                        width="300"
+                        label="資料の名称"
+                        width="400"
                     ></el-table-column>
-                    <el-table-column prop="type" label="作品の種類" width="120"></el-table-column>
+                    <!-- <el-table-column prop="type" label="作品の種類" width="120"></el-table-column> -->
                     <el-table-column prop="time" label="申し込み時間" width=""></el-table-column>
                 </el-table>
             </div>
@@ -170,7 +170,17 @@ export default {
 
     computed: {},
 
-    created() {},
+    created() {
+        this.$alert('モジュール機能はまだ開発されていません。しばらくお待ちください', 'フレンドリーリマインダー', {
+          confirmButtonText: 'わかった'
+        //   callback: action => {
+        //     this.$message({
+        //       type: 'info',
+        //       message: `action: ${ action }`
+        //     });
+        //   }
+        });
+    },
 
     mounted() {},
 

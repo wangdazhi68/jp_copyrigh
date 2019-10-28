@@ -1,15 +1,15 @@
 <template>
     <div>
-        <div class="h3-title">作品列表</div>
+        <div class="h3-title">資料リスト</div>
         <div class="filter">
             <div class="block">
-                <span class="demonstration">申し込み時間：</span>
+                <span class="demonstration">申請日：</span>
                 <el-date-picker
                     style="width:150px;"
                     v-model="startTime"
                     @change="dateStart"
                     type="date"
-                    placeholder="选择日期"
+                    placeholder="日付を選択"
                     format="yyyy-MM-dd"
                     value-format="yyyy-MM-dd"
                 ></el-date-picker>
@@ -19,29 +19,29 @@
                     v-model="endTime"
                     @change="dateEnd"
                     type="date"
-                    placeholder="选择日期"
+                    placeholder="日付を選択"
                     format="yyyy-MM-dd"
                     value-format="yyyy-MM-dd"
                 ></el-date-picker>
-                <span class="demonstration" style="margin-left:40px;">作品の概要：</span>
-                <el-input style="width:150px;" v-model="worksname" placeholder="请输入内容"></el-input>
-                <el-button type="primary" style="margin-left:50px;" @click="selectfifter()">クエリー</el-button>
+                <span class="demonstration" style="margin-left:40px;">資料の名称：</span>
+                <el-input style="width:150px;" v-model="worksname" placeholder="資料の名称"></el-input>
+                <el-button type="primary" style="margin-left:50px;" @click="selectfifter()">照会</el-button>
             </div>
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="workNo" label="番号付け" width="130"></el-table-column>
-                <el-table-column prop="workName" :show-overflow-tooltip="true" label="作品の概要" width="180"></el-table-column>
-                <el-table-column prop="workType" :formatter="formatRole" label="作品の種類" width="130"></el-table-column>
-                <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="作品の説明" width="180"></el-table-column>
-                <el-table-column prop="confirmTime" label="申し込み時間" width="180"></el-table-column>
+                <el-table-column prop="workNo" label="番号付け" width="150"></el-table-column>
+                <el-table-column prop="workName" :show-overflow-tooltip="true" label="資料の名称" width="180"></el-table-column>
+                <!-- <el-table-column prop="workType" :formatter="formatRole" label="作品の種類" width="130"></el-table-column> -->
+                <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="作品の説明" width="280"></el-table-column>
+                <el-table-column prop="confirmTime" label="申請日時" width="180"></el-table-column>
                 <el-table-column label="操作" width="100">
                     <template slot-scope="scope">
-                        <el-tooltip class="item" effect="light" content="証明書のダウンロード" placement="bottom" popper-class="mytitle">
+                        <el-tooltip class="item" effect="light" content="証書をダウンロード" placement="bottom" popper-class="mytitle">
                             <el-button class="myicon"  type="text"  @click="download(scope.row)" size="medium"><i class="el-icon-download"></i></el-button>
                         </el-tooltip>
                         <b class="sline">|</b>
-                        <el-tooltip class="item" effect="light" content="詳細を表示" placement="bottom" popper-class="mytitle">
+                        <el-tooltip class="item" effect="light" content="詳細" placement="bottom" popper-class="mytitle">
                             <el-button class="myicon" type="text" size="medium" @click="lookdetail(scope.row)"><i class="el-icon-more"></i></el-button>
                         </el-tooltip>
                     </template>

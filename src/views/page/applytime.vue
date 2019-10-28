@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="h3-title">申请时间戳</div>
+        <div class="h3-title">タイムスタンプを申請する</div>
         <div class="form">
             <el-form
                 :model="applyForm"
@@ -9,11 +9,10 @@
                 label-width="100px"
                 class="demo-ruleForm"
             >
-                <el-form-item label="上传作品：" prop="fileName" label-width="130px">
+                <el-form-item label="作品をアップロードします:" prop="fileName" label-width="130px">
                     <el-input style="display:none" type="hidden" v-model="applyForm.fileName"></el-input>
                     <div class="">
                         <div :class="uploadborder?'uploadwrap uploadborder':'uploadwrap'" v-if="!filename">
-                            
                             <input
                                 type="file"
                                 class="uploadfile"
@@ -24,7 +23,7 @@
                                 <img src="@/assets/images/uploadbtn.png" alt />
                             </div>
                             <p>
-                                点击或者拖拽上传作品
+                                作品をアップロードする
                             </p>
                         </div>
                         <div class="uploadwrap" v-else>
@@ -38,19 +37,19 @@
                         </div>
                     </div>
                 </el-form-item>
-                <el-form-item label="申请人："  label-width="130px">
+                <el-form-item label="申請者："  label-width="130px">
                     <el-input disabled v-model="applyPerson"></el-input>
                 </el-form-item>
-                <el-form-item label="证件类型：" label-width="130px">
-                    <el-input disabled v-model="certificateType"></el-input>
+                <el-form-item label="識別情報の類型：" label-width="130px">
+                    <el-input disabled v-model="identityType"></el-input>
                 </el-form-item>
-                <el-form-item label="证件号：" label-width="130px">
+                <el-form-item label="識別番号：" label-width="130px">
                     <el-input disabled v-model="certificateNo"></el-input>
                 </el-form-item>
-                <el-form-item label="作品名称：" prop="workName" label-width="130px">
+                <el-form-item label="資料の名称：" prop="workName" label-width="130px">
                     <el-input type="textarea" v-model="applyForm.workName"></el-input>
                 </el-form-item>
-                <el-form-item label="创作性质：" prop="workNature" label-width="130px">
+                <!-- <el-form-item label="创作性质：" label-width="130px">
                     <el-radio-group v-model="applyForm.workNature">
                         <el-radio v-for="item in naturetype" :key="item.value" :label="item.value">{{item.text}}</el-radio>
                         
@@ -65,46 +64,46 @@
                     <el-select v-model="applyForm.workType" placeholder="请选择作品类型">
                         <el-option v-for="item in workstype" :key="item.value" :label="item.label" :value="item.value"></el-option>
                     </el-select>
-                </el-form-item>
-                <el-form-item label="作品说明：" prop="workSpec" label-width="130px">
+                </el-form-item> -->
+                <el-form-item label="資料の説明：" prop="workSpec" label-width="130px">
                     <el-input class="mytext" type="textarea" v-model="applyForm.workSpec"></el-input>
-                    <span class="looktem" @click="choosetemplate()">选择模板</span>    
+                    <!-- <span class="looktem" @click="choosetemplate()">选择模板</span>     -->
                 </el-form-item>
             
                 <el-form-item style="text-align:center">
-                    <el-button type="primary" @click="preview('applyForm')">立即提交</el-button>
+                    <el-button type="primary" @click="preview('applyForm')">申請する</el-button>
                 </el-form-item>
             </el-form>
         </div>
 
         <el-dialog
-            title="预览确权信息"
+            title="プレビュー確認情報"
             :visible.sync="confirm"
             width="35%"
             top="10vh"
             :modal-append-to-body='false'
             >
             <dl class="dl">
-                <dt>上传作品：</dt>
+                <dt>作品：</dt>
                 <dd>{{filename}}</dd>
             </dl>
             <dl class="dl">
-                <dt>申请人：</dt>
+                <dt>申請者：</dt>
                 <dd>{{applyPerson}}</dd>
             </dl>
             <dl class="dl">
-                <dt>证件类型：</dt>
-                <dd>{{certificateType}}</dd>
+                <dt>識別情報の類型：</dt>
+                <dd>{{identityType}}</dd>
             </dl>
             <dl class="dl">
-                <dt>证件号：</dt>
+                <dt>識別番号：</dt>
                 <dd>{{certificateNo}}</dd>
             </dl>
             <dl class="dl">
-                <dt>作品名称：</dt>
+                <dt>資料の名称：</dt>
                 <dd>{{applyForm.workName}}</dd>
             </dl>
-            <dl class="dl">
+            <!-- <dl class="dl">
                 <dt>创作性质：</dt>
                 <dd>{{workNature}}</dd>
             </dl>
@@ -115,14 +114,14 @@
             <dl class="dl">
                 <dt>作品类型：</dt>
                 <dd>{{workType}}</dd>
-            </dl>
+            </dl> -->
             <dl class="dl">
-                <dt>作品说明：</dt>
+                <dt>資料の説明：</dt>
                 <dd>{{applyForm.workSpec}}</dd>
             </dl>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="confirm = false">取 消</el-button>
-                <el-button type="primary" @click="submit()">确 定</el-button>
+                <el-button @click="confirm = false">キャンセルする</el-button>
+                <el-button type="primary" @click="submit()">決定する</el-button>
             </span>
         </el-dialog>
         <el-dialog
@@ -287,18 +286,15 @@ export default {
             },
             applyrules: {
                 fileName:[
-                    { required: true, message: '请上传作品', trigger: 'change' }
+                    { required: true, message: '作品をアップロードしてください', trigger: 'change' }
                 ],
                 workName: [
-                    { required: true, message: '请输入作品名称', trigger: 'blur' },
-                    { min: 1, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
-                ],
-                workNature: [
-                    { required: true, message: '请选择创作性质', trigger: 'change' }
+                    { required: true, message: '作品の名前を入力してください', trigger: 'blur' },
+                    { min: 1, max: 50, message: '3〜50文字の長さ', trigger: 'blur' }
                 ],
                 workSpec: [
-                    { required: true, message: '请输入或选择作品说明', trigger: 'blur' },
-                    { min: 3, max: 350, message: '长度在 3 到 350 个字符', trigger: 'blur' }
+                    { required: true, message: '作品の説明を入力してください', trigger: 'blur' },
+                    { min: 3, max: 350, message: '3〜350文字の長さ', trigger: 'blur' }
                 ]
                
             },
@@ -329,10 +325,51 @@ export default {
                     return item.label
                 }
             }
+        },
+        identityType(){
+             switch(this.certificateType){
+                 case '101':
+                    return '身份证'
+                    break;
+                case '102':
+                    return '军官证'
+                    break;
+                case '103':
+                    return '护照'
+                    break;
+                case '104':
+                    return '士兵证'
+                    break;
+                case '111':
+                    return '组织机构代码或统一社会信用代码'
+                    break;
+                case '999':
+                    return '其它'
+                    break;
+             }
         }
+
+
     },
 
-    created() {},
+    created() {
+        this.$request({
+            method:'get',
+            url:'/customer/detail',
+        }).then((res) => {
+            console.log(res);
+            if(res.data.code==0){
+                this.certificateNo=res.data.data.identityId;
+                this.applyPerson=res.data.data.realName;
+                this.certificateType=res.data.data.identityType;
+            }else{
+                this.$message.error('リクエストに失敗しました。更新してもう一度お試しください');
+            }
+        }).catch((err) => {
+            this.$message.error('リクエストに失敗しました。更新してもう一度お試しください');
+            console.log(err);
+        })
+    },
 
     mounted() {},
 
@@ -342,7 +379,7 @@ export default {
             this.fil=inputDOM.files
             let size = Math.floor(this.fil[0].size / 1024);
             if(size > 10 * 1024 * 1024){
-                alert("请选择10M以内的图片！");
+                alert("10M以内の画像を選択してください！");
                 return false;
             }
             this.filename = inputDOM.files[0].name;
@@ -432,10 +469,10 @@ export default {
                         }
                     })
                 }else{
-                    this.$message.error('提交失败，请刷新重试');
+                    this.$message.error('送信に失敗しました。更新してもう一度お試しください');
                 }
             }).catch((err) => {
-                this.$message.error('提交失败，请刷新重试');
+                this.$message.error('送信に失敗しました。更新してもう一度お試しください');
                 console.log(err);
             })
         }

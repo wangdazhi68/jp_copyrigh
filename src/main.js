@@ -8,6 +8,8 @@ import './assets/css/common.css'
 import './plugins/element.js'
 import Clipboard from 'clipboard';
 import ElementUI from 'element-ui';
+
+
 Vue.prototype.Clipboard = Clipboard;
 Vue.prototype.$request = request;
 Vue.prototype.$http = 'http://192.168.50.194:8080/';
@@ -38,6 +40,27 @@ Vue.prototype.$getlocalStorage = function get(key, exp = 86400000) {
 
 }
 
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.name) {
+        document.title = to.meta.name
+    }
+    if (to.matched.length === 0) {
+        //如果未匹配到路由
+        from.name ? next({ name: from.name }) : next('/');
+        //如果上级也未匹配到路由则跳转登录页面，如果上级能匹配到则转上级路由
+    }
+    //带token开发
+    if (to.meta.requiresAuth) {
+        if (!Vue.prototype.$getlocalStorage('userinfo')) {
+            next({
+                path: '/page/index',
+                query: { redirect: to.fullPath }
+            })
+        }
+    }
+    next()
+})
 
 
 new Vue({

@@ -9,11 +9,23 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [{
             path: '/',
-            redirect: '/layout/index',
+            redirect: '/page/index',
+        },
+        {
+            name: 'lgindex',
+            path: '/page/index',
+            meta: {
+                name: '时间戳',
+            },
+            component: () =>
+                import ('./views/page/index.vue')
         },
         {
             path: '/layout/index',
             name: 'index',
+            meta: {
+                requiresAuth: true,
+            },
             redirect: '/page/applytime',
             component: index,
             children: [{

@@ -1,14 +1,14 @@
 <template>
   <div>
-      <div class="h3-title">申请时间戳</div>
+      <div class="h3-title">タイムスタンプを申請する</div>
       <div class="success-top">
           <div class="pic-ico">
               <img src="@/assets/images/success-icon.png" alt="">
-              <p>申请成功</p>
+              <p>成功したアプリケーション</p>
           </div>
           <div class="btnlink">
-              <p><span @click="lookpdf(id)">查看可信时间戳认证证书</span></p>
-              <p><b @click="$router.replace('/page/applytime')">继续申请</b></p>
+              <p><span @click="lookpdf(id)">タイムスタンプ認証証書を表示する</span></p>
+              <p><b @click="$router.replace('/page/applytime')">続けて申請する</b></p>
           </div>
       </div>
       <div class="problem">
