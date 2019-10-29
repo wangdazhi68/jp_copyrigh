@@ -45,10 +45,13 @@ service.interceptors.response.use(
             if (response.data.code == -2) {
                 store.commit('setuserinfo', '')
                 localStorage.removeItem('userinfo')
-                router.replace({
-                    path: '/page/index',
-                    query: { redirect: router.currentRoute.fullPath }
-                })
+                if (router.currentRoute.fullPath !== '/page/index') {
+                    router.replace({
+                        path: '/page/index',
+                        query: { redirect: router.currentRoute.fullPath }
+                    })
+                }
+
             }
         }
         return response

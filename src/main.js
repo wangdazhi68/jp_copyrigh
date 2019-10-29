@@ -53,10 +53,15 @@ router.beforeEach((to, from, next) => {
     //带token开发
     if (to.meta.requiresAuth) {
         if (!Vue.prototype.$getlocalStorage('userinfo')) {
-            next({
-                path: '/page/index',
-                query: { redirect: to.fullPath }
-            })
+            if (to.fullPath == "/page/index") {
+                next()
+            } else {
+                next({
+                    path: '/page/index',
+                    query: { redirect: to.fullPath }
+                })
+            }
+
         }
     }
     next()

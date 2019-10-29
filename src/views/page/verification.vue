@@ -23,7 +23,7 @@
             <dl>
                 <dt>&nbsp;</dt>
                 <dd>
-                    <p class="btn"><span>検証タイムスタンプ</span></p>
+                    <p class="btn"><span @click="check">検証タイムスタンプ</span></p>
                     <p class="link"><b>タイムスタンプ証明書をダウンロード</b></p>
                 </dd>
             </dl>
@@ -47,7 +47,8 @@ export default {
             fileName:{},
             tsa:{},
             name1:'',
-            name2:''
+            name2:'',
+            formData: new FormData(),
         };
     },
 
@@ -56,15 +57,9 @@ export default {
     computed: {},
 
     created() {
-        this.$alert('モジュール機能はまだ開発されていません。しばらくお待ちください', 'フレンドリーリマインダー', {
-          confirmButtonText: 'わかった'
-        //   callback: action => {
-        //     this.$message({
-        //       type: 'info',
-        //       message: `action: ${ action }`
-        //     });
-        //   }
-        });
+        // this.$alert('モジュール機能はまだ開発されていません。しばらくお待ちください', 'フレンドリーリマインダー', {
+        //   confirmButtonText: 'わかった'
+        // });
     },
 
     mounted() {},
@@ -96,6 +91,27 @@ export default {
                 return false;
             }
             this.name2 = inputDOM.files[0].name;
+        },
+        check(){
+            let that=this;
+            this.formData.append('fileName', this.fileName[0]);
+            this.formData.append('tsa', this.tsa[0]);
+            that.$request({
+                method:'post',
+                headers:{
+                    'Content-Type': 'multipart/form-data'
+                },
+                data:this.formData,
+                url:'/personal/timestampVerify',
+            }).then((res) => {
+                console.log(res);
+                that.$router.push({
+                    name:"verificatresult",
+                    params:res
+                })
+            }).catch((err) => {
+                console.log(err);
+            })
         }
     }
 };

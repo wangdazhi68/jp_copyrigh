@@ -5,7 +5,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Gothic', 'Helvetica', "Arial", "微软雅黑", "宋体";
+    font-family: "Yu Gothic", 'Helvetica', "Arial", "微软雅黑", "宋体";
     font-size: 16px;
     color: #000000;
 }
@@ -14,7 +14,7 @@ body {
 /* 非衬线体（游ゴシック）通常可以做如下设置：*/
 
 body {
-    font-family: "-apple-system", BlinkMacSystemFont, "Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif";
+    font-family: "Yu Gothic", "-apple-system", BlinkMacSystemFont, "Yu Gothic", "游ゴシック", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif";
 }
 
 
@@ -24,7 +24,7 @@ body {
 /* 下面的设置是直接将windows用的字体改成medium。这样默认文字的粗细在两个操作系统上是一样的 */
 
 body {
-    font-family: "-apple-system", BlinkMacSystemFont, "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif";
+    font-family: "Yu Gothic", "-apple-system", BlinkMacSystemFont, "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "メイリオ", "Hiragino Kaku Gothic ProN", "MS PGothic", Osaka, "sans-serif";
 }
 
 

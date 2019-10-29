@@ -11,9 +11,8 @@
                         <span class="apply" @click="applyuse()">使用のお申し込み</span>
                         <span v-if="loginstate"  class="login" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
-                        
-                        &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <span class="logout" @click="logout()">出口</span>
+                        <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
+                        <span v-if="loginstate" class="logout" @click="logout()">出口</span>
                     </div>
                 </div>
             </div>
@@ -450,7 +449,7 @@ export default {
                 headers:{
                     'content-type': "application/json;charset=UTF-8"
                 },
-                url:'/login/signOn',
+                url:'/login/signOn?lang=ja_JP',
             }).then((res) => {
                 console.log(res);
                 that.$nextTick(() => { 
@@ -459,12 +458,13 @@ export default {
                 });
                 if(res.data.code==0){
 					that.$store.commit('setuserinfo',res.data.data);
-					that.$setlocalStorage('userinfo',res.data.data)
-					
+                    that.$setlocalStorage('userinfo',res.data.data)
 					if(that.$route.query.redirect){
-						
-							that.$router.replace({path:that.$route.query.redirect})
-						
+						if(that.$route.query.redirect=='/page/index'){
+                            that.$router.push({name:"index"})
+                        }else{
+                            that.$router.replace({path:that.$route.query.redirect})
+                        }
 					}else{
 						// setTimeout(function(){
 						that.$router.push({name:"index"})
@@ -480,6 +480,10 @@ export default {
                 }
 
             }).catch((err) => {
+                that.$nextTick(() => { 
+                    // 以服务的方式调用的 Loading 需要异步关闭
+                    loadingInstance.close();
+                });
                 console.log(err);
             })
 
@@ -518,7 +522,7 @@ export default {
                         headers:{
                             'content-type': "application/json;charset=UTF-8"
                         },
-                        url:'/apply/add',
+                        url:'/apply/add?lang=ja_JP',
                     }).then((res) => {
                         console.log(res);
                         that.$nextTick(() => { 
@@ -526,9 +530,9 @@ export default {
                             loadingInstance.close();
                         });
                         if(res.data.code==0){
-                            console.log(res.data.data);
+                            //console.log(res.data.data);
                             that.$message({
-                                message: res.data.msg,
+                                message: '成功したアプリケーション',
                                 type: 'success'
                             });
                             this.apply=false;
@@ -536,6 +540,10 @@ export default {
                             this.$message.error(res.data.msg);
                         }
                     }).catch((err) => {
+                        that.$nextTick(() => { 
+                            // 以服务的方式调用的 Loading 需要异步关闭
+                            loadingInstance.close();
+                        });
                         this.$message.error(err);
                         console.log(err);
                     })

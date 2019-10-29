@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="h3-title">验证时间戳</div>
-        <div class="result">
+        <div class="result" v-if="result">
             <div class="ico-wrap">
                 <dl>
                     <dt>
@@ -18,31 +18,31 @@
                     <li>
                         <dl>
                             <dt>申请人：</dt>
-                            <dd>小可爱</dd>
+                            <dd>{{resultdata.realName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>申请人证件号：</dt>
-                            <dd>273627363773***234</dd>
+                            <dd>{{resultdata.identityId}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>文件/证据名称：</dt>
-                            <dd>小可爱</dd>
+                            <dd>{{resultdata.originalFileName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>可信时间戳认证时间：</dt>
-                            <dd>2019-10-11 12:11:10(UTC+8:00)</dd>
+                            <dd>{{resultdata.confirmTime}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>时间戳认证码（数字指纹）：</dt>
-                            <dd>AFFSDSDFHDGHUIWGGBNDSDS</dd>
+                            <dd>{{resultdata.hashCode}}</dd>
                         </dl>
                     </li>
                     <li>
@@ -54,7 +54,7 @@
                 </ul>
             </div>
         </div>
-        <div class="result">
+        <div class="result" v-else>
             <div class="ico-wrap">
                 <dl class="dl2">
                     <dt>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="goback">
-            <span>戻る</span>
+            <span @click="$router.go(-1)">戻る</span>
         </div>
     </div>
 </template>
@@ -76,14 +76,31 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            resultdata:{},
+            result:false
+        };
     },
 
     components: {},
 
     computed: {},
 
-    created() {},
+    created() {
+        var res=this.$route.params;
+        console.log(res)
+        if(JSON.stringify(res) == "{}"){
+            this.$router.go(-1);
+        }else{
+            if(res.data.code==0){
+                this.resultdata=res.data.data;
+                this.result=true;
+            }else{
+                this.result=false;
+            }
+        }
+        
+    },
 
     mounted() {},
 
@@ -136,7 +153,6 @@ export default {
     border-bottom:1px solid #EFEFEF;
     border-right: 1px solid #EFEFEF;
     line-height: 32px;
-    height: 32px;
 }
 .table dl{
     overflow: hidden;
@@ -152,9 +168,14 @@ export default {
     width: 45%;
     margin-right: 5%;
 }
+.table dd{
+    width:50%;
+    word-break:break-all;
+}
 .goback{
     text-align: center;
     padding-top:70px;
+    cursor: pointer;
 }
 
 .goback span{
