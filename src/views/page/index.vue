@@ -450,7 +450,7 @@ export default {
                 headers:{
                     'content-type': "application/json;charset=UTF-8"
                 },
-                url:'/login/signOn',
+                url:'/login/signOn?lang=ja_JP',
             }).then((res) => {
                 console.log(res);
                 that.$nextTick(() => { 
@@ -459,12 +459,14 @@ export default {
                 });
                 if(res.data.code==0){
 					that.$store.commit('setuserinfo',res.data.data);
-					that.$setlocalStorage('userinfo',res.data.data)
-					
+                    that.$setlocalStorage('userinfo',res.data.data)
+                    console.log(that.$route.query.redirect)
 					if(that.$route.query.redirect){
-						
-							that.$router.replace({path:that.$route.query.redirect})
-						
+						if(that.$route.query.redirect=='/page/index'){
+                            that.$router.push({name:"index"})
+                        }else{
+                            that.$router.replace({path:that.$route.query.redirect})
+                        }
 					}else{
 						// setTimeout(function(){
 						that.$router.push({name:"index"})
@@ -518,7 +520,7 @@ export default {
                         headers:{
                             'content-type': "application/json;charset=UTF-8"
                         },
-                        url:'/apply/add',
+                        url:'/apply/add?lang=ja_JP',
                     }).then((res) => {
                         console.log(res);
                         that.$nextTick(() => { 
