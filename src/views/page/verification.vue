@@ -24,7 +24,7 @@
                 <dt>&nbsp;</dt>
                 <dd>
                     <p class="btn"><span @click="check">検証タイムスタンプ</span></p>
-                    <p class="link"><b>タイムスタンプ証明書をダウンロード</b></p>
+                    <!-- <p class="link"><b>タイムスタンプ証明書をダウンロード</b></p> -->
                 </dd>
             </dl>
         </div>
@@ -69,7 +69,7 @@ export default {
             this.fileName=inputDOM.files;
             let size = Math.floor(this.fileName[0].size / 1024);
             if(size > 10 * 1024 * 1024){
-                alert("10M以内のファイルを選択してください！");
+                this.$message.error("10M以内のファイルを選択してください！");
                 return false;
             }
             this.name1 = inputDOM.files[0].name;
@@ -81,17 +81,25 @@ export default {
             let spl = fname.split(".");
             let suffix=spl[spl.length-1];
             if(suffix!='tsa'){
-               alert("拡張子がtsaのファイルを選択してください！");
+               this.$message.error("拡張子がtsaのファイルを選択してください！");
                 return false; 
             }
             let size = Math.floor(this.tsa[0].size / 1024);
             if(size > 10 * 1024 * 1024){
-                alert("10M以内のファイルを選択してください！");
+                this.$message.error("10M以内のファイルを選択してください！");
                 return false;
             }
             this.name2 = inputDOM.files[0].name;
         },
         check(){
+            if(!this.fileName[0]){
+               this.$message.error('確認するファイルを選択してください');
+               return false;
+            }
+            if(!this.tsa[0]){
+                this.$message.error('タイムスタンプファイルを選択してください');
+                return false;
+            }
             let that=this;
             this.formData.append('fileName', this.fileName[0]);
             this.formData.append('tsa', this.tsa[0]);
