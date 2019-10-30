@@ -11,8 +11,9 @@
                         <span class="apply" @click="applyuse()">使用のお申し込み</span>
                         <span v-if="loginstate"  class="login" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
-                        <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
-                        <span v-if="loginstate" class="logout" @click="logout()">出口</span>
+                        
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <span class="logout" @click="logout()">出口</span>
                     </div>
                 </div>
             </div>
@@ -459,6 +460,7 @@ export default {
                 if(res.data.code==0){
 					that.$store.commit('setuserinfo',res.data.data);
                     that.$setlocalStorage('userinfo',res.data.data)
+                    console.log(that.$route.query.redirect)
 					if(that.$route.query.redirect){
 						if(that.$route.query.redirect=='/page/index'){
                             that.$router.push({name:"index"})
@@ -480,10 +482,6 @@ export default {
                 }
 
             }).catch((err) => {
-                that.$nextTick(() => { 
-                    // 以服务的方式调用的 Loading 需要异步关闭
-                    loadingInstance.close();
-                });
                 console.log(err);
             })
 
@@ -530,9 +528,9 @@ export default {
                             loadingInstance.close();
                         });
                         if(res.data.code==0){
-                            //console.log(res.data.data);
+                            console.log(res.data.data);
                             that.$message({
-                                message: '成功したアプリケーション',
+                                message: res.data.msg,
                                 type: 'success'
                             });
                             this.apply=false;
@@ -540,10 +538,6 @@ export default {
                             this.$message.error(res.data.msg);
                         }
                     }).catch((err) => {
-                        that.$nextTick(() => { 
-                            // 以服务的方式调用的 Loading 需要异步关闭
-                            loadingInstance.close();
-                        });
                         this.$message.error(err);
                         console.log(err);
                     })
