@@ -6,7 +6,7 @@
             </div>
             <div class="userinfo">
                 <span class="account">{{loginCode}}</span>
-                <span class="epwd">パスワードを変更する</span>
+                <span class="epwd">パスワードを変更する+</span>
                 <b class="sline">|</b>
                 <span class="logout" @click="logout()">出口</span>
             </div>
