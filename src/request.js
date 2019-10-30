@@ -6,7 +6,7 @@ import router from './router';
 // 创建axios实例
 const service = axios.create({
         //baseURL: 'http://47.92.138.255:8081/guns-rest/',
-        baseURL: 'http://192.168.50.144:8080',
+        baseURL: 'http://39.107.66.190:8080',
         timeout: 10000, // 请求超时时间
         //data:data,
         // transformRequest: [function (data) {
