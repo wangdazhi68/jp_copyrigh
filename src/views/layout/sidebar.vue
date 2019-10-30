@@ -30,30 +30,30 @@ export default {
                         }
                     ]
                 },
-                {
-                    title:"資料リスト",
-                    path:"/page/workslist",
-                    child:[
-                        {
-                            title:"作品详情",
-                            path:"/page/worksdetail" 
-                        }
-                    ]
-                },
+                // {
+                //     title:"資料リスト",
+                //     path:"/page/workslist",
+                //     child:[
+                //         {
+                //             title:"作品详情",
+                //             path:"/page/worksdetail" 
+                //         }
+                //     ]
+                // },
                 {
                     title:"タイムスタンプを認証する",
                     path:"/page/verification",
                     child:[
                         {
-                            title:"验证时间戳",
+                            title:"タイムスタンプを認証する",
                             path:"/page/verificatresult" 
                         }
                     ]
                 },
-                {
-                    title:"アカウント照会",
-                    path:"/page/userinfo"
-                }
+                // {
+                //     title:"アカウント照会",
+                //     path:"/page/userinfo"
+                // }
             ],
         };
     },
