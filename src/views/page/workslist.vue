@@ -30,7 +30,7 @@
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="workNo" label="番号付け" width="150"></el-table-column>
+                <el-table-column prop="workNo" label="資料番号" width="150"></el-table-column>
                 <el-table-column prop="workName" :show-overflow-tooltip="true" label="資料の名称" width="180"></el-table-column>
                 <!-- <el-table-column prop="workType" :formatter="formatRole" label="作品の種類" width="130"></el-table-column> -->
                 <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="作品の説明" width="280"></el-table-column>
@@ -159,7 +159,7 @@ export default {
                 }
             })
             .catch(err => {
-                that.$message.error("请求数据出错，请刷新重试");
+                that.$message.error(err);
                 console.log(err);
             });
         },

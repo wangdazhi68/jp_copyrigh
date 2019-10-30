@@ -58,7 +58,9 @@
                         <p class="font">信頼されたタイムスタンプの使用回数</p>
                         <p class="num">
                             <span>
-                                <strong>{{userinfo.currentCount}}</strong>次
+                                <strong v-if="currentCount">{{currentCount}}</strong>
+                                <strong v-else>{{userinfo.currentCount}}</strong>
+                                次
                             </span>
                         </p>
                     </li>
@@ -87,37 +89,39 @@
                     <span class="fenge"></span>
                     <el-date-picker
                         style="width:150px;"
-                        v-model="startTime"
-                        @change="dateStart"
+                        v-model="endTime"
+                        @change="dateEnd"
                         type="date"
                         placeholder="終了時間"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                     ></el-date-picker>
-                    <el-button type="primary" style="margin-left:50px;">クエリー</el-button>
+                    <el-button @click="selectfifter()" type="primary" style="margin-left:50px;">クエリー</el-button>
                 </div>
             </div>
-            <div class="table">
-                <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="date" label="資料番号" width="150"></el-table-column>
-                    <el-table-column
-                        prop="name"
-                        :show-overflow-tooltip="true"
-                        label="資料の名称"
-                        width="400"
-                    ></el-table-column>
-                    <!-- <el-table-column prop="type" label="作品の種類" width="120"></el-table-column> -->
-                    <el-table-column prop="time" label="申し込み時間" width=""></el-table-column>
-                </el-table>
-            </div>
-            <div class="page">
-                <el-pagination
-                    @current-change="clickpage"
-                    :current-page="currentPage"
-                    :total="totalCount"
-                    :page-size="pageSize"
-                    layout="total, prev, pager, next, jumper"
-                ></el-pagination>
+            <div v-show="ishow">
+                <div class="table">
+                    <el-table :data="tableData" style="width: 100%">
+                        <el-table-column prop="workNo" label="資料番号" width="150"></el-table-column>
+                        <el-table-column
+                            prop="workName"
+                            :show-overflow-tooltip="true"
+                            label="資料の名称"
+                            width="400"
+                        ></el-table-column>
+                        <!-- <el-table-column prop="type" label="作品の種類" width="120"></el-table-column> -->
+                        <el-table-column prop="confirmTime" label="申請日時" width=""></el-table-column>
+                    </el-table>
+                </div>
+                <div class="page">
+                    <el-pagination
+                        @current-change="clickpage"
+                        :current-page="currentPage"
+                        :total="totalCount"
+                        :page-size="pageSize"
+                        layout="total, prev, pager, next, jumper"
+                    ></el-pagination>
+                </div>
             </div>
         </div>
     </div>
@@ -131,41 +135,17 @@ export default {
             pageSize: 10,
             currentPage: 1,
             totalCount: 10,
-            startTime: "",
-            endTime: "",
-            tableData: [
-                {
-                    date: "4543114651",
-                    name: "杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫",
-                    type:"文字",
-                    des:"hellow,骄傲十大科技拉升阶段拉萨v成本撒低级卡拉圣诞节是利空打击拉萨的接口卡死了的拉升阶段 ",
-                    time:"2019-10-11 12:11:10(UTC+8:00)",    
-                },
-                {
-                    date: "4543114651",
-                    name: "杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫",
-                    type:"文字",
-                    des:"hellow,骄傲十大科技拉升阶段拉萨v成本撒低级卡拉圣诞节是利空打击拉萨的接口卡死了的拉升阶段 ",
-                    time:"2019-10-11 12:11:10(UTC+8:00)",    
-                },
-                {
-                    date: "4543114651",
-                    name: "杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫",
-                    type:"文字",
-                    des:"hellow,骄傲十大科技拉升阶段拉萨v成本撒低级卡拉圣诞节是利空打击拉萨的接口卡死了的拉升阶段 ",
-                    time:"2019-10-11 12:11:10(UTC+8:00)",    
-                },
-                {
-                    date: "4543114651",
-                    name: "杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫杜拉拉升职记沃尔夫",
-                    type:"文字",
-                    des:"hellow,骄傲十大科技拉升阶段拉萨v成本撒低级卡拉圣诞节是利空打击拉萨的接口卡死了的拉升阶段 ",
-                    time:"2019-10-11 12:11:10(UTC+8:00)",    
-                },
-                
-            ],
+            startTime: null,
+            endTime: null,
+            tableData: [],
             userinfo:false,
-            loginCode:''
+            loginCode:'',
+            requestdata:{
+                page: 1,
+                rows: 10
+            },
+            ishow:false,
+            currentCount:null,
         };
     },
 
@@ -183,7 +163,7 @@ export default {
         if(this.$store.state.userdetail){
             this.userinfo=this.$store.state.userdetail;
         }else{
-            this.createdrequset();
+            this.uesrdetail();
         }
         
     },
@@ -191,7 +171,7 @@ export default {
     mounted() {},
 
     methods: {
-        createdrequset(){
+        uesrdetail(){
             var that=this;
             that.$request({
                 method:'get',
@@ -212,6 +192,30 @@ export default {
                 this.$message.error(err);
             })
         },
+        creatrequest() {
+            let that = this;
+            this.$request({
+                method: "post",
+                headers: {
+                    "content-type": "application/json;charset=UTF-8"
+                },
+                data:that.requestdata,
+                url: "/personal/viewAll"
+            })
+            .then(res => {
+                console.log(res);
+                if (res.data.code == 0) {
+                    that.tableData = res.data.data,
+                    that.totalCount = res.data.totalCount;
+                } else {
+                    that.$message.error(res.data.msg);
+                }
+            })
+            .catch(err => {
+                that.$message.error(err);
+                console.log(err);
+            });
+        },
         dateStart(e) {
             this.startTime = e;
         },
@@ -219,14 +223,59 @@ export default {
             this.endTime = e;
         },
         clickpage(e) {
-            
-            if(!this.datestart){
-                delete this.requestdata.startTime;  
+            this.requestdata={
+                page: e,
+                rows: this.pageSize,
+                startTime:this.startTime,
+                endTime:this.endTime,
             }
-            if(!this.dateend){
+            if(!this.startTime){
+                delete this.requestdata.startTime 
+            }
+            if(!this.endTime){
                 delete this.requestdata.endTime;
             }
+            this.creatrequest();
         },
+        selectfifter(){
+            this.totalnum();
+            this.requestdata={
+                page: 1,
+                rows: this.pageSize,
+                startTime:this.startTime,
+                endTime:this.endTime,
+            }
+            if(!this.startTime){
+                delete this.requestdata.startTime;
+            }
+            if(!this.endTime){
+                delete this.requestdata.endTime;
+            }
+            this.creatrequest();
+            this.ishow=true;
+        },
+        totalnum(){
+            let that = this;
+            this.$request({
+                method: "post",
+                headers: {
+                    "content-type": "application/json;charset=UTF-8"
+                },
+                data:{
+                    startTime:this.startTime,
+                    endTime:this.endTime
+                },
+                url: "/personal/getTotalCountByTimePeriod"
+            })
+            .then(res => {
+                console.log(res);
+                this.currentCount=res.data.totalCount
+            })
+            .catch(err => {
+                that.$message.error(err);
+                console.log(err);
+            });
+        }
     }
 };
 </script>
