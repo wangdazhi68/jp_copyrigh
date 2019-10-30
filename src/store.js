@@ -6,14 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         userinfo: {},
-        status: null
+        userdetail: null
     },
     mutations: {
         setuserinfo(state, userinfo) {
             state.userinfo = userinfo
         },
-        setstatus(state, status) {
-            state.status = status
+        setuserdetail(state, userdetail) {
+            state.userdetail = userdetail
         },
 
     },

@@ -8,43 +8,43 @@
                     <li>
                         <dl>
                             <dt>有効期間から停止時間</dt>
-                            <dd>2019-10-15 11:30:11(UTC+08:00) 至 2020-10-15 11:30:11(UTC+08:00)</dd>
+                            <dd>{{userinfo.createTime}} 至 {{userinfo.expireTime}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>アカウント</dt>
-                            <dd>sdbug@sina.com</dd>
+                            <dd>{{loginCode}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>アカウント名</dt>
-                            <dd>某某某公司</dd>
+                            <dd>{{userinfo.realName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>証明書の種類</dt>
-                            <dd>社会机构代码</dd>
+                            <dd>{{identityType}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt>証明書番号</dt>
-                            <dd>88222**882</dd>
+                            <dd>{{userinfo.identityId}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>申請者</dt>
-                            <dd>某某某</dd>
+                            <dt>連絡先</dt>
+                            <dd>{{userinfo.contactName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>申込者メール</dt>
-                            <dd>dfdw@ds.com</dd>
+                            <dt>連絡先メールアドレス</dt>
+                            <dd>{{userinfo.contactEmail}}</dd>
                         </dl>
                     </li>
                 </ul>
@@ -58,7 +58,7 @@
                         <p class="font">信頼されたタイムスタンプの使用回数</p>
                         <p class="num">
                             <span>
-                                <strong>35</strong>次
+                                <strong>{{userinfo.currentCount}}</strong>次
                             </span>
                         </p>
                     </li>
@@ -66,7 +66,7 @@
                         <p class="font">今月の信頼できるタイムスタンプの使用回数</p>
                         <p class="num">
                             <span>
-                                <strong>12</strong>次
+                                <strong>{{userinfo.monthCount}}</strong>次
                             </span>
                         </p>
                     </li>
@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import {identityType} from '@/assets/js/statetype'
 export default {
     data() {
         return {
@@ -162,29 +163,55 @@ export default {
                     time:"2019-10-11 12:11:10(UTC+8:00)",    
                 },
                 
-            ]
+            ],
+            userinfo:false,
+            loginCode:''
         };
     },
 
     components: {},
 
-    computed: {},
+    computed: {
+        identityType
+    },
 
     created() {
-        this.$alert('モジュール機能はまだ開発されていません。しばらくお待ちください', 'フレンドリーリマインダー', {
-          confirmButtonText: 'わかった'
-        //   callback: action => {
-        //     this.$message({
-        //       type: 'info',
-        //       message: `action: ${ action }`
-        //     });
-        //   }
-        });
+        let localdata=this.$getlocalStorage('userinfo')
+        if(localdata){
+            this.loginCode=localdata.loginCode
+        }
+        if(this.$store.state.userdetail){
+            this.userinfo=this.$store.state.userdetail;
+        }else{
+            this.createdrequset();
+        }
+        
     },
 
     mounted() {},
 
     methods: {
+        createdrequset(){
+            var that=this;
+            that.$request({
+                method:'get',
+                headers:{
+                    'content-type': "application/json;charset=UTF-8"
+                },
+                url:'/customer/detail',
+            }).then((res) => {
+                console.log(res);
+                if(res.data.code==0){
+                    that.userinfo=res.data.data;
+                    that.$store.commit('setuserdetail',res.data.data);
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            }).catch((err) => {
+                console.log(err);
+                this.$message.error(err);
+            })
+        },
         dateStart(e) {
             this.startTime = e;
         },
