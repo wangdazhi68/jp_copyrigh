@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h3-title">验证时间戳</div>
+        <div class="h3-title">タイムスタンプを認証する</div>
         <div class="result" v-if="result">
             <div class="ico-wrap">
                 <dl>
@@ -17,38 +17,38 @@
                 <ul>
                     <li>
                         <dl>
-                            <dt>申请人：</dt>
+                            <dt>申請者：</dt>
                             <dd>{{resultdata.realName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>申请人证件号：</dt>
+                            <dt>会社法人等番号：</dt>
                             <dd>{{resultdata.identityId}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>文件/证据名称：</dt>
+                            <dt>資料・証拠の名称：</dt>
                             <dd>{{resultdata.originalFileName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>可信时间戳认证时间：</dt>
+                            <dt>タイムスタンプの認証日時：</dt>
                             <dd>{{resultdata.confirmTime}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>时间戳认证码（数字指纹）：</dt>
+                            <dt>hash値：</dt>
                             <dd>{{resultdata.hashCode}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>时间戳颁发机构（TSA）：</dt>
-                            <dd>联合信任时间戳服务中心</dd>
+                            <dt>タイムスタンプ発行機関（TSA）：</dt>
+                            <dd>联合信任时间戳服务中心（日本部）</dd>
                         </dl>
                     </li>
                 </ul>
@@ -61,8 +61,8 @@
                         <img src="@/assets/images/error-icon.png" alt />
                     </dt>
                     <dd>
-                        <p>このファイルは検証されていません。本当のリスクがあります。</p>
-                        <p>エラーメッセージ：元のファイルはタイムスタンプファイルと一致していません。</p>
+                        <p>認証に失敗しました。改ざんのリスクがあります。</p>
+                        <p>エラー：認証対象ファイルと.tsaファイルが一致しておりません</p>
                     </dd>
                 </dl>
             </div>
