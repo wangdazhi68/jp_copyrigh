@@ -95,6 +95,7 @@ export default {
     box-shadow:0px 4px 10px 0px rgba(210,223,255,0.5);
     border-radius:8px;
     min-height: 712px;
+    background:#fff;
 }
 .nav li{
     width: 100%;
