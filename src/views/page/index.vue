@@ -207,7 +207,7 @@
                     </li>
                     <li>
                         <input class="pwd" type="password" v-model="password" placeholder="パスワード" />
-                        <span class="forget">忘记密码？</span>
+                        <!-- <span class="forget">忘记密码？</span> -->
                     </li>
                     <li>
                         <input class="pwd" type="text" v-model="yzm" placeholder="グラフィック検証コード" />
@@ -216,6 +216,7 @@
                         </span>
                     </li>
                 </ul>
+                <div class="forget-wrap"><span class="forget">パスワードを忘れた方はこちら</span></div>
                 <div class="btns">
                     <p>
                         <span class="lgbtn" @click="loginto()">ログイン</span>
@@ -860,6 +861,10 @@ export default {
 .form1 li .pwd {
     width: 73%;
     cursor: pointer;
+}
+.forget-wrap{
+    text-align: right;
+    padding: 10px 0;
 }
 .forget {
     font-size: 16px;
