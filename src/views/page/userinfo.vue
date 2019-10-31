@@ -238,7 +238,7 @@ export default {
             this.creatrequest();
         },
         selectfifter(){
-            this.totalnum();
+            
             this.requestdata={
                 page: 1,
                 rows: this.pageSize,
@@ -250,6 +250,10 @@ export default {
             }
             if(!this.endTime){
                 delete this.requestdata.endTime;
+            }
+            this.currentCount=null;
+            if(this.startTime || this.endTime){
+                this.totalnum();
             }
             this.creatrequest();
             this.ishow=true;

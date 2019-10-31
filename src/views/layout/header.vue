@@ -6,7 +6,7 @@
             </div>
             <div class="userinfo">
                 <span class="account">{{loginCode}}</span>
-                <span class="epwd">パスワードを変更する</span>
+                <span class="epwd" @click="epwd()">パスワードを変更する</span>
                 <b class="sline">|</b>
                 <span class="logout" @click="logout()">出口</span>
             </div>
@@ -14,7 +14,7 @@
         <el-dialog
             title="修改密码"
             :visible.sync="edipwd"
-            width="40%"
+            width="50%"
             :modal-append-to-body="false"
             top="15vh"
         >
@@ -23,26 +23,26 @@
                 status-icon
                 :rules="rules"
                 ref="pwdForm"
-                label-width="100px"
+                label-width="180px"
                 class="demo-ruleForm"
             >
-                <el-form-item label="输入旧密码" prop="pass">
+                <el-form-item label="古いパスワード:" prop="oldPassword">
                     <el-input
                         type="password"
-                        v-model="pwdForm.pass"
+                        v-model="pwdForm.oldPassword"
                         autocomplete="off"
                         show-password
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="输入新密码" prop="checkPass">
+                <el-form-item label="新しいパスワード:" prop="password">
                     <el-input
                         type="password"
-                        v-model="pwdForm.checkPass"
+                        v-model="pwdForm.password"
                         autocomplete="off"
                         show-password
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="确认新密码" prop="checkPass">
+                <el-form-item label="パスワードを確認:" prop="checkPass">
                     <el-input
                         type="password"
                         v-model="pwdForm.checkPass"
@@ -52,47 +52,20 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <el-button @click="edipwd = false">取 消</el-button>
+                <el-button type="primary" @click="confimpwd('pwdForm')">确 定</el-button>
             </span>
         </el-dialog>
     </div>
 </template>
 
 <script>
+import { hexMD5 } from '@/assets/js/md5';
 export default {
     data() {
-        var checkAge = (rule, value, callback) => {
-            if (!value) {
-                return callback(new Error("年龄不能为空"));
-            }
-            setTimeout(() => {
-                if (!Number.isInteger(value)) {
-                    callback(new Error("请输入数字值"));
-                } else {
-                    if (value < 18) {
-                        callback(new Error("必须年满18岁"));
-                    } else {
-                        callback();
-                    }
-                }
-            }, 1000);
-        };
-        var validatePass = (rule, value, callback) => {
-            if (value === "") {
-                callback(new Error("请输入密码"));
-            } else {
-                if (this.ruleForm.checkPass !== "") {
-                    this.$refs.ruleForm.validateField("checkPass");
-                }
-                callback();
-            }
-        };
         var validatePass2 = (rule, value, callback) => {
-            if (value === "") {
-                callback(new Error("请再次输入密码"));
-            } else if (value !== this.ruleForm.pass) {
-                callback(new Error("两次输入密码不一致!"));
+            if (value !== this.pwdForm.password) {
+                callback(new Error("一貫性のない2回の入力パスワード!"));
             } else {
                 callback();
             }
@@ -101,14 +74,21 @@ export default {
             edipwd: false,
             loginCode:'',
             pwdForm: {
-                pass: "",
-                checkPass: "",
-                age: ""
+                oldPassword: "",
+                password: "",
+                checkPass: ""
             },
             rules: {
-                pass: [{ validator: validatePass, trigger: "blur" }],
-                checkPass: [{ validator: validatePass2, trigger: "blur" }],
-                age: [{ validator: checkAge, trigger: "blur" }]
+                oldPassword: [
+                    { required: true, message: '古いパスワードを入力してください', trigger: 'blur' },
+                ],
+                checkPass: [
+                    { required: true, message: 'パスワードを確認してください', trigger: 'blur' },
+                    { validator: validatePass2, trigger: "blur" }
+                ],
+                password: [
+                    { required: true, message: '新しいパスワードを入力してください', trigger: 'blur' },
+                ]
             }
         };
     },
@@ -147,6 +127,49 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
+        },
+        epwd(){
+            this.edipwd=true;
+        },
+        confimpwd(pwdForm){
+            this.$refs[pwdForm].validate((valid) => {
+                if (valid) {
+                    var that=this;
+                    this.$request({
+                        method: "post",
+                        headers: {
+                            "content-type": "application/json;charset=UTF-8"
+                        },
+                        data:{
+                            oldPassword:hexMD5(this.pwdForm.oldPassword),
+                            password:hexMD5(this.pwdForm.password)
+                        },
+                        url: "/register/updatePassword"
+                    })
+                    .then(res => {
+                        console.log(res);
+                        if(res.data.code==0){
+                            that.$message({
+                                message: 'パスワードは正常に変更されました。もう一度ログインしてください。',
+                                type: 'success'
+                            });
+                            this.edipwd=false;
+                            setTimeout(() => {
+                                this.logout();
+                            }, 3000);
+                        }else{
+                            that.$message.error(res.data.msg);
+                        }
+                    })
+                    .catch(err => {
+                        that.$message.error(err);
+                        console.log(err);
+                    });
+                }else{
+                    console.log('error submit!!');
+                    return false;
+                }
+            })
         }
     }
 };
