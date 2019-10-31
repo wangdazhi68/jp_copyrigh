@@ -449,7 +449,7 @@ export default {
                 headers:{
                     'content-type': "application/json;charset=UTF-8"
                 },
-                url:'/login/signOn?lang=ja_JP',
+                url:'login/signOn?lang=ja_JP',
             }).then((res) => {
                 console.log(res);
                 that.$nextTick(() => { 

@@ -5,11 +5,12 @@ module.exports = {
     // 静态资源目录
     assetsDir: 'assets',
     devServer: {
+        //proxy: 'http://39.107.66.190:8080'
         // proxy: {
         //     '/api': {
-        //         target: 'http://192.168.50.144:8080/',
+        //         target: 'http://39.107.66.190:8080',
         //         ws: true,
-        //         changeOrigin: true
+        //         changeOrigin: true,
         //     },
         // }
     }
