@@ -216,7 +216,7 @@
                         </span>
                     </li>
                 </ul>
-                <div class="forget-wrap"><span class="forget">パスワードを忘れた方はこちら</span></div>
+                <div class="forget-wrap"><span class="forget" @click="forgetpwd()">パスワードを忘れた方はこちら</span></div>
                 <div class="btns">
                     <p>
                         <span class="lgbtn" @click="loginto()">ログイン</span>
@@ -277,14 +277,64 @@
                 </div>
             </div>
         </el-dialog>
+        <!-- 忘记密码 -->
+        <el-dialog
+            title="ログイン"
+            :visible.sync="forget"
+            width="60%"
+            top="10vh"
+            :modal-append-to-body="false"
+        >
+            <div class="logo">
+                <img src="@/assets/images/logo3.png" alt />
+                <p>中国タイムスタンプ知財保護システム</p>
+            </div>
+            <div class="form1" v-if="one">
+                <ul>
+                    <li>
+                        <input type="text" v-model="email" placeholder="メールアカウントを入力してください" />
+                    </li>
+                    <li>
+                        <input type="text" v-model="yzm" placeholder="確認コードを入力してください" />
+                    </li>
+                </ul>
+                <div class="forget-wrap"><span class="forget" :disabled='disabled' @click="getVerificationCode">{{yzmtext}}</span></div>
+                <div class="btns">
+                    <p>
+                        <span class="lgbtn" @click="next()">次のステップ</span>
+                    </p>
+                    <b @click="gologin()">ログインに戻る</b>
+                </div>
+            </div>
+            <div class="form1" v-else>
+                <ul>
+                    <li>
+                        <input type="password" v-model="newpwd" placeholder="新しいパスワードを入力してください" autocomplete="off"
+                        show-password />
+                    </li>
+                    <li>
+                        <input type="password" v-model="confirmpwd" placeholder="新しいパスワードを確認" autocomplete="off"
+                        show-password />
+                    </li>
+                </ul>
+                <div class="btns">
+                    <p>
+                        <span class="lgbtn" @click="modify()">今すぐ送信</span>
+                    </p>
+                    <b @click="gologin()">ログインに戻る</b>
+                </div>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 import SIdentify from "@/components/identify";
 import { Loading } from 'element-ui';
+import {getSign} from '@/assets/js/sign';
 import { hexMD5 } from '@/assets/js/md5';
-
+import qs from 'qs';
+var interval = null;
 export default {
     data() {
         var phone = (rule, value, callback) => {
@@ -308,11 +358,20 @@ export default {
             activeindex:1,
             login: false,
             apply: false,
+            forget:false,
+            one:true,
             identifyCodes: "1234567890",
             identifyCode: "",
             username:'',
             password:'',
+            newpwd:'',
+            confirmpwd:'',
             yzm:'',
+            yzmtext: "確認コードを取得する",
+            currentTime: 61,
+            sucyzm: "",
+            disabled:false,
+            email:'',
             usererror:'',
             passerror:'',
             yzmerror:'',
@@ -390,8 +449,27 @@ export default {
     },
 
     methods: {
+
         taglogin(){
             this.login=true;
+        },
+        gologin(){
+            this.login=true;
+            this.forget=false;
+            this.one=true;
+        },
+        next(){
+            if(this.yzm==this.sucyzm && this.yzm.length>0){
+                this.one=false 
+            }else{
+                this.$message.error('検証コードエラー');
+                return false 
+            } 
+        },
+        forgetpwd(){
+            this.login=false;
+            this.forget=true;
+            this.one=true;
         },
         applyuse(){
             this.apply=true;
@@ -554,6 +632,131 @@ export default {
                 }
             });
             
+        },
+        async getVerificationCode(){
+            var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+            if(!reg.test(this.email)){ 
+                this.$message.error('正しいメールボックス形式を入力してください');
+                return false;
+            }
+            var that = this
+            let data=qs.stringify({
+                    loginName:this.email,
+                });
+            var ison=true;
+			await this.$request({
+                method:'post',
+                data:data,
+                headers:{
+					'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                url:'/register/validate',
+            }).then((res) => {
+                //console.log(res);
+                if(res.data.code==0){
+                   that.$message.error('アカウントが存在しません');
+                   ison=false;
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+            if(!ison){
+                return false;
+            }
+            this.getCode();
+            
+            that.disabled=true;
+
+            var date = new Date();
+            var timestamp = date.getTime();
+            var res = {
+                "timestamp": timestamp,
+                "loginName":this.email,
+                "loginType":"2",
+            }
+            var signature=getSign(res);
+            var json=JSON.stringify({
+                    "loginName":this.email,
+                    "loginType":"2",
+                    "signature":signature.toUpperCase(),
+                    "timestamp":timestamp.toString()
+                });
+
+            this.$request({
+                method:'post',
+                data:json,
+                headers:{
+                    'content-type': "application/json;charset=UTF-8"
+                },
+                url:'/register/sendValidateCode',
+            }).then((res) => {
+                console.log(res);
+                if(res.data.code==-1){
+                    alert('请求失败')
+                    return false
+                }
+                this.sucyzm=res.data.data.code;
+            }).catch((err) => {
+                console.log(err);
+            })
+        },
+        getCode: function (options) {
+            var that = this;
+            var currentTime = that.currentTime
+            interval = setInterval(function () {
+                currentTime--;
+                that.yzmtext='('+currentTime + 's)取り戻す'
+                if (currentTime <= 0) {
+                    clearInterval(interval)
+                    that.yzmtext='取り戻す';
+                    that.currentTime=61;
+                    that.disabled=false;
+                }
+            }, 1000)
+        },
+        modify(){
+            var that=this;
+            if(this.newpwd.trim()==''){
+                that.$message.error('新しいパスワードを入力してください');
+                return false
+            }
+            if(this.confirmpwd!==this.newpwd){
+                that.$message.error('一貫性のない2回の入力パスワード!');
+                return false
+            }
+            var that=this;
+            this.$request({
+                method: "post",
+                headers: {
+                    "content-type": "application/json;charset=UTF-8"
+                },
+                data:{
+                    email:this.email,
+                    password:hexMD5(this.newpwd)
+                },
+                url: "/register/resetPassword"
+            })
+            .then(res => {
+                console.log(res);
+                if(res.data.code==0){
+                    that.$message({
+                        message: 'パスワードは正常に変更されました。もう一度ログインしてください。',
+                        type: 'success'
+                    });
+                    setTimeout(function(){
+					    that.one=true;
+                        that.forget=false;
+                        that.login=true;
+					},3000);
+                    
+                }else{
+                    that.$message.error(res.data.msg);
+                }
+            })
+            .catch(err => {
+                that.$message.error(err);
+                console.log(err);
+            });
         }
     }
 };
@@ -870,7 +1073,14 @@ export default {
     font-size: 16px;
     color: #7499f5;
     cursor: pointer;
+    user-select:none;
 }
+.forget[disabled]{
+    color:#999;
+    pointer-events: none;
+    cursor: inherit;
+}
+
 .error-ts {
     position: absolute;
     right: -300px;
@@ -902,6 +1112,7 @@ export default {
     border-radius: 8px;
     margin-bottom: 27px;
     cursor: pointer;
+    user-select: none;
 }
 .lgbtn:hover {
     opacity: 0.8;

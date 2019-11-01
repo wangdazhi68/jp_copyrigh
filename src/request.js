@@ -24,7 +24,7 @@ service.interceptors.request.use(
     config => {
         let localdata = Vue.prototype.$getlocalStorage('userinfo')
         if (config.url == "/register/sendValidateCode") {
-            console.log('不需要加token')
+            //console.log('不需要加token')
         } else {
             if (localdata) {
                 config.headers.token = localdata.sessionId;
