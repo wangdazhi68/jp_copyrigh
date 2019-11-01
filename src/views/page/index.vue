@@ -616,6 +616,7 @@ export default {
     padding-top: 100px;
     width:100%;
     max-width: 1920px;
+    margin:0 auto;
     height:600px;
     background-size: cover;
     background-position: center;
