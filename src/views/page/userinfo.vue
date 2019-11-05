@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="layout">
         <div class="h3-title">アカウント照会</div>
         <div class="section">
             <h4>アカウント情報</h4>

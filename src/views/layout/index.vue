@@ -47,6 +47,8 @@ export default {
     left: 0;
     bottom:0;
     z-index: 1;
+    right:0;
+    margin:0 auto;
 }
 .section{
     position: relative;
@@ -54,6 +56,5 @@ export default {
     width: 1200px;
     margin:0 auto;
     margin-top:-320px;
-
 }
 </style>

@@ -2,7 +2,7 @@
     <div class="wrap">
         <div class="header">
             <div class="logo">
-                <img @click="$router.push({name:'lgindex'})" src="@/assets/images/logo1.png" alt="联合信任" />
+                <img src="@/assets/images/logo1.png" alt="联合信任" />
             </div>
             <div class="userinfo">
                 <span class="account">{{loginCode}}</span>
@@ -111,7 +111,7 @@ export default {
         logout() {
             this.$store.commit("setuserinfo", "");
             localStorage.removeItem("userinfo");
-            this.$router.replace({ name: "lgindex" });
+            this.$router.replace({ name: "login" });
             this.loginstate = false;
             var that = this;
             that.$request({

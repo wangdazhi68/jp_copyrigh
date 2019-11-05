@@ -823,6 +823,7 @@ export default {
     background-size: cover;
     background-position: center;
     position: relative;
+    margin:0 auto;
 }
 .des{
     width:910px;

@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="layout">
         <div class="h3-title">タイムスタンプを申請する</div>
         <div class="form">
             <el-form
@@ -31,7 +31,7 @@
                                 <img src="@/assets/images/file-icon.png" alt />
                                 <a class="close" title="删除" @click="delfile()">×</a>
                             </div>
-                            <p>
+                            <p class="file-name">
                                {{filename}}
                             </p>
                         </div>
@@ -522,6 +522,12 @@ export default {
     z-index: 999;
     cursor: pointer;
 }
+.file-name{
+    width:100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .uploadwrap .add{
     margin-top:20px;
 }
@@ -589,23 +595,23 @@ export default {
 }
 </style>
 <style>
-.el-dialog__header {
+.layout .el-dialog__header {
     border-radius: 4px;
     padding: 10px;
     padding-bottom: 10px;
     background:#F2F2F2;
 }
-.el-dialog__title{
+.layout .el-dialog__title{
     color:#7499f5;
 }
-.el-dialog__headerbtn {
+.layout .el-dialog__headerbtn {
     top: 10px;
     font-size: 20px;
 }
-.el-dialog{
+.layout .el-dialog{
     border-radius: 4px;
 }
-.mytext .el-textarea__inner{
+.layout .mytext .el-textarea__inner{
     height:120px;
 }
 </style>

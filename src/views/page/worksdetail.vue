@@ -76,6 +76,7 @@
                     </el-image>
                 </div>
                 <span @click="download" class="download">認証証書をダウンロードする >></span>
+                <span style="top:70px;" @click="downloadtsa" class="download">TSA証明書をダウンロードする >></span>
             </div>
         </div>
     </div>
@@ -260,6 +261,9 @@ export default {
         },
         download(){
             window.open(this.$baseURL+"personal/download?id="+this.id,'_blank');
+        },
+        downloadtsa(){
+            window.open(this.$baseURL+"/personal/downloadtsa?id="+this.id,'_blank');
         }
     }
 };

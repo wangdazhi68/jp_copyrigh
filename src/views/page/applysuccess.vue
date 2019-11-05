@@ -8,6 +8,7 @@
           </div>
           <div class="btnlink">
               <p><span @click="lookpdf(id)">タイムスタンプ認証証書を表示する</span></p>
+              <p><span @click="looktsa(id)">TSA証明書をダウンロードする</span></p>
               <p><b @click="$router.replace('/page/applytime')">続けて申請する</b></p>
           </div>
       </div>
@@ -39,7 +40,7 @@
 export default {
   data () {
     return {
-        id:''
+        id:'',
     };
   },
 
@@ -55,9 +56,12 @@ export default {
   mounted(){},
 
   methods: {
-      lookpdf(id){
+        lookpdf(id){
             window.open(this.$baseURL+"personal/download?id="+this.id,'_blank'); 
         },
+        looktsa(id){
+            window.open(this.$baseURL+"personal/downloadtsa?id="+this.id,'_blank'); 
+        }
   }
 }
 

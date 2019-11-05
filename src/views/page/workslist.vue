@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="layout">
         <div class="h3-title">資料リスト</div>
         <div class="filter">
             <div class="block">
@@ -31,11 +31,11 @@
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="workNo" label="資料番号" width="150"></el-table-column>
-                <el-table-column prop="workName" :show-overflow-tooltip="true" label="資料の名称" width="180"></el-table-column>
+                <el-table-column prop="workName" :show-overflow-tooltip="true" label="資料の名称" width="150"></el-table-column>
                 <!-- <el-table-column prop="workType" :formatter="formatRole" label="作品の種類" width="130"></el-table-column> -->
-                <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="作品の説明" width="280"></el-table-column>
-                <el-table-column prop="confirmTime" label="申請日時" width="180"></el-table-column>
-                <el-table-column label="操作" width="100">
+                <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="作品の説明" width="250"></el-table-column>
+                <el-table-column prop="confirmTime" label="申請日時" width="160"></el-table-column>
+                <el-table-column label="操作" width="190">
                     <template slot-scope="scope">
                         <el-tooltip class="item" effect="light" content="証書をダウンロード" placement="bottom" popper-class="mytitle">
                             <el-button class="myicon"  type="text"  @click="download(scope.row)" size="medium"><i class="el-icon-download"></i></el-button>
@@ -43,6 +43,10 @@
                         <b class="sline">|</b>
                         <el-tooltip class="item" effect="light" content="詳細" placement="bottom" popper-class="mytitle">
                             <el-button class="myicon" type="text" size="medium" @click="lookdetail(scope.row)"><i class="el-icon-more"></i></el-button>
+                        </el-tooltip>
+                        <b class="sline">|</b>
+                        <el-tooltip class="item" effect="light" content="ダウンロードtsa" placement="bottom" popper-class="mytitle">
+                            <el-button class="myicon" type="text" size="medium" @click="downloadtsa(scope.row)"><i class="el-icon-bottom"></i></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -214,6 +218,9 @@ export default {
 
         download(e){
             window.open(this.$baseURL+"personal/download?id="+e.id,'_blank');
+        },
+        downloadtsa(e){
+            window.open(this.$baseURL+"personal/downloadtsa?id="+e.id,'_blank');
         }
     }
 };
