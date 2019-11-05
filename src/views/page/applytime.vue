@@ -9,7 +9,7 @@
                 label-width="100px"
                 class="demo-ruleForm"
             >
-                <el-form-item label="作品をアップロードします:" prop="fileName" label-width="130px">
+                <el-form-item label="ファイル選択:" prop="fileName" label-width="130px">
                     <el-input style="display:none" type="hidden" v-model="applyForm.fileName"></el-input>
                     <div class="">
                         <div :class="uploadborder?'uploadwrap uploadborder':'uploadwrap'" v-if="!filename">
@@ -77,7 +77,7 @@
         </div>
 
         <el-dialog
-            title="プレビュー確認情報"
+            title="タイムスタンプを申請する > 確認画面"
             :visible.sync="confirm"
             width="35%"
             top="10vh"
@@ -120,8 +120,8 @@
                 <dd>{{applyForm.workSpec}}</dd>
             </dl>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="confirm = false">キャンセルする</el-button>
-                <el-button type="primary" @click="submit()">決定する</el-button>
+                <el-button @click="confirm = false">修正する</el-button>
+                <el-button type="primary" @click="submit()">申請を確定する</el-button>
             </span>
         </el-dialog>
         <el-dialog

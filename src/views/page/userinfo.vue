@@ -7,13 +7,13 @@
                 <ul>
                     <li>
                         <dl>
-                            <dt>有効期間から停止時間</dt>
+                            <dt>有効期間</dt>
                             <dd>{{userinfo.createTime}} 至 {{userinfo.expireTime}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>アカウント</dt>
+                            <dt>ユーザID</dt>
                             <dd>{{loginCode}}</dd>
                         </dl>
                     </li>
@@ -25,25 +25,25 @@
                     </li>
                     <li>
                         <dl>
-                            <dt>証明書の種類</dt>
+                            <dt>識別情報</dt>
                             <dd>{{identityType}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>証明書番号</dt>
+                            <dt>会社法人等番号</dt>
                             <dd>{{userinfo.identityId}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>連絡先</dt>
+                            <dt>申請者</dt>
                             <dd>{{userinfo.contactName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>連絡先メールアドレス</dt>
+                            <dt>申請者連絡先アドレス</dt>
                             <dd>{{userinfo.contactEmail}}</dd>
                         </dl>
                     </li>
@@ -55,7 +55,7 @@
             <div class="account-num">
                 <ul>
                     <li>
-                        <p class="font">信頼されたタイムスタンプの使用回数</p>
+                        <p class="font">タイムスタンプ累積使用件数</p>
                         <p class="num">
                             <span>
                                 <strong v-if="currentCount">{{currentCount}}</strong>
@@ -65,7 +65,7 @@
                         </p>
                     </li>
                     <li>
-                        <p class="font">今月の信頼できるタイムスタンプの使用回数</p>
+                        <p class="font">タイムスタンプ当月使用件数</p>
                         <p class="num">
                             <span>
                                 <strong>{{userinfo.monthCount}}</strong>次
@@ -82,7 +82,7 @@
                         v-model="startTime"
                         @change="dateStart"
                         type="date"
-                        placeholder="開始時間"
+                        placeholder="起算日"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                     ></el-date-picker>
@@ -92,11 +92,11 @@
                         v-model="endTime"
                         @change="dateEnd"
                         type="date"
-                        placeholder="終了時間"
+                        placeholder="終結日"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                     ></el-date-picker>
-                    <el-button @click="selectfifter()" type="primary" style="margin-left:50px;">クエリー</el-button>
+                    <el-button @click="selectfifter()" type="primary" style="margin-left:50px;">照会</el-button>
                 </div>
             </div>
             <div v-show="ishow">

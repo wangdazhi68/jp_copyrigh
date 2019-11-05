@@ -45,9 +45,9 @@ service.interceptors.response.use(
             if (response.data.code == -2) {
                 store.commit('setuserinfo', '')
                 localStorage.removeItem('userinfo')
-                if (router.currentRoute.fullPath !== '/page/index') {
+                if (router.currentRoute.fullPath !== '/page/login') {
                     router.replace({
-                        path: '/page/index',
+                        path: '/page/login',
                         query: { redirect: router.currentRoute.fullPath }
                     })
                 }

@@ -54,7 +54,7 @@
             </div>
         </div>
         <el-dialog
-            title="ログイン"
+            title="パスワードを忘れた方はこちら"
             :visible.sync="forget"
             width="60%"
             top="10vh"
@@ -263,7 +263,7 @@ export default {
                 },
                 url:'/register/validate',
             }).then((res) => {
-                //console.log(res);
+                console.log(res);
                 if(res.data.code==0){
                    that.$message.error('アカウントが存在しません');
                    ison=false;

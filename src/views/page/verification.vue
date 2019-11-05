@@ -23,7 +23,7 @@
             <dl>
                 <dt>&nbsp;</dt>
                 <dd>
-                    <p class="btn"><span @click="check">検証タイムスタンプ</span></p>
+                    <p class="btn"><span @click="check">タイムスタンプを認証する</span></p>
                     <!-- <p class="link"><b>タイムスタンプ証明書をダウンロード</b></p> -->
                 </dd>
             </dl>
@@ -93,11 +93,11 @@ export default {
         },
         check(){
             if(!this.fileName[0]){
-               this.$message.error('確認するファイルを選択してください');
+               this.$message.error('認証するファイルを選択してください');
                return false;
             }
             if(!this.tsa[0]){
-                this.$message.error('タイムスタンプファイルを選択してください');
+                this.$message.error('認証証書を選択してください');
                 return false;
             }
             let that=this;
