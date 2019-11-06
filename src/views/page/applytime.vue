@@ -31,7 +31,7 @@
                                 <img src="@/assets/images/file-icon.png" alt />
                                 <a class="close" title="删除" @click="delfile()">×</a>
                             </div>
-                            <p>
+                            <p class="file-name">
                                {{filename}}
                             </p>
                         </div>
@@ -527,6 +527,12 @@ export default {
     width: 243px;
     z-index: 999;
     cursor: pointer;
+}
+.file-name{
+    width:100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .uploadwrap .add{
     margin-top:20px;

@@ -158,6 +158,7 @@ export default {
 }
 .form dd{
 	float: left;
+    position: relative;
 }
 .upfile{
 	width:298px;
@@ -165,9 +166,11 @@ export default {
     line-height: 38px;
 	background:#fff;
 	border: 1px solid #EBEBEB;
-    display: none;
     position: absolute;
-
+    opacity: 0;
+    top:0;
+    left:0;
+    z-index: 2;
 }
 .lookipt{
 	width:298px;
