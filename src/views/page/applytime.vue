@@ -440,6 +440,7 @@ export default {
         
         submit(){
             //console.log(this.fil);
+            this.formData= new FormData();
             this.formData.append('fileName', this.fil[0]);
             this.formData.append('workName', this.applyForm.workName);
             //this.formData.append('workNature', this.applyForm.workNature);
@@ -476,6 +477,9 @@ export default {
             }).catch((err) => {
                 this.$message.error('送信に失敗しました。更新してもう一度お試しください');
                 console.log(err);
+                that.$nextTick(() => {
+                    loadingInstance.close();
+                });
             })
         }
     }

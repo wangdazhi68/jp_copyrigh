@@ -13,10 +13,10 @@
             </dl>
             <dl>
                 <!-- 选择时间戳证书 -->
-                <dt>認証証書（*.tsa）：</dt>
+                <dt>タイムスタンプトークン:</dt>
                 <dd>
                     <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo">
-                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="認証証書を選択してください">
+                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="タイムスタンプトークンを選択またはドラッグ">
                     <span class="choosebtn" @click="$refs.filetwo.click()">ファイルを選択する</span>
                 </dd>
             </dl>
@@ -32,7 +32,7 @@
             <h4>注意事項</h4>
             <div class="prompt">
                 1、タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。<br>
-                2、タイムスタンプ証書（トークンファイル）は「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。<br>
+                2、タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。<br>
                 3、タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。        
             </div>
         </div>
@@ -96,7 +96,7 @@ export default {
         },
         check(){
             if(!this.fileName[0]){
-               this.$message.error('確認するファイルを選択してください');
+               this.$message.error('認証する資料を選択してください');
                return false;
             }
             if(!this.tsa[0]){
