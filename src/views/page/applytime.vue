@@ -279,9 +279,9 @@ export default {
             applyForm: {
                 fileName:'',
                 workName: '',
-                workNature: '',
-                creationType: '',
-                workType: '',
+                //workNature: '',
+                //creationType: '',
+                //workType: '',
                 workSpec: '',
             },
             applyrules: {
@@ -442,9 +442,9 @@ export default {
             //console.log(this.fil);
             this.formData.append('fileName', this.fil[0]);
             this.formData.append('workName', this.applyForm.workName);
-            this.formData.append('workNature', this.applyForm.workNature);
-            this.formData.append('creationType', this.applyForm.creationType);
-            this.formData.append('workType', this.applyForm.workType);
+            //this.formData.append('workNature', this.applyForm.workNature);
+            //this.formData.append('creationType', this.applyForm.creationType);
+            //this.formData.append('workType', this.applyForm.workType);
             this.formData.append('workSpec', this.applyForm.workSpec);
             let loadingInstance = Loading.service();
             var that=this;
@@ -471,6 +471,7 @@ export default {
                     })
                 }else{
                     this.$message.error('送信に失敗しました。更新してもう一度お試しください');
+                    console.log('请求成功，返回出错')
                 }
             }).catch((err) => {
                 this.$message.error('送信に失敗しました。更新してもう一度お試しください');
