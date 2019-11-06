@@ -4,7 +4,7 @@
       <div class="success-top">
           <div class="pic-ico">
               <img src="@/assets/images/success-icon.png" alt="">
-              <p>成功したアプリケーション</p>
+              <p>申請が完了しました</p>
           </div>
           <div class="btnlink">
               <p><span @click="lookpdf(id)">タイムスタンプ認証証書を表示する</span></p>

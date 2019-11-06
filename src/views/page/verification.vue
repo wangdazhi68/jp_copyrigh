@@ -67,9 +67,11 @@ export default {
         addone(){
             let inputDOM = this.$refs.fileone;
             this.fileName=inputDOM.files;
-            let size = Math.floor(this.fileName[0].size / 1024);
+            let size = Math.floor(this.fileName[0].size);
             if(size > 10 * 1024 * 1024){
+                
                 this.$message.error("10M以内のファイルを選択してください！");
+                this.fileName={};
                 return false;
             }
             this.name1 = inputDOM.files[0].name;
@@ -84,9 +86,10 @@ export default {
                this.$message.error("拡張子がtsaのファイルを選択してください！");
                 return false; 
             }
-            let size = Math.floor(this.tsa[0].size / 1024);
+            let size = Math.floor(this.tsa[0].size);
             if(size > 10 * 1024 * 1024){
                 this.$message.error("10M以内のファイルを選択してください！");
+                this.tsa={};
                 return false;
             }
             this.name2 = inputDOM.files[0].name;
@@ -98,6 +101,11 @@ export default {
             }
             if(!this.tsa[0]){
                 this.$message.error('タイムスタンプファイルを選択してください');
+                return false;
+            }
+            let size1 = Math.floor(this.fileName[0].size);
+            if(size1 > 10 * 1024 * 1024){
+                this.$message.error("10M以内のファイルを選択してください！");
                 return false;
             }
             let that=this;

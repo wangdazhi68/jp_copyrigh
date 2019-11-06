@@ -12,7 +12,7 @@
                         <span v-if="loginstate"  class="login" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
                         <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
-                        <span v-if="loginstate" class="logout" @click="logout()">出口</span>
+                        <span v-if="loginstate" class="logout" @click="logout()">ログオフ</span>
                     </div>
                 </div>
             </div>
@@ -240,7 +240,7 @@
         <el-dialog
             title="使用のお申し込み"
             :visible.sync="apply"
-            width="60%"
+            width="80%"
             top="10vh"
             :modal-append-to-body="false"
             >
@@ -587,6 +587,7 @@ export default {
     float:right;
     color:#fff;
     font-size: 20px;
+    
 }
 .login{
     cursor: pointer;

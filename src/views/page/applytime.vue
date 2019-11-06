@@ -23,7 +23,7 @@
                                 <img src="@/assets/images/uploadbtn.png" alt />
                             </div>
                             <p>
-                                作品をアップロードする
+                                資料選択
                             </p>
                         </div>
                         <div class="uploadwrap" v-else>
@@ -77,14 +77,14 @@
         </div>
 
         <el-dialog
-            title="プレビュー確認情報"
+            title="申請情報の確認"
             :visible.sync="confirm"
             width="35%"
             top="10vh"
             :modal-append-to-body='false'
             >
             <dl class="dl">
-                <dt>作品：</dt>
+                <dt>資料：</dt>
                 <dd>{{filename}}</dd>
             </dl>
             <dl class="dl">
@@ -121,7 +121,7 @@
             </dl>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="confirm = false">キャンセルする</el-button>
-                <el-button type="primary" @click="submit()">決定する</el-button>
+                <el-button type="primary" @click="submit()">申請する</el-button>
             </span>
         </el-dialog>
         <el-dialog
@@ -289,11 +289,11 @@ export default {
                     { required: true, message: '作品をアップロードしてください', trigger: 'change' }
                 ],
                 workName: [
-                    { required: true, message: '作品の名前を入力してください', trigger: 'blur' },
+                    { required: true, message: '資料の名称を入力してください', trigger: 'blur' },
                     { min: 1, max: 50, message: '3〜50文字の長さ', trigger: 'blur' }
                 ],
                 workSpec: [
-                    { required: true, message: '作品の説明を入力してください', trigger: 'blur' },
+                    { required: true, message: '資料の説明を入力してください', trigger: 'blur' },
                     { min: 3, max: 350, message: '3〜350文字の長さ', trigger: 'blur' }
                 ]
                
@@ -329,7 +329,7 @@ export default {
         identityType(){
              switch(this.certificateType){
                  case '101':
-                    return '身份证'
+                    return '会社法人等番号'
                     break;
                 case '102':
                     return '军官证'
@@ -377,9 +377,10 @@ export default {
         addfile(){
             let inputDOM = this.$refs.inputer;
             this.fil=inputDOM.files
-            let size = Math.floor(this.fil[0].size / 1024);
+            let size = Math.floor(this.fil[0].size);
             if(size > 10 * 1024 * 1024){
                 alert("10M以内の画像を選択してください！");
+                this.fil={};
                 return false;
             }
             this.filename = inputDOM.files[0].name;
