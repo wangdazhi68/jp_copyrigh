@@ -9,7 +9,7 @@
                 label-width="100px"
                 class="demo-ruleForm"
             >
-                <el-form-item label="作品をアップロードします:" prop="fileName" label-width="130px">
+                <el-form-item label="対象資料:" prop="fileName" label-width="130px">
                     <el-input style="display:none" type="hidden" v-model="applyForm.fileName"></el-input>
                     <div class="">
                         <div :class="uploadborder?'uploadwrap uploadborder':'uploadwrap'" v-if="!filename">
@@ -23,7 +23,7 @@
                                 <img src="@/assets/images/uploadbtn.png" alt />
                             </div>
                             <p>
-                                資料選択
+                                資料を選択またはドラッグ
                             </p>
                         </div>
                         <div class="uploadwrap" v-else>
@@ -79,7 +79,7 @@
         <el-dialog
             title="申請情報の確認"
             :visible.sync="confirm"
-            width="35%"
+            width="40%"
             top="10vh"
             :modal-append-to-body='false'
             >
@@ -286,7 +286,7 @@ export default {
             },
             applyrules: {
                 fileName:[
-                    { required: true, message: '作品をアップロードしてください', trigger: 'change' }
+                    { required: true, message: '資料を選択してください', trigger: 'change' }
                 ],
                 workName: [
                     { required: true, message: '資料の名称を入力してください', trigger: 'blur' },
@@ -551,7 +551,7 @@ export default {
 }
 .dl dt{
     float: left;
-    width:35%;
+    width:38%;
     text-align: right;
     margin-bottom: 20px;
     opacity: 0.6;

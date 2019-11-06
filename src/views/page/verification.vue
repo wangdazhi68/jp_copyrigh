@@ -4,10 +4,10 @@
         <div class="form">
             <dl>
                 <!-- 选择需要验证的文件 -->
-                <dt>認証対象ファイル：</dt>
+                <dt>認証対象資料：</dt>
                 <dd>
                     <input type="file" ref="fileone" name="" class="upfile" @change="addone">
-                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="認証するファイルを選択してください">
+                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="認証する資料を選択またはドラッグ">
                     <span class="choosebtn" @click="$refs.fileone.click()">ファイルを選択する</span>
                 </dd>
             </dl>
@@ -23,7 +23,7 @@
             <dl>
                 <dt>&nbsp;</dt>
                 <dd>
-                    <p class="btn"><span @click="check">検証タイムスタンプ</span></p>
+                    <p class="btn"><span @click="check">認証する</span></p>
                     <!-- <p class="link"><b>タイムスタンプ証明書をダウンロード</b></p> -->
                 </dd>
             </dl>
@@ -70,7 +70,7 @@ export default {
             let size = Math.floor(this.fileName[0].size);
             if(size > 10 * 1024 * 1024){
                 
-                this.$message.error("10M以内のファイルを選択してください！");
+                this.$message.error("資料のサイズが10MBを超えています");
                 this.fileName={};
                 return false;
             }
@@ -83,12 +83,12 @@ export default {
             let spl = fname.split(".");
             let suffix=spl[spl.length-1];
             if(suffix!='tsa'){
-               this.$message.error("拡張子がtsaのファイルを選択してください！");
+               this.$message.error("拡張子が.tsaのファイルを選択してください");
                 return false; 
             }
             let size = Math.floor(this.tsa[0].size);
             if(size > 10 * 1024 * 1024){
-                this.$message.error("10M以内のファイルを選択してください！");
+                this.$message.error("資料のサイズが10MBを超えています");
                 this.tsa={};
                 return false;
             }
@@ -105,7 +105,7 @@ export default {
             }
             let size1 = Math.floor(this.fileName[0].size);
             if(size1 > 10 * 1024 * 1024){
-                this.$message.error("10M以内のファイルを選択してください！");
+                this.$message.error("資料のサイズが10MBを超えています");
                 return false;
             }
             let that=this;

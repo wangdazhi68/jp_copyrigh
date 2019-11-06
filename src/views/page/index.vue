@@ -9,7 +9,7 @@
                     </div>
                     <div class="userinfo">
                         <span class="apply" @click="applyuse()">使用のお申し込み</span>
-                        <span v-if="loginstate"  class="login" @click="$router.push({name:'index'})">{{loginCode}}</span>
+                        <span v-if="loginstate"  class="login logincode" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
                         <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
                         <span v-if="loginstate" class="logout" @click="logout()">ログオフ</span>
@@ -210,7 +210,7 @@
                         <!-- <span class="forget">忘记密码？</span> -->
                     </li>
                     <li>
-                        <input class="pwd" type="text" v-model="yzm" placeholder="グラフィック検証コード" />
+                        <input class="pwd" type="text" v-model="yzm" placeholder="検証コード" />
                         <span class="yzmpic" @click="refreshCode">
                             <s-identify :identifyCode="identifyCode"></s-identify>
                         </span>
@@ -225,13 +225,13 @@
                 </div>
                 <div class="error-ts">
                     <p>
-                        <b v-show="usererror">正しいメールボックス形式を入力してください</b>
+                        <b v-show="usererror">メールアドレスの形式が正しくありません</b>
                     </p>
                     <p>
                         <b v-show="passerror">パスワードを入力してください</b>
                     </p>
                     <p>
-                        <b v-show="yzmerror">検証コードエラー</b>
+                        <b v-show="yzmerror">検証コードが正しくありません</b>
                     </p>
                 </div>
             </div>
@@ -591,6 +591,9 @@ export default {
 }
 .login{
     cursor: pointer;
+}
+.logincode{
+    font-size: 16px;
 }
 .login:hover,.logout:hover{
     color:blue
