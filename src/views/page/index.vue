@@ -587,13 +587,18 @@ export default {
     float:right;
     color:#fff;
     font-size: 20px;
-    
 }
 .login{
     cursor: pointer;
 }
 .logincode{
     font-size: 16px;
+    width:145px;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .login:hover,.logout:hover{
     color:blue
