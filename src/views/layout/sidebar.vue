@@ -4,7 +4,7 @@
             <div class="nav-header">
                 <img src="@/assets/images/nav-header.png" alt="">
             </div>
-            <ul>
+            <ul ref="sideHeight">
                 <template v-for="(item, index) in nav" >
                 <li v-if="item.child" @click="routerLink(index, item.path)" :key="index" :class="activeNav === item.path || activeNav=== item.child[0].path?'active':''">{{ item.title }}</li>
 
@@ -45,7 +45,7 @@ export default {
                     path:"/page/verification",
                     child:[
                         {
-                            title:"验证时间戳",
+                            title:"タイムスタンプを認証する",
                             path:"/page/verificatresult" 
                         }
                     ]
@@ -66,9 +66,13 @@ export default {
         }
     },
 
-    created() {},
+    created() {
 
-    mounted() {},
+    },
+
+    mounted() {
+       
+    },
 
     methods: {
         routerLink(index, path) {
@@ -94,8 +98,9 @@ export default {
 .nav ul{
     box-shadow:0px 4px 10px 0px rgba(210,223,255,0.5);
     border-radius:8px;
-    min-height: 712px;
+    /* min-height: 712px; */
     background:#fff;
+    padding-bottom:100px; 
 }
 .nav li{
     width: 100%;

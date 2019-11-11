@@ -4,26 +4,32 @@
         <div class="form">
             <dl>
                 <!-- 选择需要验证的文件 -->
-                <dt>認証対象ファイル：</dt>
+                <dt>認証対象資料：</dt>
                 <dd>
-                    <input type="file" ref="fileone" name="" class="upfile" @change="addone">
-                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="認証するファイルを選択してください">
+                    <input type="file" ref="fileone" name="" class="upfile" @change="addone"
+                    @drop="drop($event)"
+                    @dragover="allowDrop($event)"
+                    >
+                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="認証する資料を選択またはドラッグ">
                     <span class="choosebtn" @click="$refs.fileone.click()">ファイルを選択する</span>
                 </dd>
             </dl>
             <dl>
                 <!-- 选择时间戳证书 -->
-                <dt>認証証書（*.tsa）：</dt>
+                <dt>タイムスタンプトークン:</dt>
                 <dd>
-                    <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo">
-                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="認証証書を選択してください">
+                    <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo"
+                    @drop="droptwo($event)"
+                    @dragover="allowDroptwo($event)"
+                    >
+                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="タイムスタンプトークンを選択またはドラッグ">
                     <span class="choosebtn" @click="$refs.filetwo.click()">ファイルを選択する</span>
                 </dd>
             </dl>
             <dl>
                 <dt>&nbsp;</dt>
                 <dd>
-                    <p class="btn"><span @click="check">タイムスタンプを認証する</span></p>
+                    <p class="btn"><span @click="check">認証する</span></p>
                     <!-- <p class="link"><b>タイムスタンプ証明書をダウンロード</b></p> -->
                 </dd>
             </dl>
@@ -32,14 +38,25 @@
             <h4>注意事項</h4>
             <div class="prompt">
                 1、タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。<br>
-                2、タイムスタンプ証書（トークンファイル）は「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。<br>
+                2、タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。<br>
                 3、タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。        
+            </div>
+        </div>
+        <div class="zhe" v-if="zhe">
+            <div class="progress">
+                <el-progress type="circle" :percentage="percentage"  ></el-progress>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Loading } from "element-ui";
+import CryptoJS from "crypto-js";
+import { arrayBufferToWordArray, swapendian32 } from "@/assets/js/buffer";
+var pos=0;
+var chunkSize =204800; //409600;//204800;
+var lastprogress = 0;
 export default {
     data() {
         return {
@@ -48,6 +65,11 @@ export default {
             name1:'',
             name2:'',
             formData: new FormData(),
+            zhe:false,
+            sha1:'',
+            sha256:'',
+            zhe:false,
+            percentage:0,
         };
     },
 
@@ -67,12 +89,71 @@ export default {
         addone(){
             let inputDOM = this.$refs.fileone;
             this.fileName=inputDOM.files;
-            let size = Math.floor(this.fileName[0].size / 1024);
-            if(size > 10 * 1024 * 1024){
-                this.$message.error("10M以内のファイルを選択してください！");
-                return false;
-            }
+            // let size = Math.floor(this.fileName[0].size);
+            // if(size > 10 * 1024 * 1024){
+                
+            //     this.$message.error("資料のサイズが10MBを超えています");
+            //     this.fileName={};
+            //     return false;
+            // }
             this.name1 = inputDOM.files[0].name;
+            this.zhe=true;
+            this.progressiveRead(this.fileName[0]);
+        },
+        drop(e) {
+            e.preventDefault();
+            let dt = e.dataTransfer;
+            let files = dt.files;
+            this.fileName = files;
+            this.name1 =files[0].name;
+            this.zhe=true;
+            this.progressiveRead(files[0]);
+        },
+        allowDrop(e) {
+            e.preventDefault();
+        },
+        progressiveReadNext(file, reader) {
+            var that = this;
+            var end = Math.min(pos + chunkSize, file.size);
+            reader.onload = function(e) {
+                pos = end;
+                var wordArray = arrayBufferToWordArray(e.target.result);
+                var sha256 = CryptoJS.algo.SHA256.create();
+                sha256.update(wordArray);
+                var sha1 = CryptoJS.algo.SHA1.create();
+                sha1.update(wordArray);
+                var progress = Math.floor((pos / file.size) * 100);
+                 
+                if (progress > lastprogress) {
+                    //console.log(progress)
+                    that.percentage = progress;
+                    lastprogress = progress;
+                }
+                if (pos < file.size) {
+                    setTimeout(that.progressiveReadNext(file, reader), 0);
+                } else {
+                    that.sha1=sha1.finalize().toString().toUpperCase();
+                    that.sha256=sha256.finalize().toString().toUpperCase();
+                    setTimeout(function(){
+                        that.zhe=false;
+                        that.percentage=0;
+                    },1000)
+                }
+            };
+            if (file.slice) {
+                var blob = file.slice(pos, end);
+            } else if (file.webkitSlice) {
+                var blob = file.webkitSlice(pos, end);
+            }
+            reader.readAsArrayBuffer(blob);
+        },
+        progressiveRead(file) {
+            // 20KiB at a time
+            pos=0;
+            chunkSize =204800; //409600;//204800;
+            lastprogress = 0;
+            let reader= new FileReader();
+            setTimeout(this.progressiveReadNext(file, reader), 0);
         },
         addtwo(){
             let inputDOM = this.$refs.filetwo;
@@ -81,28 +162,63 @@ export default {
             let spl = fname.split(".");
             let suffix=spl[spl.length-1];
             if(suffix!='tsa'){
-               this.$message.error("拡張子がtsaのファイルを選択してください！");
+               this.$message.error("拡張子が.tsaのファイルを選択してください");
                 return false; 
             }
-            let size = Math.floor(this.tsa[0].size / 1024);
+            let size = Math.floor(this.tsa[0].size);
             if(size > 10 * 1024 * 1024){
-                this.$message.error("10M以内のファイルを選択してください！");
+                this.$message.error("資料のサイズが10MBを超えています");
+                this.tsa={};
                 return false;
             }
             this.name2 = inputDOM.files[0].name;
         },
+        droptwo(e) {
+            let that = this;
+            e.preventDefault();
+            let dt = e.dataTransfer;
+            let files = dt.files;
+            that.tsa = files;
+            let fname = files[0].name;
+            let spl = fname.split(".");
+            let suffix=spl[spl.length-1];
+            if(suffix!='tsa'){
+               this.$message.error("拡張子が.tsaのファイルを選択してください");
+                return false; 
+            }
+            let size = Math.floor(this.tsa[0].size);
+            if(size > 10 * 1024 * 1024){
+                this.$message.error("資料のサイズが10MBを超えています");
+                this.tsa={};
+                return false;
+            }
+            this.name2 = files[0].name;
+        },
+        allowDroptwo(e) {
+            e.preventDefault();
+        },
         check(){
+            this.formData = new FormData();
+            console.log(this.fileName)
             if(!this.fileName[0]){
-               this.$message.error('認証するファイルを選択してください');
+               this.$message.error('認証する資料を選択してください');
                return false;
             }
             if(!this.tsa[0]){
                 this.$message.error('認証証書を選択してください');
                 return false;
             }
+            // let size1 = Math.floor(this.fileName[0].size);
+            // if(size1 > 10 * 1024 * 1024){
+            //     this.$message.error("資料のサイズが10MBを超えています");
+            //     return false;
+            // }
             let that=this;
-            this.formData.append('fileName', this.fileName[0]);
+            this.formData.append('originalFileName', this.fileName[0].name);
             this.formData.append('tsa', this.tsa[0]);
+            this.formData.append("hashCode", this.sha1);
+            this.formData.append("hashCode256", this.sha256);
+            let loadingInstance = Loading.service();
             that.$request({
                 method:'post',
                 headers:{
@@ -111,6 +227,9 @@ export default {
                 data:this.formData,
                 url:'/personal/timestampVerify',
             }).then((res) => {
+                that.$nextTick(() => {
+                        loadingInstance.close();
+                    });
                 console.log(res);
                 that.$router.push({
                     name:"verificatresult",
@@ -118,6 +237,9 @@ export default {
                 })
             }).catch((err) => {
                 console.log(err);
+                that.$nextTick(() => {
+                        loadingInstance.close();
+                    });
                 this.$message.error(err);
             })
         }
@@ -150,6 +272,7 @@ export default {
 }
 .form dd{
 	float: left;
+    position: relative;
 }
 .upfile{
 	width:298px;
@@ -157,9 +280,11 @@ export default {
     line-height: 38px;
 	background:#fff;
 	border: 1px solid #EBEBEB;
-    display: none;
     position: absolute;
-
+    opacity: 0;
+    top:0;
+    left:0;
+    z-index: 2;
 }
 .lookipt{
 	width:298px;
@@ -233,5 +358,31 @@ export default {
     font-size: 14px;
     padding:0 10px;
     padding-top:30px; 
+}
+.zhe{
+    background:rgba(0,0,0,.5);
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+}
+.zhe .progress{
+    position: fixed;
+    width:126px;
+    height: 126px;
+    top:0;
+    bottom:0;
+    left:0;
+    right: 0;
+    margin: auto;
+    z-index: 999;
+}
+</style>
+<style>
+.el-progress__text{
+    color:#fff;
+    font-weight: bold;
 }
 </style>

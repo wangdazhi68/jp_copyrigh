@@ -12,6 +12,7 @@ const service = axios.create({
         // transformRequest: [function (data) {
         //     return qs.stringify(data);
         // }],
+        async: false,
         headers: {
             //'token': '',
             //'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'

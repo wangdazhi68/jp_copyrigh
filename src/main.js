@@ -12,8 +12,6 @@ import ElementUI from 'element-ui';
 
 Vue.prototype.Clipboard = Clipboard;
 Vue.prototype.$request = request;
-// Vue.prototype.$http = 'http://192.168.50.194:8080/';
-// Vue.prototype.$baseURL = 'http://192.168.50.144:8080/'
 Vue.prototype.$http = process.env.VUE_APP_BASEURL;
 Vue.prototype.$baseURL = process.env.VUE_APP_APIURL + '/' //'http://192.168.50.144:8080/'
 Vue.config.productionTip = false

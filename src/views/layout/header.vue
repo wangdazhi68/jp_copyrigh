@@ -6,9 +6,9 @@
             </div>
             <div class="userinfo">
                 <span class="account">{{loginCode}}</span>
-                <span class="epwd" @click="epwd()">パスワードを変更する</span>
+                <span class="epwd" @click="epwd()">パスワードを変更する+</span>
                 <b class="sline">|</b>
-                <span class="logout" @click="logout()">出口</span>
+                <span class="logout" @click="logout()">ログオフ</span>
             </div>
         </div>
         <el-dialog

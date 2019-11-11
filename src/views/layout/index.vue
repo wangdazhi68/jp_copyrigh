@@ -5,8 +5,8 @@
             <img src="@/assets/images/banner.png" alt="banner">
         </div>
         <div class="section">
-            <Sidebar />
-            <Content />
+            <Sidebar ref="sidebar"/>
+            <Content ref="ContentHeight"/>
         </div>
     </div>
 </template>
@@ -28,9 +28,13 @@ export default {
 
     computed: {},
 
-    created() {},
+    created() {
 
-    mounted() {},
+    },
+
+    mounted() {
+        
+    },
 
     methods: {}
 };

@@ -9,10 +9,10 @@
                     </div>
                     <div class="userinfo">
                         <span class="apply" @click="applyuse()">使用のお申し込み</span>
-                        <span v-if="loginstate"  class="login" @click="$router.push({name:'index'})">{{loginCode}}</span>
+                        <span v-if="loginstate"  class="login logincode" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
                         <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
-                        <span v-if="loginstate" class="logout" @click="logout()">出口</span>
+                        <span v-if="loginstate" class="logout" @click="logout()">ログオフ</span>
                     </div>
                 </div>
             </div>
@@ -210,13 +210,13 @@
                         <!-- <span class="forget">忘记密码？</span> -->
                     </li>
                     <li>
-                        <input class="pwd" type="text" v-model="yzm" placeholder="グラフィック検証コード" />
+                        <input class="pwd" type="text" v-model="yzm" placeholder="検証コード" />
                         <span class="yzmpic" @click="refreshCode">
                             <s-identify :identifyCode="identifyCode"></s-identify>
                         </span>
                     </li>
                 </ul>
-                <div class="forget-wrap"><span class="forget" @click="forgetpwd()">パスワードを忘れた方はこちら</span></div>
+                <div class="forget-wrap"><span class="forget">パスワードを忘れた方はこちら</span></div>
                 <div class="btns">
                     <p>
                         <span class="lgbtn" @click="loginto()">ログイン</span>
@@ -225,13 +225,13 @@
                 </div>
                 <div class="error-ts">
                     <p>
-                        <b v-show="usererror">正しいメールボックス形式を入力してください</b>
+                        <b v-show="usererror">メールアドレスの形式が正しくありません</b>
                     </p>
                     <p>
                         <b v-show="passerror">パスワードを入力してください</b>
                     </p>
                     <p>
-                        <b v-show="yzmerror">検証コードエラー</b>
+                        <b v-show="yzmerror">検証コードが正しくありません</b>
                     </p>
                 </div>
             </div>
@@ -240,7 +240,7 @@
         <el-dialog
             title="使用のお申し込み"
             :visible.sync="apply"
-            width="60%"
+            width="80%"
             top="10vh"
             :modal-append-to-body="false"
             >
@@ -528,7 +528,7 @@ export default {
                 headers:{
                     'content-type': "application/json;charset=UTF-8"
                 },
-                url:'/login/signOn?lang=ja_JP',
+                url:'login/signOn?lang=ja_JP',
             }).then((res) => {
                 console.log(res);
                 that.$nextTick(() => { 
@@ -794,6 +794,15 @@ export default {
 .login{
     cursor: pointer;
 }
+.logincode{
+    font-size: 16px;
+    width:145px;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .login:hover,.logout:hover{
     color:blue
 }
@@ -819,6 +828,7 @@ export default {
     padding-top: 100px;
     width:100%;
     max-width: 1920px;
+    margin:0 auto;
     height:600px;
     background-size: cover;
     background-position: center;

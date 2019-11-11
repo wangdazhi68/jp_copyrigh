@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wrap" ref="ContentHeight">
         <div class="content">
             <router-view></router-view>
         </div>  
@@ -9,7 +9,9 @@
 <script>
 export default {
     data() {
-        return {};
+        return {
+            contentHeight:0,
+        };
     },
 
     components: {},
@@ -18,7 +20,9 @@ export default {
 
     created() {},
 
-    mounted() {},
+    mounted() {
+        
+    },
 
     methods: {}
 };

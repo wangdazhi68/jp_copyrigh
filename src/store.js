@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         userinfo: {},
-        userdetail: null
+        userdetail: null,
     },
     mutations: {
         setuserinfo(state, userinfo) {
