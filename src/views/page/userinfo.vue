@@ -35,7 +35,7 @@
                             <dd>{{userinfo.identityId}}</dd>
                         </dl>
                     </li>
-                    <li>
+                    <!-- <li>
                         <dl>
                             <dt>申請者</dt>
                             <dd>{{userinfo.contactName}}</dd>
@@ -46,7 +46,7 @@
                             <dt>申請者連絡先アドレス</dt>
                             <dd>{{userinfo.contactEmail}}</dd>
                         </dl>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

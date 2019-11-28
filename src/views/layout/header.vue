@@ -109,9 +109,6 @@ export default {
 
     methods: {
         logout() {
-            this.$store.commit("setuserinfo", "");
-            localStorage.removeItem("userinfo");
-            this.$router.replace({ name: "login" });
             this.loginstate = false;
             var that = this;
             that.$request({
@@ -122,11 +119,18 @@ export default {
                 url: "/login/logout"
             })
                 .then(res => {
+                    that.$store.commit("setuserinfo", "");
+                    localStorage.removeItem("userinfo");
+                    that.$router.replace({ name: "lgindex" });
                     return true;
                 })
                 .catch(err => {
                     console.log(err);
+                    that.$store.commit("setuserinfo", "");
+                    localStorage.removeItem("userinfo");
+                    that.$router.replace({ name: "lgindex" });
                 });
+            
         },
         epwd(){
             this.edipwd=true;

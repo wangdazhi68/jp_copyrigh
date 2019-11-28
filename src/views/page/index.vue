@@ -5,10 +5,10 @@
                 <div class="header-cnt">
                     <div class="logo-index">
                         <img src="@/assets/images/logo1.png" alt="联合信任" />
-                        <span>信頼できるタイムスタンプの知的財産保護プラットフォーム</span>
+                        <span>トラステッド・タイムスタンプ知的財産保護システム</span>
                     </div>
                     <div class="userinfo">
-                        <span class="apply" @click="applyuse()">使用のお申し込み</span>
+                        <span class="apply" @click="applyuse()">新規利用申込</span>
                         <span v-if="loginstate"  class="login logincode" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
                         <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
@@ -21,29 +21,29 @@
                     <div class="des-cnt" v-show="curactive==1">
                         <h3>トラステッドタイムスタンプ®知的財産保護センター（日本局）</h3>
                         <p>
-                            Trusted Timestamp知的財産保護プラットフォームは、Trusted TrustedTimestamp®知的財産保護センターが日本企業の知的財産保護に対する意識を高め、企業の著作権保護能力を高めるために構築された知的財産プラットフォームです。 プリエンプティブプルーフは、便利で高速なサービスを提供します。 このシステムは、著作権保護サービスのオンラインアプリケーションを提供し、知的財産権の効果的、迅速、即時、効果的な保護を目的として、法的に有効な「出生証明書」を提供します。
+                            トラステッド・タイムスタンプ®は北京聯合信任技術服務有限公司（Beijing UniTrust Tech Service Co., Ltd.）が提供する電子認証型タイムスタンプサービスであり、認証に利用される時間は中国の国家時刻標準機関である中国科学院国家授時センター（NTSC）の付与する中国標準時間を採用し、多くの中国の司法機関において認められた実績があります。
                         </p>
                     </div>
-                    <div class="des-cnt" v-show="curactive==2">
+                    <!-- <div class="des-cnt" v-show="curactive==2">
                         <h3>信頼できるタイムスタンプ</h3>
                         <p>
                             信頼できるタイムスタンプ（R）は、Joint Trust Time Stamp Service Centerによって発行されるe-Certであり、ソフトウェアが誰（WHO）でいつ動作するか（WHEN）どんな種類のコード（WHAT）であるかを証明します。法的に有効な電子証明書は、中国の司法省によって広く認められています。
                         </p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="des-nav">
-                    <span @click="tagbtn(1)" :class="curactive==1?'active':''" >可信时间戳知识产权保护平台</span>
-                    <span @click="tagbtn(2)" :class="curactive==2?'active':''">信頼できるタイムスタンプ</span>
+                    <span @click="tagbtn(1)" :class="curactive==1?'active':''" >トラステッド・タイムスタンプ</span>
+                    <!-- <span @click="tagbtn(2)" :class="curactive==2?'active':''">信頼できるタイムスタンプ</span> -->
                 </div>
             </div>
             <div class="apply-process">
-                <h3>アカウントプロセスに申し込む</h3>
+                <h3>アカウント作成の流れ</h3>
                 <p>
                     <img src="@/assets/images/apply-process.png" alt="">
                 </p>
             </div>
             <div class="auth-process">
-                <h3>認証プロセス</h3>
+                <h3>タイムスタンプの申請と認証の流れ</h3>
                 <ul>
                     <li>
                         <dl>
@@ -57,7 +57,7 @@
                                     <b></b>
                                 </span>
                             </dt>
-                            <dd>ログイン/登録</dd>
+                            <dd>サインイン/ログイン</dd>
                         </dl>
                     </li>
                     <li>
@@ -72,7 +72,7 @@
                                     <b></b>
                                 </span>
                             </dt>
-                            <dd>電子データ/ファイルを選択</dd>
+                            <dd>対象資料の選択</dd>
                         </dl>
                     </li>
                     <li>
@@ -87,21 +87,20 @@
                                     <b></b>
                                 </span>
                             </dt>
-                            <dd>共同信頼タイムスタ<br>
-                            ンプサービスセンター</dd>
+                            <dd>認証証書及びタイムス<br/>タンプトークンのダウンロード
+                            </dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
                             <dt><img src="@/assets/images/auth4.png" alt=""></dt>
-                            <dd>信頼できるタイムス<br>
-                            タンプ証明書を発行する</dd>
+                            <dd>対象資料及びタイムス<br/>タンプトークンによる認証</dd>
                         </dl>
                     </li>
                 </ul>
             </div>
             <div class="trait">
-                <h3>特徴</h3>
+                <h3>トラステッド・タイムスタンプの強み</h3>
                 <ul>
                     <li>
                         <dl>
@@ -109,8 +108,8 @@
                                 <img src="@/assets/images/trait1.png" alt="">
                             </dt>
                             <dd>
-                                <h5>速い</h5>
-                                <span>セカンドパス認証，インスタント認証</span>
+                                <h5>利便性</h5>
+                                <span>ログインして対象資料をドラッグ＆ドロップするだけ！</span>
                             </dd>
                         </dl>
                     </li>
@@ -120,8 +119,8 @@
                                 <img src="@/assets/images/trait2.png" alt="">
                             </dt>
                             <dd>
-                                <h5>守秘義務</h5>
-                                <span>コンテンツ情報をアップロードしないでください</span>
+                                <h5>秘匿性</h5>
+                                <span>第三者に資料の内容を開示する必要なし！</span>
                             </dd>
                         </dl>
                     </li>
@@ -131,8 +130,8 @@
                                 <img src="@/assets/images/trait3.png" alt="">
                             </dt>
                             <dd>
-                                <h5>効果的</h5>
-                                <span>直接司法認定</span>
+                                <h5>有効性</h5>
+                                <span>中国の裁判所に認められた実績が多数！</span>
                             </dd>
                         </dl>
                     </li>
@@ -142,23 +141,23 @@
                                 <img src="@/assets/images/trait4.png" alt="">
                             </dt>
                             <dd>
-                                <h5>便利な</h5>
-                                <span>ウェブページから直接認定を申請する</span>
+                                <h5>客観性</h5>
+                                <span>中国国家授時センターによる標準時刻情報を採用！</span>
                             </dd>
                         </dl>
                     </li>
                 </ul>
             </div>
             <div class="proof" :style="proofbg">
-                <h3>証拠の使用</h3>
+                <h3>トラステッド・スタンプの有効性と実績</h3>
                 <div class="proof-cnt">
                     <div :class="activeindex==2?'sec blur':'sec'">
-                        <h4>権利者から治安判事に提出された証拠には以下が含まれます。</h4>
+                        <h4>裁判所に提出する証拠は以下の者が含まれます。</h4>
                         <dl>
                             <dt>
-                                1.信頼できるタイムスタンプ認証の元のファイルを申請する<br>
-                                2.対応する信頼できるタイムスタンプ証明書（* tsa形式）<br>
-                                3.信頼できるタイムスタンプ認証証明書（* pdf形式）;
+                                1.変更がされていないトラステッド・タイムスタンプを申請した対象資料<br>
+                                2.対象資料に対応するタイムスタンプトークン（*.tsa形式）<br>
+                                3.タイムスタンプ認証証書（*.pdf形式）;
                             </dt>
                             <dd>
                                 <img src="@/assets/images/proofone.png" alt="">
@@ -166,7 +165,7 @@
                         </dl>
                     </div>
                     <div :class="activeindex==1?'sec blur':'sec'">
-                        <h4>司法および行政判決：</h4>
+                        <!-- <h4>司法および行政判決：</h4>
                         <dl>
                             <dt>
                                 www.tsa.cnの検証センターにログインして、権利所有者か <br>  
@@ -176,7 +175,10 @@
                             <dd>
                                 <img src="@/assets/images/prooftwo.png" alt="">
                             </dd>
-                        </dl>
+                        </dl> -->
+                        <div style="text-indent:1em; padding-top:55px;">
+                            2018年6月29日、杭州のインターネット法院が著作権をめぐる裁判において「当事者が提出した電子データは、電子署名、トラステッド・タイムスタンプ、ハッシュツール、ブロックチェーン等証拠収集、固定と改竄防止技術または電子証拠保管プラットホームの認証を通じ、その真実性が証明できるものについては、インターネット法院で証拠として認められる。」と表明しました。また、その表明を追認するように2018年9月7日、中国最高人民法院は「インターネット法院による事件審理に係る若干の問題に関する規定」を公布、施行し、ブロックチェーンを用いた証拠は法的効力を有すると認めています。なお、本サービスで取得したタイムスタンプが判決文に登場するケースは2017年以降、年間1,000件を上回っています。
+                        </div>
                     </div>
                 </div>
                 <div class="circle-nav">
@@ -256,26 +258,55 @@
                     :rules="applyrules"
                     ref="applyForm"
                 > 
-                    <el-form-item label="申請者名:" prop="applyer">
+                    <!-- <el-form-item label="申請者名:" prop="applyer">
                         <el-input type="text" v-model="applyForm.applyer"></el-input>
                     </el-form-item>
                     <el-form-item label="申請者の連絡先:" prop="mobile">
                         <el-input type="text" v-model="applyForm.mobile"></el-input>
-                    </el-form-item>
-                    <el-form-item label="申請者の連絡先メール:" prop="email">
-                        <el-input type="text" v-model="applyForm.email"></el-input>
-                    </el-form-item>
-                    <el-form-item label="会社名（オプション）:">
+                    </el-form-item> -->
+                    <el-form-item label="会社名:" prop="company">
                         <el-input type="text" v-model="applyForm.company"></el-input>
                     </el-form-item>
-                    <el-form-item label="産業（オプション）:">
-                        <el-input type="text" v-model="applyForm.industry"></el-input>
+                    <el-form-item label="メールアドレス:" prop="email">
+                        <el-input type="text" v-model="applyForm.email"></el-input>
                     </el-form-item>
+                    <el-form-item label="お問い合わせ内容:" prop="inqueryInfo">
+                        <el-input class="mytext" show-word-limit maxlength="100" type="textarea" v-model="applyForm.inqueryInfo"></el-input>
+                    </el-form-item>
+                    <!-- <el-form-item label="産業（オプション）:">
+                        <el-input type="text" v-model="applyForm.industry"></el-input>
+                    </el-form-item> -->
                 </el-form>
                 <div class="submit">
-                    <span @click="submit('applyForm')">適用する</span>
+                    <span @click="preview('applyForm')">適用する</span>
                 </div>
             </div>
+        </el-dialog>
+        <!-- 申请确认 -->
+        <el-dialog
+            class="confirm-dialog"
+            title="申請確認"
+            :visible.sync="confirm"
+            width="40%"
+            top="10vh"
+            :modal-append-to-body="false"
+            >
+            <dl class="dl">
+                <dt>会社名：</dt>
+                <dd>{{applyForm.company}}</dd>
+            </dl>
+            <dl class="dl">
+                <dt>メールアドレス：</dt>
+                <dd>{{applyForm.email}}</dd>
+            </dl>
+            <dl class="dl">
+                <dt>お問い合わせ内容：</dt>
+                <dd>{{applyForm.inqueryInfo}}</dd>
+            </dl>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="confirm = false">キャンセルする</el-button>
+                <el-button type="primary" @click="submit()">申請する</el-button>
+            </span>
         </el-dialog>
         <!-- 忘记密码 -->
         <el-dialog
@@ -337,17 +368,17 @@ import qs from 'qs';
 var interval = null;
 export default {
     data() {
-        var phone = (rule, value, callback) => {
-            var phone = this.applyForm.mobile;
-            if(!(/^1[3456789]\d{9}$/.test(phone))){ 
-                callback(new Error('電話番号の形式が正しくありません'));
-            }
-            callback();
-        };
+        // var phone = (rule, value, callback) => {
+        //     var phone = this.applyForm.mobile;
+        //     if(!(/^1[3456789]\d{9}$/.test(phone))){ 
+        //         callback(new Error('電話番号の形式が正しくありません'));
+        //     }
+        //     callback();
+        // };
         var emails = (rule, value, callback) => {
                 var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 if(!reg.test(this.applyForm.email)){ 
-                    callback(new Error('メールボックスの形式が正しくありません')); 
+                    callback(new Error('メールアドレスの形式が正しくありません')); 
                 }  
             callback();
         };
@@ -359,6 +390,7 @@ export default {
             login: false,
             apply: false,
             forget:false,
+            confirm:false,
             one:true,
             identifyCodes: "1234567890",
             identifyCode: "",
@@ -384,45 +416,60 @@ export default {
                 backgroundRepeat:"no-repeat"
             },
             applyForm: {
-                applyer: "",
-                mobile: "",
+                // applyer: "",
+                // mobile: "",
                 email: "",
                 company: "",
-                industry: ""
+                //industry: "",
+                inqueryInfo:"",
             },
             applyrules: {
-                applyer: [
-                    {
-                        required: true,
-                        message: "申請者の名前を入力してください",
-                        trigger: "blur"
-                    },
-                    {
-                        min: 3,
-                        max: 15,
-                        message: "3〜15文字の長さ",
-                        trigger: "blur"
-                    }
-                ],
-                mobile: [
-                    {
-                        required: true,
-                        message: "連絡先を入力してください",
-                        trigger: "blur"
-                    },
-                    {
-                        validator: phone,
-                        trigger: "blur"
-                    },
-                ],
+                // applyer: [
+                //     {
+                //         required: true,
+                //         message: "申請者の名前を入力してください",
+                //         trigger: "blur"
+                //     },
+                //     {
+                //         min: 3,
+                //         max: 15,
+                //         message: "3〜15文字の長さ",
+                //         trigger: "blur"
+                //     }
+                // ],
+                // mobile: [
+                //     {
+                //         required: true,
+                //         message: "連絡先を入力してください",
+                //         trigger: "blur"
+                //     },
+                //     {
+                //         validator: phone,
+                //         trigger: "blur"
+                //     },
+                // ],
                 email: [
                     {
                         required: true,
-                        message: "連絡先メールアドレスを入力してください",
+                        message: "メールアドレスをご記入ください",
                         trigger: "blur"
                     },
                     {
                         validator: emails,
+                        trigger: "blur"
+                    }
+                ],
+                company:[
+                    {
+                        required: true,
+                        message: "会社名をご記入ください",
+                        trigger: "blur"
+                    }
+                ],
+                inqueryInfo:[
+                    {
+                        required: true,
+                        message: "お問い合わせ内容をご記入ください",
                         trigger: "blur"
                     }
                 ]
@@ -451,7 +498,8 @@ export default {
     methods: {
 
         taglogin(){
-            this.login=true;
+            //this.login=true;
+            this.$router.push({name:"login"})
         },
         gologin(){
             this.login=true;
@@ -568,8 +616,6 @@ export default {
 
         },
         logout(){
-            this.$store.commit('setuserinfo', '')
-            localStorage.removeItem('userinfo')
             this.loginstate=false;
             var that=this;
             that.$request({
@@ -579,59 +625,66 @@ export default {
                 },
                 url:'/login/logout',
             }).then((res) => {
+                that.$store.commit('setuserinfo', '')
+                localStorage.removeItem('userinfo')
                 return true
             }).catch((err) => {
+                that.$store.commit('setuserinfo', '')
+                localStorage.removeItem('userinfo')
                 console.log(err);
             })
+            
         },
-        submit(applyForm){
-            this.$refs[applyForm].validate((valid) => {
+        preview(applyForm) {
+            this.$refs[applyForm].validate(valid => {
                 if (valid) {
-                    let loadingInstance = Loading.service();
-                    if(!this.company){
-                        delete this.applyForm.company;  
-                    }
-                    if(!this.industry){
-                        delete this.applyForm.industry;
-                    }
-                    let that=this
-                    this.$request({
-                        method:'post',
-                        data:this.applyForm,
-                        headers:{
-                            'content-type': "application/json;charset=UTF-8"
-                        },
-                        url:'/apply/add?lang=ja_JP',
-                    }).then((res) => {
-                        console.log(res);
-                        that.$nextTick(() => { 
-                            // 以服务的方式调用的 Loading 需要异步关闭
-                            loadingInstance.close();
-                        });
-                        if(res.data.code==0){
-                            //console.log(res.data.data);
-                            that.$message({
-                                message: '成功したアプリケーション',
-                                type: 'success'
-                            });
-                            this.apply=false;
-                        }else{
-                            this.$message.error(res.data.msg);
-                        }
-                    }).catch((err) => {
-                        that.$nextTick(() => { 
-                            // 以服务的方式调用的 Loading 需要异步关闭
-                            loadingInstance.close();
-                        });
-                        this.$message.error(err);
-                        console.log(err);
-                    })
+                    this.confirm = true;
                 } else {
-                    console.log('error submit!!');
+                    console.log("error submit!!");
                     return false;
                 }
             });
-            
+        },
+        submit(applyForm){
+            let loadingInstance = Loading.service();
+            let that=this
+            this.$request({
+                method:'post',
+                data:this.applyForm,
+                headers:{
+                    'content-type': "application/json;charset=UTF-8"
+                },
+                url:'/apply/add?lang=ja_JP',
+            }).then((res) => {
+                console.log(res);
+                that.$nextTick(() => { 
+                    // 以服务的方式调用的 Loading 需要异步关闭
+                    loadingInstance.close();
+                });
+                if(res.data.code==0){
+                    //console.log(res.data.data);
+                    that.$message({
+                        message: '成功したアプリケーション',
+                        type: 'success'
+                    });
+                    this.apply=false;
+                    this.confirm=false;
+                    this.applyForm={
+                        email: "",
+                        company: "",
+                        inqueryInfo:"",
+                    }
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            }).catch((err) => {
+                that.$nextTick(() => { 
+                    // 以服务的方式调用的 Loading 需要异步关闭
+                    loadingInstance.close();
+                });
+                this.$message.error(err);
+                console.log(err);
+            })          
         },
         async getVerificationCode(){
             var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
@@ -1155,6 +1208,26 @@ export default {
 .submit span:hover {
     opacity: 0.8;
 }
+/* 申请确认 */
+.dl {
+    overflow: hidden;
+    width: 100%;
+    font-size: 16px;
+    color: #010101;
+}
+.dl dt {
+    float: left;
+    width: 38%;
+    text-align: right;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+.dl dd {
+    float: right;
+    width: 60%;
+    text-align: left;
+    opacity: 0.8;
+}
 </style>
 <style >
 .my .el-dialog__header {
@@ -1181,16 +1254,13 @@ export default {
 .my .mytext .el-textarea__inner {
     height: 120px;
 }
-.my .el-input__inner {
-    border: none;
-    border-bottom: 2px solid #f0f0f0;
-    border-radius: 0;
-    font-size: 18px;
-}
+/* 
+
+ */
 .my .el-form-item__label {
     font-size: 18px;
 }
-.my .el-form-item__error {
+/* .my .el-form-item__error {
     color: #F56C6C;
     font-size: 16px;
     line-height: 1;
@@ -1199,6 +1269,6 @@ export default {
     top: 15px;
     right: -305px;
     left:auto;
-}
+} */
 
 </style>

@@ -14,7 +14,7 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [{
             path: '/',
-            redirect: '/page/login',
+            redirect: '/page/index',
         },
         {
             name: 'login',
@@ -25,19 +25,16 @@ export default new Router({
             component: () =>
                 import ('./views/page/login.vue')
         },
-        // {
-        //     path: '/',
-        //     redirect: '/page/index',
-        // },
-        // {
-        //     name: 'lgindex',
-        //     path: '/page/index',
-        //     meta: {
-        //         name: '时间戳',
-        //     },
-        //     component: () =>
-        //         import ('./views/page/index.vue')
-        // },
+        
+        {
+            name: 'lgindex',
+            path: '/page/index',
+            meta: {
+                name: '时间戳',
+            },
+            component: () =>
+                import ('./views/page/index.vue')
+        },
         {
             path: '/layout/index',
             name: 'index',

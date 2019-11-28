@@ -430,7 +430,7 @@ export default {
     methods: {
         addfile(e) {
             let inputDOM = this.$refs.inputer;
-            this.fil = inputDOM.files;
+            this.fil = inputDOM.files; 
             //let size = Math.floor(this.fil[0].size);
             // if(size > 10 * 1024 * 1024){
             //     alert("10M以内の画像を選択してください！");

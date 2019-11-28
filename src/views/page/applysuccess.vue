@@ -7,8 +7,10 @@
               <p>タイムスタンプの申請が完了しました。</p>
           </div>
           <div class="btnlink">
+              <p>
+                <span @click="looktsa(id)">タイムスタンプトークンをダウンロードする</span>
+              </p>
               <p><span @click="lookpdf(id)">タイムスタンプ認証証書をダウンロードする</span></p>
-              <p><span @click="looktsa(id)">TSA証明書をダウンロードする</span></p>
               <p><b @click="$router.replace('/page/applytime')">続けて申請する</b></p>
           </div>
       </div>
@@ -93,6 +95,7 @@ export default {
 .btnlink span{
     display: inline-block;
     padding: 5px 10px;
+    width:350px;
     border:1px solid #7499f5;
     border-radius: 8px;
     cursor: pointer;
