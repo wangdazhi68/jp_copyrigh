@@ -160,11 +160,12 @@ export default {
         if(localdata){
             this.loginCode=localdata.loginCode
         }
-        if(this.$store.state.userdetail){
-            this.userinfo=this.$store.state.userdetail;
-        }else{
-            this.uesrdetail();
-        }
+        this.uesrdetail();
+        // if(this.$store.state.userdetail){
+        //     this.userinfo=this.$store.state.userdetail;
+        // }else{
+        //     this.uesrdetail();
+        // }
         
     },
 
@@ -183,7 +184,7 @@ export default {
                 console.log(res);
                 if(res.data.code==0){
                     that.userinfo=res.data.data;
-                    that.$store.commit('setuserdetail',res.data.data);
+                    // that.$store.commit('setuserdetail',res.data.data);
                 }else{
                     this.$message.error(res.data.msg);
                 }

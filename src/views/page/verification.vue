@@ -16,7 +16,7 @@
             </dl>
             <dl>
                 <!-- 选择时间戳证书 -->
-                <dt>タイムスタンプトークン:</dt>
+                <dt>タイムスタンプトークン：</dt>
                 <dd>
                     <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo"
                     @drop="droptwo($event)"

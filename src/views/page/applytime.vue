@@ -87,7 +87,7 @@
             width="40%"
             top="10vh"
             :modal-append-to-body="false"
-        >
+            >
             <dl class="dl">
                 <dt>資料：</dt>
                 <dd>{{filename}}</dd>
