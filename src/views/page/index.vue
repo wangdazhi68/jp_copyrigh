@@ -1,5 +1,5 @@
 <template>
-    <div class="my">
+    <div class="my-wrap">
         <div class="body">
             <div class="header">
                 <div class="header-cnt">
@@ -19,7 +19,7 @@
             <div class="banner" :style='bannerbg1'>
                 <div class="des">
                     <div class="des-cnt" v-show="curactive==1">
-                        <h3>トラステッドタイムスタンプ®知的財産保護センター（日本局）</h3>
+                        <h3>トラステッド・タイムスタンプ</h3>
                         <p>
                             トラステッド・タイムスタンプ®は北京聯合信任技術服務有限公司（Beijing UniTrust Tech Service Co., Ltd.）が提供する電子認証型タイムスタンプサービスであり、認証に利用される時間は中国の国家時刻標準機関である中国科学院国家授時センター（NTSC）の付与する中国標準時間を採用し、多くの中国の司法機関において認められた実績があります。
                         </p>
@@ -32,7 +32,7 @@
                     </div> -->
                 </div>
                 <div class="des-nav">
-                    <span @click="tagbtn(1)" :class="curactive==1?'active':''" >トラステッド・タイムスタンプ</span>
+                    <!-- <span @click="tagbtn(1)" :class="curactive==1?'active':''" >トラステッド・タイムスタンプ</span> -->
                     <!-- <span @click="tagbtn(2)" :class="curactive==2?'active':''">信頼できるタイムスタンプ</span> -->
                 </div>
             </div>
@@ -240,7 +240,7 @@
         </el-dialog>
         <!-- 申请使用 -->
         <el-dialog
-            title="使用のお申し込み"
+            title="新規利用申込"
             :visible.sync="apply"
             width="80%"
             top="10vh"
@@ -248,7 +248,7 @@
             >
             <div class="logo">
                 <img src="@/assets/images/logo3.png" alt />
-                <p>使用のお申し込み</p>
+                <p>新規利用申込</p>
             </div>
             <div class="form2">
                 <el-form
@@ -278,7 +278,7 @@
                     </el-form-item> -->
                 </el-form>
                 <div class="submit">
-                    <span @click="preview('applyForm')">適用する</span>
+                    <span @click="preview('applyForm')">送信する</span>
                 </div>
             </div>
         </el-dialog>
@@ -464,7 +464,8 @@ export default {
                         required: true,
                         message: "会社名をご記入ください",
                         trigger: "blur"
-                    }
+                    },
+                    { min: 1, max: 100, message: '入力できる内容は100文字以内となります。', trigger: 'blur' }
                 ],
                 inqueryInfo:[
                     {
@@ -895,7 +896,7 @@ export default {
     opacity: 0.8;
     font-size: #000;
     margin:0 auto;
-    margin-top:60px;
+    margin-top:110px;
     box-sizing: border-box;
 }
 .des-cnt h3{
@@ -939,7 +940,7 @@ export default {
     box-shadow:none;
 }
 .apply-process{
-    padding-top: 100px;
+    padding-top: 60px;
     text-align: center;
 }
 .apply-process h3,.auth-process h3,.trait h3,.proof h3{
@@ -1230,7 +1231,7 @@ export default {
 }
 </style>
 <style >
-.my .el-dialog__header {
+.my-wrap .el-dialog__header {
     border-radius: 4px;
     height: 54px;
     line-height: 54px;
@@ -1238,26 +1239,26 @@ export default {
     box-sizing: border-box;
     opacity: 0.8;
 }
-.my .el-dialog__title {
+.my-wrap .el-dialog__title {
     border-bottom: 4px solid #7499f5;
     color: #7499f5;
     display: block;
     padding-bottom: 10px;
 }
-.my .el-dialog__headerbtn {
+.my-wrap .el-dialog__headerbtn {
     top: 10px;
     font-size: 20px;
 }
-.my .el-dialog {
+.my-wrap .el-dialog {
     border-radius: 4px;
 }
-.my .mytext .el-textarea__inner {
+.my-wrap .mytext .el-textarea__inner {
     height: 120px;
 }
 /* 
 
  */
-.my .el-form-item__label {
+.my-wrap .el-form-item__label {
     font-size: 18px;
 }
 /* .my .el-form-item__error {

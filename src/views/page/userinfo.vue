@@ -60,7 +60,7 @@
                             <span>
                                 <strong v-if="currentCount">{{currentCount}}</strong>
                                 <strong v-else>{{userinfo.currentCount}}</strong>
-                                次
+                                回
                             </span>
                         </p>
                     </li>
@@ -68,7 +68,7 @@
                         <p class="font">タイムスタンプ当月使用件数</p>
                         <p class="num">
                             <span>
-                                <strong>{{userinfo.monthCount}}</strong>次
+                                <strong>{{userinfo.monthCount}}</strong>回
                             </span>
                         </p>
                     </li>

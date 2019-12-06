@@ -33,7 +33,7 @@
                 <el-table-column prop="workNo" label="資料番号" width="150"></el-table-column>
                 <el-table-column prop="workName" :show-overflow-tooltip="true" label="資料の名称" width="150"></el-table-column>
                 <!-- <el-table-column prop="workType" :formatter="formatRole" label="作品の種類" width="130"></el-table-column> -->
-                <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="作品の説明" width="250"></el-table-column>
+                <el-table-column prop="workSpec" :show-overflow-tooltip="true" label="資料の説明" width="250"></el-table-column>
                 <el-table-column prop="confirmTime" label="申請日時" width="160"></el-table-column>
                 <el-table-column label="操作" width="190">
                     <template slot-scope="scope">

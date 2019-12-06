@@ -72,11 +72,12 @@
                     <el-image 
                         style="width: 200px; height: 250px"
                         :src="url" 
-                        :preview-src-list="srcList">
+                        >
+                        <!-- :preview-src-list="srcList" -->
                     </el-image>
                 </div>
                 <span @click="download" class="download">認証証書をダウンロードする >></span>
-                <span style="top:70px;" @click="downloadtsa" class="download">TSA証明書をダウンロードする >></span>
+                <span style="top:200px;" @click="downloadtsa" class="download">TSA証明書をダウンロードする >></span>
             </div>
         </div>
     </div>
@@ -203,7 +204,7 @@ export default {
         identityType(){
              switch(this.dataobj.identityType){
                  case '101':
-                    return '身份证'
+                    return '会社法人等番号'
                     break;
                 case '102':
                     return '军官证'
@@ -336,7 +337,7 @@ export default {
 }
 .download{
     position: absolute;
-    top:20px;
+    top:150px;
     right:10%;
     color:#7499F5;
     font-size: 16px;

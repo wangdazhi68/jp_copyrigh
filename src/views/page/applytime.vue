@@ -125,7 +125,7 @@
                 <dd>{{applyForm.workSpec}}</dd>
             </dl>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="confirm = false">キャンセルする</el-button>
+                <el-button @click="confirm = false">修正する</el-button>
                 <el-button type="primary" @click="submit()">申請する</el-button>
             </span>
         </el-dialog>
@@ -326,7 +326,7 @@ export default {
                     {
                         min: 1,
                         max: 50,
-                        message: "3〜50文字の長さ",
+                        message: "1〜50文字の長さ",
                         trigger: "blur"
                     }
                 ],
@@ -542,6 +542,10 @@ export default {
                                 id: res.data.data
                             }
                         });
+                    }else if(res.data.code == -200){
+                        this.$message.error(
+                            "試用アカウントの無料使用回数がなくなりました。"
+                        );
                     } else {
                         this.$message.error(
                             "送信に失敗しました。更新してもう一度お試しください"

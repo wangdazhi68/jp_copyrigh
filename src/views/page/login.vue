@@ -26,7 +26,7 @@
                             <!-- <span class="forget">忘记密码？</span> -->
                         </li>
                         <li>
-                            <input class="pwd" type="text" v-model="picyzm" placeholder="グラフィック検証コード" />
+                            <input class="pwd" type="text" v-model="picyzm" placeholder="検証コード" />
                             <span class="yzmpic" @click="refreshCode">
                                 <s-identify :identifyCode="identifyCode"></s-identify>
                             </span>
@@ -41,13 +41,13 @@
                     </div>
                     <div class="error-ts">
                         <p>
-                            <b v-show="usererror">正しいメールボックス形式を入力してください</b>
+                            <b v-show="usererror">メールアドレスの形式が正しくありません</b>
                         </p>
                         <p>
                             <b v-show="passerror">パスワードを入力してください</b>
                         </p>
                         <p>
-                            <b v-show="yzmerror">検証コードエラー</b>
+                            <b v-show="yzmerror">検証コードが正しくありません</b>
                         </p>
                     </div>
                 </div>

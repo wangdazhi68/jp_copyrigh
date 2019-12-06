@@ -12,7 +12,7 @@
             </div>
         </div>
         <el-dialog
-            title="修改密码"
+            title="パスワード変更"
             :visible.sync="edipwd"
             width="50%"
             :modal-append-to-body="false"
@@ -26,12 +26,13 @@
                 label-width="180px"
                 class="demo-ruleForm"
             >
-                <el-form-item label="古いパスワード:" prop="oldPassword">
+                <el-form-item label="現行パスワード:" prop="oldPassword">
                     <el-input
                         type="password"
                         v-model="pwdForm.oldPassword"
                         autocomplete="off"
                         show-password
+                        placeholder="現行パスワードを入力してください"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="新しいパスワード:" prop="password">
@@ -40,6 +41,7 @@
                         v-model="pwdForm.password"
                         autocomplete="off"
                         show-password
+                        placeholder="新しいパスワードを入力してください"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="パスワードを確認:" prop="checkPass">
@@ -48,12 +50,13 @@
                         v-model="pwdForm.checkPass"
                         autocomplete="off"
                         show-password
+                        placeholder="新しいパスワードを再度入力してください"
                     ></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="edipwd = false">取 消</el-button>
-                <el-button type="primary" @click="confimpwd('pwdForm')">确 定</el-button>
+                <el-button @click="edipwd = false">戻 る</el-button>
+                <el-button type="primary" @click="confimpwd('pwdForm')">進 む</el-button>
             </span>
         </el-dialog>
     </div>
