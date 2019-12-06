@@ -2,7 +2,7 @@
     <div class="layout">
         <div class="h3-title">アカウント照会</div>
         <div class="section">
-            <h4>アカウント情報</h4>
+            <h4>ユーザ情報</h4>
             <div class="table">
                 <ul>
                     <li>
