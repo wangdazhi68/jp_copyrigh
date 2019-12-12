@@ -73,6 +73,12 @@ export default {
                 callback();
             }
         };
+        var space= (rule, value, callback) => {
+            if (value.trim().length==0) {
+                callback(new Error('新しいパスワードを入力してください'));
+            } 
+            callback();
+        };
         return {
             edipwd: false,
             loginCode:'',
@@ -91,6 +97,10 @@ export default {
                 ],
                 password: [
                     { required: true, message: '新しいパスワードを入力してください', trigger: 'blur' },
+                    {
+                        validator:space,
+                        trigger: "blur"
+                    }
                 ]
             }
         };
@@ -184,6 +194,7 @@ export default {
 <style scoped>
 .wrap {
     width: 100%;
+    min-width: 1200px;
     background: #6a91f0;
     border-bottom: 2px solid #ffffff;
 }

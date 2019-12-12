@@ -303,7 +303,7 @@ export default {
             }).then((res) => {
                 console.log(res);
                 if(res.data.code==-1){
-                    alert('请求失败')
+                    that.$message.error('验证码发送失败，请确认邮箱地址是否正确');
                     return false
                 }
                 this.sucyzm=res.data.data.code;
@@ -374,6 +374,7 @@ export default {
 <style scoped>
 .header-wrap {
     width: 100%;
+    min-width: 1200px;
     background: #6a91f0;
     border-bottom: 2px solid #ffffff;
 }
@@ -395,6 +396,8 @@ export default {
     background:#6A91F0;
     min-height: 368px;
     position: relative;
+    min-width: 1200px;
+    width: 100%;
 }
 .banner img{
     width: 100%;

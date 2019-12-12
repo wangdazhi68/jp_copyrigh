@@ -823,6 +823,7 @@ export default {
     top:0;
     left: 0;
     z-index: 3;
+    min-width: 1200px;
 }
 .header-cnt{
     width: 1200px;
@@ -882,6 +883,7 @@ export default {
     padding-top: 100px;
     width:100%;
     max-width: 1920px;
+    min-width:1200px;
     margin:0 auto;
     height:600px;
     background-size: cover;
@@ -952,6 +954,7 @@ export default {
 .auth-process{
     background:#EAEEF8;
     width:100%;
+    min-width: 1200px;
     padding:40px 0;
     margin-top:80px;
 }
@@ -1014,6 +1017,8 @@ export default {
 }
 .proof{
     padding-top:60px;
+    width:100%;
+    min-width: 1200px;
     height:606px;
     box-sizing: border-box;
     background-size: cover;
@@ -1086,6 +1091,8 @@ export default {
 }
 .footer{
     text-align: center;
+    width: 100%;
+    min-width: 1200px;
     line-height: 120px;
     color:#010101;
     font-size: 14px;

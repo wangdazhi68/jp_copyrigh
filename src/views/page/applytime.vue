@@ -167,10 +167,25 @@ import { Loading } from "element-ui";
 import CryptoJS from "crypto-js";
 import { arrayBufferToWordArray, swapendian32 } from "@/assets/js/buffer";
 var pos=0;
+var end;
 var chunkSize =204800; //409600;//204800;
 var lastprogress = 0;
+var sha256=CryptoJS.algo.SHA256.create();
+var sha1=CryptoJS.algo.SHA1.create();
 export default {
     data() {
+        var space= (rule, value, callback) => {
+            if (value.trim().length==0) {
+                callback(new Error('資料の名称を入力してください'));
+            } 
+            callback();
+        };
+        var space2= (rule, value, callback) => {
+            if (value.trim().length==0) {
+                callback(new Error('資料の説明を入力してください'));
+            } 
+            callback();
+        };
         return {
             fil: {},
             uploadborder: false,
@@ -328,6 +343,10 @@ export default {
                         max: 50,
                         message: "1〜50文字の長さ",
                         trigger: "blur"
+                    },
+                    {
+                        validator:space,
+                        trigger: "blur"
                     }
                 ],
                 workSpec: [
@@ -340,6 +359,10 @@ export default {
                         min: 3,
                         max: 350,
                         message: "3〜350文字の長さ",
+                        trigger: "blur"
+                    },
+                    {
+                        validator:space2,
                         trigger: "blur"
                     }
                 ]
@@ -406,7 +429,7 @@ export default {
             url: "/customer/detail"
         })
             .then(res => {
-                console.log(res);
+                //console.log(res);
                 if (res.data.code == 0) {
                     this.certificateNo = res.data.data.identityId;
                     this.applyPerson = res.data.data.realName;
@@ -440,7 +463,14 @@ export default {
             this.filename = inputDOM.files[0].name;
             this.applyForm.fileName = inputDOM.files[0].name;
             this.zhe=true;
+            pos=0;
+            end;
+            chunkSize =204800; //409600;//204800;
+            lastprogress = 0;
+            sha256=CryptoJS.algo.SHA256.create();
+            sha1=CryptoJS.algo.SHA1.create();
             this.progressiveRead(inputDOM.files[0]);
+           
         },
         drop(e) {
             let that = this;
@@ -451,6 +481,12 @@ export default {
             that.filename = files[0].name;
             that.applyForm.fileName = files[0].name;
             this.zhe=true;
+            pos=0;
+            end;
+            chunkSize =204800; //409600;//204800;
+            lastprogress = 0;
+            sha256=CryptoJS.algo.SHA256.create();
+            sha1=CryptoJS.algo.SHA1.create();
             this.progressiveRead(files[0]);
         },
         allowDrop(e) {
@@ -507,14 +543,15 @@ export default {
         },
 
         submit() {
-            //console.log(this.fil);
+            console.log(this.sha256);
             this.formData = new FormData();
+            console.log(this.fil[0].name);
             this.formData.append("originalFileName", this.fil[0].name);
-            this.formData.append("workName", this.applyForm.workName);
+            this.formData.append("workName", (this.applyForm.workName).replace(/(^\s*)|(\s*$)/g, ""));
             //this.formData.append('workNature', this.applyForm.workNature);
             //this.formData.append('creationType', this.applyForm.creationType);
             //this.formData.append('workType', this.applyForm.workType);
-            this.formData.append("workSpec", this.applyForm.workSpec);
+            this.formData.append("workSpec", (this.applyForm.workSpec).replace(/(^\s*)|(\s*$)/g, ""));
             this.formData.append("hashCode", this.sha1);
             this.formData.append("hashCode256", this.sha256);
             let loadingInstance = Loading.service();
@@ -535,7 +572,7 @@ export default {
                         loadingInstance.close();
                     });
                     if (res.data.code == 0) {
-                        console.log(res.data.data);
+                        //console.log(res.data.data);
                         that.$router.replace({
                             name: "applysuccess",
                             params: {
@@ -565,16 +602,19 @@ export default {
         },
         progressiveReadNext(file, reader) {
             var that = this;
-            var end = Math.min(pos + chunkSize, file.size);
+            end = Math.min(pos + chunkSize, file.size);
+            if (file.slice) {
+                var blob = file.slice(pos, end);
+            } else if (file.webkitSlice) {
+                var blob = file.webkitSlice(pos, end);
+            }
+            reader.readAsArrayBuffer(blob);
             reader.onload = function(e) {
                 pos = end;
                 var wordArray = arrayBufferToWordArray(e.target.result);
-                var sha256 = CryptoJS.algo.SHA256.create();
                 sha256.update(wordArray);
-                var sha1 = CryptoJS.algo.SHA1.create();
                 sha1.update(wordArray);
                 var progress = Math.floor((pos / file.size) * 100);
-                 
                 if (progress > lastprogress) {
                     //console.log(progress)
                     that.percentage = progress;
@@ -585,25 +625,21 @@ export default {
                 } else {
                     that.sha1=sha1.finalize().toString().toUpperCase();
                     that.sha256=sha256.finalize().toString().toUpperCase();
+                    console.log(that.sha1)
                     setTimeout(function(){
                         that.zhe=false;
                         that.percentage=0;
                     },1000)
                 }
             };
-            if (file.slice) {
-                var blob = file.slice(pos, end);
-            } else if (file.webkitSlice) {
-                var blob = file.webkitSlice(pos, end);
-            }
-            reader.readAsArrayBuffer(blob);
+            
         },
         progressiveRead(file) {
             // 20KiB at a time
             pos=0;
             chunkSize =204800; //409600;//204800;
             lastprogress = 0;
-            var reader= new FileReader();
+            let reader= new FileReader();
             setTimeout(this.progressiveReadNext(file, reader), 0);
         },
     }

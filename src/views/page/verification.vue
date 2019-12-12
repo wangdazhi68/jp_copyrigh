@@ -55,8 +55,11 @@ import { Loading } from "element-ui";
 import CryptoJS from "crypto-js";
 import { arrayBufferToWordArray, swapendian32 } from "@/assets/js/buffer";
 var pos=0;
+var end;
 var chunkSize =204800; //409600;//204800;
 var lastprogress = 0;
+var sha256=CryptoJS.algo.SHA256.create();
+var sha1=CryptoJS.algo.SHA1.create();
 export default {
     data() {
         return {
@@ -98,6 +101,12 @@ export default {
             // }
             this.name1 = inputDOM.files[0].name;
             this.zhe=true;
+            pos=0;
+            end;
+            chunkSize =204800; //409600;//204800;
+            lastprogress = 0;
+            sha256=CryptoJS.algo.SHA256.create();
+            sha1=CryptoJS.algo.SHA1.create();
             this.progressiveRead(this.fileName[0]);
         },
         drop(e) {
@@ -107,6 +116,12 @@ export default {
             this.fileName = files;
             this.name1 =files[0].name;
             this.zhe=true;
+            pos=0;
+            end;
+            chunkSize =204800; //409600;//204800;
+            lastprogress = 0;
+            sha256=CryptoJS.algo.SHA256.create();
+            sha1=CryptoJS.algo.SHA1.create();
             this.progressiveRead(files[0]);
         },
         allowDrop(e) {
@@ -114,16 +129,19 @@ export default {
         },
         progressiveReadNext(file, reader) {
             var that = this;
-            var end = Math.min(pos + chunkSize, file.size);
+            end = Math.min(pos + chunkSize, file.size);
+            if (file.slice) {
+                var blob = file.slice(pos, end);
+            } else if (file.webkitSlice) {
+                var blob = file.webkitSlice(pos, end);
+            }
+            reader.readAsArrayBuffer(blob);
             reader.onload = function(e) {
                 pos = end;
                 var wordArray = arrayBufferToWordArray(e.target.result);
-                var sha256 = CryptoJS.algo.SHA256.create();
                 sha256.update(wordArray);
-                var sha1 = CryptoJS.algo.SHA1.create();
                 sha1.update(wordArray);
                 var progress = Math.floor((pos / file.size) * 100);
-                 
                 if (progress > lastprogress) {
                     //console.log(progress)
                     that.percentage = progress;
@@ -134,18 +152,14 @@ export default {
                 } else {
                     that.sha1=sha1.finalize().toString().toUpperCase();
                     that.sha256=sha256.finalize().toString().toUpperCase();
+                    console.log(that.sha1)
                     setTimeout(function(){
                         that.zhe=false;
                         that.percentage=0;
                     },1000)
                 }
             };
-            if (file.slice) {
-                var blob = file.slice(pos, end);
-            } else if (file.webkitSlice) {
-                var blob = file.webkitSlice(pos, end);
-            }
-            reader.readAsArrayBuffer(blob);
+            
         },
         progressiveRead(file) {
             // 20KiB at a time

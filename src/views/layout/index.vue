@@ -44,6 +44,7 @@ export default {
     background:#6A91F0;
     min-height: 368px;
     position: relative;
+    min-width: 1200px;
 }
 .banner img{
     width: 100%;

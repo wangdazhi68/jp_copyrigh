@@ -252,11 +252,14 @@ export default {
             if(!this.endTime){
                 delete this.requestdata.endTime;
             }
-            this.currentCount=null;
+            if(!this.startTime&&!this.endTime){
+                this.currentCount=null;
+            }
             if(this.startTime || this.endTime){
                 this.totalnum();
             }
             this.creatrequest();
+            
             this.ishow=true;
         },
         totalnum(){
@@ -274,7 +277,7 @@ export default {
             })
             .then(res => {
                 console.log(res);
-                this.currentCount=res.data.totalCount
+                this.currentCount=res.data.totalCount+''
             })
             .catch(err => {
                 that.$message.error(err);

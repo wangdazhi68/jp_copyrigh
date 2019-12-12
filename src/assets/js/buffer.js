@@ -1,9 +1,9 @@
 import CryptoJS from "crypto-js";
 const swapendian32 = function(val) {
-    return (((val & 0xFF) << 24) |
-        ((val & 0xFF00) << 8) |
-        ((val >> 8) & 0xFF00) |
-        ((val >> 24) & 0xFF)) >>> 0;
+    return (((val & 0xFF) << 24)
+        | ((val & 0xFF00) << 8)
+        | ((val >> 8) & 0xFF00)
+        | ((val >> 24) & 0xFF)) >>> 0;
 }
 
 const arrayBufferToWordArray = function(arrayBuffer) {

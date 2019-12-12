@@ -226,7 +226,7 @@ export default {
     },
 
     created() {
-        console.log(this.$route.params.id)
+        //console.log(this.$route.params.id)
         if(this.$route.params.id){
             this.id=this.$route.params.id;
             this.url=this.$baseURL+"/personal/thumbnail?id="+this.id
@@ -248,7 +248,7 @@ export default {
                 url: "personal/viewOne?id="+this.id
             })
             .then(res => {
-                console.log(res);
+                //console.log(res);
                 if (res.data.code == 0) {
                     this.dataobj=res.data.data
                 } else {

@@ -154,7 +154,7 @@ export default {
                 url: "/personal/viewAll"
             })
             .then(res => {
-                console.log(res);
+                //console.log(res);
                 if (res.data.code == 0) {
                     that.tableData = res.data.data,
                     that.totalCount = res.data.totalCount;
