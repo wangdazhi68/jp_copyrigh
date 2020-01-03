@@ -3,7 +3,8 @@
         <div class="header-wrap">
             <div class="header">
                 <div class="logo">
-                    <img src="@/assets/images/logo1.png" alt="联合信任" />
+                    <a @click="$router.replace({name:'lgindex'})"><img src="@/assets/images/logo1.png" alt="联合信任" /></a>
+                    <a class="ngb" href="https://www.ngb.co.jp/" target="_blank"><img src="@/assets/images/ngb-logo.png" alt="联合信任" /></a>
                 </div>
             </div>
         </div>
@@ -22,7 +23,9 @@
                             <input type="text" v-model="username" placeholder="ユーザID/メールアドレスを入力してください" />
                         </li>
                         <li>
-                            <input class="pwd" type="password" v-model="password" placeholder="パスワード" />
+                            <el-input class="pwd2" show-password type="password" v-model="password" placeholder="パスワード">
+                            </el-input>
+                            <!-- <input class="pwd" show-password type="password" v-model="password" placeholder="パスワード" /> -->
                             <!-- <span class="forget">忘记密码？</span> -->
                         </li>
                         <li>
@@ -67,18 +70,18 @@
             <div class="form1" v-if="one">
                 <ul>
                     <li>
-                        <input type="text" v-model="email" placeholder="メールアカウントを入力してください" />
+                        <input type="text" v-model="email" placeholder="ユーザID/メールアドレスを入力してください" />
                     </li>
                     <li>
-                        <input type="text" v-model="yzm" placeholder="確認コードを入力してください" />
+                        <input type="text" v-model="yzm" placeholder="検証コードを入力してください" />
                     </li>
                 </ul>
                 <div class="forget-wrap"><span class="forget" :disabled='disabled' @click="getVerificationCode">{{yzmtext}}</span></div>
                 <div class="btns">
                     <p>
-                        <span class="lgbtn" @click="next()">次のステップ</span>
+                        <span class="lgbtn" @click="next()">次へ</span>
                     </p>
-                    <b @click="gologin()">ログインに戻る</b>
+                    <b @click="gologin()">ログイン画面に戻る</b>
                 </div>
             </div>
             <div class="form1" v-else>
@@ -94,7 +97,7 @@
                 </ul>
                 <div class="btns">
                     <p>
-                        <span class="lgbtn" @click="modify()">今すぐ送信</span>
+                        <span class="lgbtn" @click="modify()">送信する</span>
                     </p>
                     <b @click="gologin()">ログインに戻る</b>
                 </div>
@@ -122,7 +125,7 @@ export default {
             newpwd:'',
             confirmpwd:'',
             yzm:'',
-            yzmtext: "確認コードを取得する",
+            yzmtext: "検証コードを取得する",
             currentTime: 61,
             sucyzm: "",
             disabled:false,
@@ -211,7 +214,7 @@ export default {
                 },
                 url:'/login/signOn?lang=ja_JP',
             }).then((res) => {
-                console.log(res);
+                //console.log(res);
                 that.$nextTick(() => { 
                     // 以服务的方式调用的 Loading 需要异步关闭
                     loadingInstance.close();
@@ -263,9 +266,9 @@ export default {
                 },
                 url:'/register/validate',
             }).then((res) => {
-                console.log(res);
+                //console.log(res);
                 if(res.data.code==0){
-                   that.$message.error('アカウントが存在しません');
+                   that.$message.error('このIDは存在しません！');
                    ison=false;
                 }
             }).catch((err) => {
@@ -301,11 +304,15 @@ export default {
                 },
                 url:'/register/sendValidateCode',
             }).then((res) => {
-                console.log(res);
+                //console.log(res);
                 if(res.data.code==-1){
-                    that.$message.error('验证码发送失败，请确认邮箱地址是否正确');
+                    that.$message.error('検証コードを送信できませんでした。メールアドレスをご確認ください');
                     return false
                 }
+                that.$message({
+                    message: '検証コードを送信しました',
+                    type: 'success'
+                });
                 this.sucyzm=res.data.data.code;
             }).catch((err) => {
                 console.log(err);
@@ -316,10 +323,10 @@ export default {
             var currentTime = that.currentTime
             interval = setInterval(function () {
                 currentTime--;
-                that.yzmtext='('+currentTime + 's)取り戻す'
+                that.yzmtext='('+currentTime + 's)検証コードを再取得する'
                 if (currentTime <= 0) {
                     clearInterval(interval)
-                    that.yzmtext='取り戻す';
+                    that.yzmtext='検証コードを再取得する';
                     that.currentTime=61;
                     that.disabled=false;
                 }
@@ -332,7 +339,7 @@ export default {
                 return false
             }
             if(this.confirmpwd!==this.newpwd){
-                that.$message.error('一貫性のない2回の入力パスワード!');
+                that.$message.error('入力したパスワードが異なります');
                 return false
             }
             var that=this;
@@ -385,12 +392,23 @@ export default {
     line-height: 100px;
 }
 .logo {
-    float: left;
-    height: 47px;
+    display: flex;
+    height: 100px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start
 }
-.logo img {
-    margin-top: 26px;
+.logo a{
+    display:block;
     cursor: pointer;
+}
+.logo a.ngb{
+    margin-left: 20px;
+    height:27px;
+    width: 72px;
+}
+.logo a img{
+    display: block;
 }
 .banner{
     background:#6A91F0;
@@ -580,5 +598,19 @@ export default {
     right: -305px;
     left:auto;
 }
-
+.my .pwd2 input{
+    border-bottom:none;
+    padding: 0;
+    font-size: 14px;
+    color:#000;
+}
+.pwd2 input::-webkit-input-placeholder {
+    color: #777;
+  }
+.pwd2 input::-moz-input-placeholder {
+    color: #c0c4cc;
+  }
+.pwd2 input::-ms-input-placeholder {
+    color: #c0c4cc;
+  }
 </style>

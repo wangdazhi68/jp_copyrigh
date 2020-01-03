@@ -219,7 +219,7 @@ export default {
                     return '组织机构代码或统一社会信用代码'
                     break;
                 case '999':
-                    return '其它'
+                    return 'その他'
                     break;
              }
         }

@@ -10,8 +10,8 @@
                     @drop="drop($event)"
                     @dragover="allowDrop($event)"
                     >
-                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="認証する資料を選択またはドラッグ">
-                    <span class="choosebtn" @click="$refs.fileone.click()">ファイルを選択する</span>
+                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="">
+                    <span class="choosebtn" @click="$refs.fileone.click()">選択</span>
                 </dd>
             </dl>
             <dl>
@@ -22,8 +22,8 @@
                     @drop="droptwo($event)"
                     @dragover="allowDroptwo($event)"
                     >
-                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="タイムスタンプトークンを選択またはドラッグ">
-                    <span class="choosebtn" @click="$refs.filetwo.click()">ファイルを選択する</span>
+                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="">
+                    <span class="choosebtn" @click="$refs.filetwo.click()">選択</span>
                 </dd>
             </dl>
             <dl>
@@ -37,9 +37,9 @@
         <div class="section">
             <h4>注意事項</h4>
             <div class="prompt">
-                1、タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。<br>
-                2、タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。<br>
-                3、タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。        
+                <p><b>1、</b>タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。</p>
+                <p><b>2、</b>タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。</p>
+                <p><b>3、</b>タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。</p>        
             </div>
         </div>
         <div class="zhe" v-if="zhe">
@@ -92,13 +92,23 @@ export default {
         addone(){
             let inputDOM = this.$refs.fileone;
             this.fileName=inputDOM.files;
-            // let size = Math.floor(this.fileName[0].size);
-            // if(size > 10 * 1024 * 1024){
-                
-            //     this.$message.error("資料のサイズが10MBを超えています");
-            //     this.fileName={};
-            //     return false;
-            // }
+            let size = Math.floor(this.fileName[0].size);
+            let name = inputDOM.files[0].name;
+            let index = name.lastIndexOf('.');
+            let Format=name.substring(index)
+            let arry_format=['.zip','.rar','.tar','.gz','.7z','.cab','.lzh']
+            if(!(arry_format.indexOf(Format)=='-1')){
+                this.$message.error(".zip、.rar、.tar.gz、.7z、.cab、.lzhなど圧縮形式を用いたデータは対象外です。");
+                this.$refs.fileone.value=''
+                this.fileName={};
+                return false;
+            }
+            if(size > 4000 * 1024 * 1024){  
+                this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
+                this.$refs.fileone.value=''
+                this.fileName={};
+                return false;
+            }
             this.name1 = inputDOM.files[0].name;
             this.zhe=true;
             pos=0;
@@ -110,9 +120,26 @@ export default {
             this.progressiveRead(this.fileName[0]);
         },
         drop(e) {
+            let that = this;
             e.preventDefault();
             let dt = e.dataTransfer;
             let files = dt.files;
+            let size = Math.floor(files[0].size);
+            let name = files[0].name;
+            let index = name.lastIndexOf('.');
+            let Format=name.substring(index)
+            let arry_format=['.zip','.rar','.tar','.gz','.7z','.cab','.lzh']
+            if(!(arry_format.indexOf(Format)=='-1')){
+                this.$message.error(".zip、.rar、.tar.gz、.7z、.cab、.lzhなど圧縮形式を用いたデータは対象外です。");
+                this.fileName={};
+                return false;
+            }
+            if(size > 4000 * 1024 * 1024){
+                this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
+                that.fileName={};
+                return false;
+            }
+
             this.fileName = files;
             this.name1 =files[0].name;
             this.zhe=true;
@@ -320,7 +347,7 @@ export default {
 	text-align: center;
 	background:#fff;
 	color:#7499F5;
-	width: 126px;
+	width: 90px;
 	display: inline-block;
 	font-size: 14px;
 	cursor: pointer;
@@ -372,6 +399,14 @@ export default {
     font-size: 14px;
     padding:0 10px;
     padding-top:30px; 
+}
+.prompt p{
+    padding-left:18px; 
+    position: relative;
+}
+.prompt p b{
+    position: absolute;
+    left:0;
 }
 .zhe{
     background:rgba(0,0,0,.5);

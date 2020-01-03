@@ -1,8 +1,8 @@
 <template>
     <div class="layout">
-        <div class="h3-title">アカウント照会</div>
+        <div class="h3-title">アカウント情報</div>
         <div class="section">
-            <h4>ユーザ情報</h4>
+            <!-- <h4>ユーザ情報</h4> -->
             <div class="table">
                 <ul>
                     <li>
@@ -50,7 +50,7 @@
                 </ul>
             </div>
         </div>
-        <div class="section">
+        <!-- <div class="section">
             <h4>アカウント情報</h4>
             <div class="account-num">
                 <ul>
@@ -109,7 +109,7 @@
                             label="資料の名称"
                             width="400"
                         ></el-table-column>
-                        <!-- <el-table-column prop="type" label="作品の種類" width="120"></el-table-column> -->
+                        <el-table-column prop="type" label="作品の種類" width="120"></el-table-column>
                         <el-table-column prop="confirmTime" label="申請日時" width=""></el-table-column>
                     </el-table>
                 </div>
@@ -123,7 +123,7 @@
                     ></el-pagination>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -298,6 +298,7 @@ export default {
 }
 .section {
     padding-top: 15px;
+    min-height:400px;
 }
 .section h4 {
     box-sizing: border-box;

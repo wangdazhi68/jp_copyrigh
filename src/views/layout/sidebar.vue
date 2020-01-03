@@ -31,7 +31,7 @@ export default {
                     ]
                 },
                 {
-                    title:"資料リスト",
+                    title:"タイムスタンプ取得履歴",
                     path:"/page/workslist",
                     child:[
                         {
@@ -51,7 +51,7 @@ export default {
                     ]
                 },
                 {
-                    title:"アカウント照会",
+                    title:"アカウント情報",
                     path:"/page/userinfo"
                 }
             ],

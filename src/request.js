@@ -42,7 +42,7 @@ service.interceptors.request.use(
 // respone拦截器
 service.interceptors.response.use(
     response => {
-        console.log(response);
+        //console.log(response);
         if (response.status == 200) {
             if (response.data.code == -2) {
                 store.commit('setuserinfo', '')

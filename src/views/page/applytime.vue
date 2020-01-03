@@ -1,6 +1,8 @@
 <template>
     <div class="layout">
-        <div class="h3-title">タイムスタンプを申請する</div>
+        <div class="h3-title">タイムスタンプを申請する
+            <span class="title-num" v-if="userinfo.accountType=='2'">トライアル残り回数：{{userinfo.availableCount-userinfo.currentCount}}/{{userinfo.availableCount}}</span>
+        </div>
         <div class="form">
             <el-form
                 :model="applyForm"
@@ -41,7 +43,7 @@
                 <el-form-item label="申請者：" label-width="130px">
                     <el-input disabled v-model="applyPerson"></el-input>
                 </el-form-item>
-                <el-form-item label="識別情報の類型：" label-width="130px">
+                <el-form-item label="識別番号の種別：" label-width="130px">
                     <el-input disabled v-model="identityType"></el-input>
                 </el-form-item>
                 <el-form-item label="識別番号：" label-width="130px">
@@ -340,8 +342,8 @@ export default {
                     },
                     {
                         min: 1,
-                        max: 50,
-                        message: "1〜50文字の長さ",
+                        max: 36,
+                        message: "1〜36文字の長さ",
                         trigger: "blur"
                     },
                     {
@@ -356,9 +358,9 @@ export default {
                         trigger: "blur"
                     },
                     {
-                        min: 3,
-                        max: 350,
-                        message: "3〜350文字の長さ",
+                        min: 1,
+                        max: 400,
+                        message: "1〜400文字の長さ",
                         trigger: "blur"
                     },
                     {
@@ -372,6 +374,7 @@ export default {
             sha256:'',
             zhe:false,
             percentage:0,
+            userinfo:false,
         };
     },
 
@@ -417,7 +420,7 @@ export default {
                     return "组织机构代码或统一社会信用代码";
                     break;
                 case "999":
-                    return "其它";
+                    return "その他";
                     break;
             }
         }
@@ -446,20 +449,51 @@ export default {
                 );
                 console.log(err);
             });
+        this.uesrdetail();
     },
 
     mounted() {},
 
     methods: {
+        uesrdetail(){
+            var that=this;
+            that.$request({
+                method:'get',
+                headers:{
+                    'content-type': "application/json;charset=UTF-8"
+                },
+                url:'/customer/detail',
+            }).then((res) => {
+                console.log(res);
+                if(res.data.code==0){
+                    that.userinfo=res.data.data;
+                    // that.$store.commit('setuserdetail',res.data.data);
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            }).catch((err) => {
+                console.log(err);
+                this.$message.error(err);
+            })
+        },
         addfile(e) {
             let inputDOM = this.$refs.inputer;
             this.fil = inputDOM.files; 
-            //let size = Math.floor(this.fil[0].size);
-            // if(size > 10 * 1024 * 1024){
-            //     alert("10M以内の画像を選択してください！");
-            //     this.fil={};
-            //     return false;
-            // }
+            let size = Math.floor(this.fil[0].size);
+            let name = inputDOM.files[0].name;
+            let index = name.lastIndexOf('.');
+            let Format=name.substring(index)
+            let arry_format=['.zip','.rar','.tar','.gz','.7z','.cab','.lzh']
+            if(!(arry_format.indexOf(Format)=='-1')){
+                this.$message.error(".zip、.rar、.tar.gz、.7z、.cab、.lzhなど圧縮形式を用いたデータは対象外です。");
+                this.fil={};
+                return false;
+            }
+            if(size > 4000 * 1024 * 1024){
+                this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
+                this.fil={};
+                return false;
+            }
             this.filename = inputDOM.files[0].name;
             this.applyForm.fileName = inputDOM.files[0].name;
             this.zhe=true;
@@ -478,6 +512,24 @@ export default {
             var dt = e.dataTransfer;
             var files = dt.files;
             that.fil = files;
+            let size = Math.floor(that.fil[0].size);
+            let name = files[0].name;
+            let index = name.lastIndexOf('.');
+            let Format=name.substring(index)
+            let arry_format=['.zip','.rar','.tar','.gz','.7z','.cab','.lzh']
+            if(!(arry_format.indexOf(Format)=='-1')){
+                this.$message.error(".zip、.rar、.tar.gz、.7z、.cab、.lzhなど圧縮形式を用いたデータは対象外です。");
+                this.fil={};
+                return false;
+            }
+            if(size > 4000 * 1024 * 1024){
+                this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
+                this.fil={};
+                return false;
+            }
+
+
+
             that.filename = files[0].name;
             that.applyForm.fileName = files[0].name;
             this.zhe=true;
@@ -581,7 +633,7 @@ export default {
                         });
                     }else if(res.data.code == -200){
                         this.$message.error(
-                            "試用アカウントの無料使用回数がなくなりました。"
+                            "試用アカウントの無料使用回数がなくなりました。トライアルアカウントの利用制限に達しました。"
                         );
                     } else {
                         this.$message.error(
@@ -657,6 +709,13 @@ export default {
     font-size: 18px;
     padding-bottom: 12px;
     opacity: 0.8;
+}
+.title-num{
+    float:right;
+    font-size: 16px;
+    line-height: 33px;
+    height:33px;
+    display: block;
 }
 .form {
     width: 60%;

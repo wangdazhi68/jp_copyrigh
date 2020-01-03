@@ -1,7 +1,7 @@
 export function identityType() {
     switch (this.userinfo.identityType) {
         case '101':
-            return '身份证'
+            return '会社法人等番号'
             break;
         case '102':
             return '军官证'
@@ -16,7 +16,7 @@ export function identityType() {
             return '组织机构代码或统一社会信用代码'
             break;
         case '999':
-            return '其它'
+            return 'その他'
             break;
     }
 }

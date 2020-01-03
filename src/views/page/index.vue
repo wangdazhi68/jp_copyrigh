@@ -1,14 +1,21 @@
 <template>
     <div class="my-wrap">
         <div class="body">
-            <div class="header">
+            <div class="china-time">
+                <div class="china-time-cnt">
+                    中国授时中心标准时间：
+                    <span>{{cTime}}(UTC+8:00)</span>
+                </div>
+            </div>
+            <div :class="[headershow ? 'header header-fixed' : 'header']">
                 <div class="header-cnt">
                     <div class="logo-index">
                         <img src="@/assets/images/logo1.png" alt="联合信任" />
-                        <span>トラステッド・タイムスタンプ知的財産保護システム</span>
+                        <a href="https://www.ngb.co.jp/" target="_blank"><img src="@/assets/images/ngb-logo.png" alt="联合信任" /></a>
+                        <span>トラステッド・タイムスタンプ</span>
                     </div>
                     <div class="userinfo">
-                        <span class="apply" @click="applyuse()">新規利用申込</span>
+                        <span class="apply" @click="applyuse()">アカウント申請</span>
                         <span v-if="loginstate"  class="login logincode" @click="$router.push({name:'index'})">{{loginCode}}</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
                         <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
@@ -37,12 +44,12 @@
                 </div>
             </div>
             <div class="apply-process">
-                <h3>アカウント作成の流れ</h3>
+                <h3>トラステッド・タイムスタンプの申請と認証の仕組み</h3>
                 <p>
-                    <img src="@/assets/images/apply-process.png" alt="">
+                    <img src="@/assets/images/Principle.png" alt="">
                 </p>
             </div>
-            <div class="auth-process">
+            <!-- <div class="auth-process">
                 <h3>タイムスタンプの申請と認証の流れ</h3>
                 <ul>
                     <li>
@@ -98,7 +105,7 @@
                         </dl>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <div class="trait">
                 <h3>トラステッド・タイムスタンプの強み</h3>
                 <ul>
@@ -151,7 +158,7 @@
             <div class="proof" :style="proofbg">
                 <h3>トラステッド・スタンプの有効性と実績</h3>
                 <div class="proof-cnt">
-                    <div :class="activeindex==2?'sec blur':'sec'">
+                    <!-- <div :class="activeindex==2?'sec blur':'sec'">
                         <h4>裁判所に提出する証拠は以下の者が含まれます。</h4>
                         <dl>
                             <dt>
@@ -163,7 +170,7 @@
                                 <img src="@/assets/images/proofone.png" alt="">
                             </dd>
                         </dl>
-                    </div>
+                    </div> -->
                     <div :class="activeindex==1?'sec blur':'sec'">
                         <!-- <h4>司法および行政判決：</h4>
                         <dl>
@@ -177,14 +184,14 @@
                             </dd>
                         </dl> -->
                         <div style="text-indent:1em; padding-top:55px;">
-                            2018年6月29日、杭州のインターネット法院が著作権をめぐる裁判において「当事者が提出した電子データは、電子署名、トラステッド・タイムスタンプ、ハッシュツール、ブロックチェーン等証拠収集、固定と改竄防止技術または電子証拠保管プラットホームの認証を通じ、その真実性が証明できるものについては、インターネット法院で証拠として認められる。」と表明しました。また、その表明を追認するように2018年9月7日、中国最高人民法院は「インターネット法院による事件審理に係る若干の問題に関する規定」を公布、施行し、ブロックチェーンを用いた証拠は法的効力を有すると認めています。なお、本サービスで取得したタイムスタンプが判決文に登場するケースは2017年以降、年間1,000件を上回っています。
+                            2018年6月29日、杭州のインターネット法院が著作権をめぐる裁判において「当事者が提出した電子データは、電子署名、トラステッド・タイムスタンプ、ハッシュツール、ブロックチェーン等証拠収集、固定と改竄防止技術または電子証拠保管プラットホームの認証を通じ、その真実性が証明できるものについては、インターネット法院で証拠として認められる。」と表明しました。また、その表明を追認するように2018年9月7日、中国最高人民法院は「インターネット法院による事件審理に係る若干の問題に関する規定」を公布、施行し、ブロックチェーンを用いた証拠は法的効力を有すると認めています。
                         </div>
                     </div>
                 </div>
-                <div class="circle-nav">
+                <!-- <div class="circle-nav">
                     <b @click="tagcir(1)" :class="activeindex==1?'active':''" ></b>
                     <b @click="tagcir(2)" :class="activeindex==2?'active':''" ></b>
-                </div>
+                </div> -->
             </div>
             <div class="footer">
                 版权所有：北京联合信任技术服务有限公司 京IPC备13046264号-2
@@ -205,7 +212,7 @@
             <div class="form1">
                 <ul>
                     <li>
-                        <input type="text" v-model="username" placeholder="ユーザID/メールアドレスを入力してください" />
+                        <input type="text" v-model="username" placeholder="ユーザーＩＤを入力してください" />
                     </li>
                     <li>
                         <input class="pwd" type="password" v-model="password" placeholder="パスワード" />
@@ -240,7 +247,7 @@
         </el-dialog>
         <!-- 申请使用 -->
         <el-dialog
-            title="新規利用申込"
+            title="アカウント申請"
             :visible.sync="apply"
             width="80%"
             top="10vh"
@@ -248,7 +255,7 @@
             >
             <div class="logo">
                 <img src="@/assets/images/logo3.png" alt />
-                <p>新規利用申込</p>
+                <p>アカウント申請</p>
             </div>
             <div class="form2">
                 <el-form
@@ -258,12 +265,12 @@
                     :rules="applyrules"
                     ref="applyForm"
                 > 
-                    <!-- <el-form-item label="申請者名:" prop="applyer">
+                    <el-form-item label="担当者名:" prop="applyer">
                         <el-input type="text" v-model="applyForm.applyer"></el-input>
                     </el-form-item>
-                    <el-form-item label="申請者の連絡先:" prop="mobile">
+                    <el-form-item label="電話番号:">
                         <el-input type="text" v-model="applyForm.mobile"></el-input>
-                    </el-form-item> -->
+                    </el-form-item>
                     <el-form-item label="会社名:" prop="company">
                         <el-input type="text" v-model="applyForm.company"></el-input>
                     </el-form-item>
@@ -291,6 +298,14 @@
             top="10vh"
             :modal-append-to-body="false"
             >
+            <dl class="dl">
+                <dt>担当者名：</dt>
+                <dd>{{applyForm.applyer}}</dd>
+            </dl>
+            <dl class="dl">
+                <dt>電話番号:</dt>
+                <dd>{{applyForm.mobile}}</dd>
+            </dl>
             <dl class="dl">
                 <dt>会社名：</dt>
                 <dd>{{applyForm.company}}</dd>
@@ -365,16 +380,18 @@ import { Loading } from 'element-ui';
 import {getSign} from '@/assets/js/sign';
 import { hexMD5 } from '@/assets/js/md5';
 import qs from 'qs';
+import moment from 'moment'
 var interval = null;
+var interval2 = null;
 export default {
     data() {
-        // var phone = (rule, value, callback) => {
-        //     var phone = this.applyForm.mobile;
-        //     if(!(/^1[3456789]\d{9}$/.test(phone))){ 
-        //         callback(new Error('電話番号の形式が正しくありません'));
-        //     }
-        //     callback();
-        // };
+        var phone = (rule, value, callback) => {
+            var phone = this.applyForm.mobile;
+            if(!(/^1[3456789]\d{9}$/.test(phone))){ 
+                callback(new Error('電話番号の形式が正しくありません'));
+            }
+            callback();
+        };
         var emails = (rule, value, callback) => {
                 var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 if(!reg.test(this.applyForm.email)){ 
@@ -416,27 +433,27 @@ export default {
                 backgroundRepeat:"no-repeat"
             },
             applyForm: {
-                // applyer: "",
-                // mobile: "",
+                applyer: "",
+                mobile: "",
                 email: "",
                 company: "",
                 //industry: "",
                 inqueryInfo:"",
             },
             applyrules: {
-                // applyer: [
-                //     {
-                //         required: true,
-                //         message: "申請者の名前を入力してください",
-                //         trigger: "blur"
-                //     },
-                //     {
-                //         min: 3,
-                //         max: 15,
-                //         message: "3〜15文字の長さ",
-                //         trigger: "blur"
-                //     }
-                // ],
+                applyer: [
+                    {
+                        required: true,
+                        message: "申請者の名前を入力してください",
+                        trigger: "blur"
+                    },
+                    {
+                        min: 1,
+                        max: 15,
+                        message: "1〜15文字の長さ",
+                        trigger: "blur"
+                    }
+                ],
                 // mobile: [
                 //     {
                 //         required: true,
@@ -467,14 +484,19 @@ export default {
                     },
                     { min: 1, max: 100, message: '入力できる内容は100文字以内となります。', trigger: 'blur' }
                 ],
-                inqueryInfo:[
-                    {
-                        required: true,
-                        message: "お問い合わせ内容をご記入ください",
-                        trigger: "blur"
-                    }
-                ]
-            }
+                // inqueryInfo:[
+                //     {
+                //         required: true,
+                //         message: "お問い合わせ内容をご記入ください",
+                //         trigger: "blur"
+                //     }
+                // ]
+            },
+            headershow:false,
+            ntpDate:null, 
+            nowDate:null, 
+            td:null,
+            cTime:null,
         };
     },
 
@@ -488,16 +510,56 @@ export default {
             this.loginCode=localdata.loginCode
             this.loginstate=true;
         }
-        
+        this.initTime(); 
+        interval2 =window.setInterval(this.getDate, 1);
     },
 
     mounted() {
         this.identifyCode = "";
         this.makeCode(this.identifyCodes, 4);
+        let that=this
+        window.addEventListener("scroll", function(){
+            let winscroll=document.body.scrollTop||document.documentElement.scrollTop;
+            if(winscroll>100){
+                that.headershow=true;
+            }else{
+                that.headershow=false;
+            }
+        });
+
     },
-
+    destroyed(){
+        clearInterval(interval2)
+    },
     methods: {
-
+        initTime(){
+            let that=this;
+            this.$request({
+                url:'/register/time',
+            }).then((res) => {
+                console.log(res);
+                that.ntpDate = res.data;
+                that.nowDate = new Date().getTime();
+                that.td = that.ntpDate - that.nowDate;
+                that.nowDate = that.nowDate + that.td;
+            }).catch((err) => {
+                console.log(err);
+            })
+        },
+        getDate() {
+            if (this.ntpDate == null) {
+                return;
+            } else {
+                var now = new Date().getTime() + this.td;
+                if (Math.abs(parseInt(now) - parseInt(this.nowDate)) > 1000) {
+                    this.ntpDate = null;
+                    this.initTime();
+                } else {
+                    this.nowDate = now;
+                    this.cTime = moment(now).format('YYYY-MM-DD HH:mm:ss:SSS');
+                }
+            }
+        },
         taglogin(){
             //this.login=true;
             this.$router.push({name:"login"})
@@ -816,14 +878,31 @@ export default {
 };
 </script>
 <style scoped>
+.china-time{
+    background:#000;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+}
+.china-time-cnt{
+    width: 1200px;
+    margin:0 auto;
+    font-size: 16px;
+}
 .header{
     width:100%;
     background:rgba(255,255,255,.3);
     position: absolute;
-    top:0;
+    top:30px;
     left: 0;
     z-index: 3;
     min-width: 1200px;
+}
+.header-fixed{
+    background:rgba(0,0,0,.6);
+	position: fixed;
+	top:0;
+	left: 0;
 }
 .header-cnt{
     width: 1200px;
@@ -834,7 +913,7 @@ export default {
 .logo-index{
     width:60%;
     float: left;
-    font-size: 20px;
+    font-size: 22px;
     color:#fff;
 }
 .logo-index img{
@@ -907,7 +986,7 @@ export default {
     margin-bottom:46px;
 }
 .des-cnt p{
-    font-size: 16px;
+    font-size: 18px;
     line-height: 30px;
 }
 .des-nav{
@@ -1098,11 +1177,6 @@ export default {
     font-size: 14px;
     opacity: 0.8;
 }
-
-
-
-
-
 
 
 

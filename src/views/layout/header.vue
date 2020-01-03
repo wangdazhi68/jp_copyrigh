@@ -2,13 +2,16 @@
     <div class="wrap">
         <div class="header">
             <div class="logo">
-                <img src="@/assets/images/logo1.png" alt="联合信任" />
+                <div class="logo-child">
+                    <a @click="$router.replace({name:'lgindex'})"><img src="@/assets/images/logo1.png" alt="联合信任" /></a>
+                    <a class="ngb" href="https://www.ngb.co.jp/" target="_blank"><img src="@/assets/images/ngb-logo.png" alt="联合信任" /></a>
+                </div>
             </div>
             <div class="userinfo">
                 <span class="account">{{loginCode}}</span>
-                <span class="epwd" @click="epwd()">パスワードを変更する+</span>
+                <span class="epwd" @click="epwd()">パスワード変更</span>
                 <b class="sline">|</b>
-                <span class="logout" @click="logout()">ログオフ</span>
+                <span class="logout" @click="logout()">ログアウト</span>
             </div>
         </div>
         <el-dialog
@@ -17,7 +20,7 @@
             width="50%"
             :modal-append-to-body="false"
             top="15vh"
-        >
+            >
             <el-form
                 :model="pwdForm"
                 status-icon
@@ -59,11 +62,19 @@
                 <el-button type="primary" @click="confimpwd('pwdForm')">進 む</el-button>
             </span>
         </el-dialog>
+        <div class="first-login">
+            <Argeement :show1="show1" @show="show($event)"/>
+            <Privacy :show2="show2" @show="show($event)" />
+            <Setpwd :show3="show3" />
+        </div>
     </div>
 </template>
 
 <script>
 import { hexMD5 } from '@/assets/js/md5';
+import Argeement from '@/components/agreement';
+import Privacy from '@/components/privacy';
+import Setpwd from '@/components/setpwd';
 export default {
     data() {
         var validatePass2 = (rule, value, callback) => {
@@ -81,6 +92,9 @@ export default {
         };
         return {
             edipwd: false,
+            show1:false,
+            show2:false,
+            show3:false,
             loginCode:'',
             pwdForm: {
                 oldPassword: "",
@@ -106,7 +120,7 @@ export default {
         };
     },
 
-    components: {},
+    components: {Argeement,Privacy,Setpwd},
 
     computed: {},
 
@@ -114,7 +128,9 @@ export default {
         let localdata = this.$getlocalStorage("userinfo");
         if (localdata) {
             this.loginCode = localdata.loginCode;
-            this.loginstate = true;
+            if(!localdata.loginTime){
+                this.show1=true;
+            }
         }
     },
 
@@ -122,7 +138,6 @@ export default {
 
     methods: {
         logout() {
-            this.loginstate = false;
             var that = this;
             that.$request({
                 method: "get",
@@ -187,6 +202,20 @@ export default {
                     return false;
                 }
             })
+        },
+        show(n){
+            console.log(n)
+            if(n==2){
+                this.show1=false;
+                this.show2=true;
+                this.show3=false;
+            }
+            if(n==3){
+                this.show1=false;
+                this.show2=false;
+                this.show3=true;
+            }
+            
         }
     }
 };
@@ -208,9 +237,24 @@ export default {
     float: left;
     height: 47px;
 }
-.logo img {
-    margin-top: 26px;
+.logo-child{
+    display: flex;
+    height: 100px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start
+}
+.logo-child a{
+    display:block;
     cursor: pointer;
+}
+.logo-child a.ngb{
+    margin-left: 20px;
+    height:27px;
+    width: 72px;
+}
+.logo img {
+    display: block;
 }
 .userinfo {
     float: right;
@@ -218,13 +262,11 @@ export default {
     font-size: 18px;
 }
 .epwd {
-    font-size: 14px;
-    border: 1px solid #fff;
+    font-size: 18px;
     padding: 2px 4px;
     vertical-align: 2px;
     margin-left: 10px;
     cursor: pointer;
-    border-radius: 4px;
 }
 .sline {
     margin: 0 10px;
@@ -239,4 +281,24 @@ export default {
 .epwd:hover {
     border-color: blue;
 }
+
+</style>
+<style>
+.first-login .el-dialog__header {
+    border-radius: 4px;
+    padding: 10px;
+    padding-bottom: 10px;
+    background: #f2f2f2;
+}
+.first-login .el-dialog__title {
+    color: #7499f5;
+}
+.first-login .el-dialog__headerbtn {
+    top: 10px;
+    font-size: 20px;
+}
+.first-login .el-dialog {
+    border-radius: 4px;
+}
+
 </style>
