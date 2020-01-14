@@ -101,12 +101,14 @@ export default {
                 this.$message.error(".zip、.rar、.tar.gz、.7z、.cab、.lzhなど圧縮形式を用いたデータは対象外です。");
                 this.$refs.fileone.value=''
                 this.fileName={};
+                this.$refs.fileone.value=null;
                 return false;
             }
             if(size > 4000 * 1024 * 1024){  
                 this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
                 this.$refs.fileone.value=''
                 this.fileName={};
+                this.$refs.fileone.value=null;
                 return false;
             }
             this.name1 = inputDOM.files[0].name;
@@ -204,12 +206,14 @@ export default {
             let suffix=spl[spl.length-1];
             if(suffix!='tsa'){
                this.$message.error("拡張子が.tsaのファイルを選択してください");
+               this.$refs.filetwo.value=null;
                 return false; 
             }
             let size = Math.floor(this.tsa[0].size);
             if(size > 10 * 1024 * 1024){
                 this.$message.error("資料のサイズが10MBを超えています");
                 this.tsa={};
+                this.$refs.filetwo.value=null;
                 return false;
             }
             this.name2 = inputDOM.files[0].name;

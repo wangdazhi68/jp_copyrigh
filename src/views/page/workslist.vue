@@ -192,7 +192,7 @@ export default {
                     that.userinfo=res.data.data;
                     // that.$store.commit('setuserdetail',res.data.data);
                 }else{
-                    this.$message.error(res.data.msg);
+                    console.log(res.data.msg);
                 }
             }).catch((err) => {
                 console.log(err);

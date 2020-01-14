@@ -427,28 +427,28 @@ export default {
     },
 
     created() {
-        this.$request({
-            method: "get",
-            url: "/customer/detail"
-        })
-            .then(res => {
-                //console.log(res);
-                if (res.data.code == 0) {
-                    this.certificateNo = res.data.data.identityId;
-                    this.applyPerson = res.data.data.realName;
-                    this.certificateType = res.data.data.identityType;
-                } else {
-                    this.$message.error(
-                        "リクエストに失敗しました。更新してもう一度お試しください"
-                    );
-                }
-            })
-            .catch(err => {
-                this.$message.error(
-                    "リクエストに失敗しました。更新してもう一度お試しください"
-                );
-                console.log(err);
-            });
+        // this.$request({
+        //     method: "get",
+        //     url: "/customer/detail"
+        // })
+        //     .then(res => {
+        //         //console.log(res);
+        //         if (res.data.code == 0) {
+        //             this.certificateNo = res.data.data.identityId;
+        //             this.applyPerson = res.data.data.realName;
+        //             this.certificateType = res.data.data.identityType;
+        //         } else {
+        //             this.$message.error(
+        //                 "リクエストに失敗しました。更新してもう一度お試しください"
+        //             );
+        //         }
+        //     })
+        //     .catch(err => {
+        //         this.$message.error(
+        //             "リクエストに失敗しました。更新してもう一度お試しください"
+        //         );
+        //         console.log(err);
+        //     });
         this.uesrdetail();
     },
 
@@ -464,9 +464,12 @@ export default {
                 },
                 url:'/customer/detail',
             }).then((res) => {
-                console.log(res);
+                //console.log(res);
                 if(res.data.code==0){
                     that.userinfo=res.data.data;
+                    that.certificateNo = res.data.data.identityId;
+                    that.applyPerson = res.data.data.realName;
+                    that.certificateType = res.data.data.identityType;
                     // that.$store.commit('setuserdetail',res.data.data);
                 }else{
                     this.$message.error(res.data.msg);
@@ -487,11 +490,13 @@ export default {
             if(!(arry_format.indexOf(Format)=='-1')){
                 this.$message.error(".zip、.rar、.tar.gz、.7z、.cab、.lzhなど圧縮形式を用いたデータは対象外です。");
                 this.fil={};
+                this.$refs.inputer.value=null;
                 return false;
             }
             if(size > 4000 * 1024 * 1024){
                 this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
                 this.fil={};
+                this.$refs.inputer.value=null;
                 return false;
             }
             this.filename = inputDOM.files[0].name;
@@ -612,8 +617,9 @@ export default {
                 method: "post",
                 data: this.formData,
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    //"Content-Type": "multipart/form-data"
                     //'content-type': "application/json;charset=UTF-8"
+                    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                 },
                 url: "/personal/timestampApply"
             })

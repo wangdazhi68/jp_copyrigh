@@ -51,7 +51,7 @@ export default {
                     let currentTime=this.userinfo.currentTime;
                     that.timeFn(currentTime,expireTime)
                 }else{
-                    this.$message.error(res.data.msg);
+                    //this.$message.error(res.data.msg);
                     return false;
                 }
             }).catch((err) => {
@@ -76,11 +76,12 @@ export default {
             // console.log(" 相差 "+dayDiff+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
             // console.log(dateDiff+"时间差的毫秒数",dayDiff+"计算出相差天数",leave1+"计算天数后剩余的毫秒数"
             //     ,hours+"计算出小时数",minutes+"计算相差分钟数",seconds+"计算相差秒数");
-            if(dayDiff==0){
-                this.day=1;
-            }else{
-                this.day=dayDiff;
-            }
+            this.day=dayDiff*1+1;
+            // if(dayDiff==0){
+            //     this.day=1;
+            // }else{
+            //     this.day=dayDiff;
+            // }
             
         }
     }

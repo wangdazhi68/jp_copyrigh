@@ -20,7 +20,7 @@
                 <div class="form1">
                     <ul>
                         <li>
-                            <input type="text" v-model="username" placeholder="ユーザID/メールアドレスを入力してください" />
+                            <input type="text" v-model="username" placeholder="ユーザーＩＤを入力してください" />
                         </li>
                         <li>
                             <el-input class="pwd2" show-password type="password" v-model="password" placeholder="パスワード">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="error-ts">
                         <p>
-                            <b v-show="usererror">メールアドレスの形式が正しくありません</b>
+                            <b v-show="usererror">ユーザーＩＤを入力してください</b>
                         </p>
                         <p>
                             <b v-show="passerror">パスワードを入力してください</b>
@@ -182,9 +182,10 @@ export default {
         },
         loginto(){
             var that=this;
-                var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
-			reg.test(this.username)
-            if(!reg.test(this.username)){
+            //     var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+            // reg.test(this.username)
+            this.username.trim()==''
+            if(this.username.trim()==''){
                 this.usererror=true
                 return false
             }else{
@@ -214,7 +215,7 @@ export default {
                 },
                 url:'/login/signOn?lang=ja_JP',
             }).then((res) => {
-                //console.log(res);
+                console.log(res);
                 that.$nextTick(() => { 
                     // 以服务的方式调用的 Loading 需要异步关闭
                     loadingInstance.close();
@@ -226,7 +227,7 @@ export default {
                         that.$router.replace({path:that.$route.query.redirect})  
 					}else{
 						// setTimeout(function(){
-						that.$router.push({name:"index"})
+						that.$router.replace({name:"index"})
 						// },3000);
 					}
                     

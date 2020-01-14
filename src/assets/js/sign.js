@@ -8,7 +8,7 @@ const getSign = function(obj) {
     }
     sb += 'client_secret=client_secret';
     sb = uTF8Encode(sb);
-    console.log(sb)
+    // console.log(sb)
     var sign = hexMD5(sb);
     return sign;
 }

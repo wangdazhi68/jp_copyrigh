@@ -303,7 +303,7 @@
                 <dd>{{applyForm.applyer}}</dd>
             </dl>
             <dl class="dl">
-                <dt>電話番号:</dt>
+                <dt>電話番号：</dt>
                 <dd>{{applyForm.mobile}}</dd>
             </dl>
             <dl class="dl">

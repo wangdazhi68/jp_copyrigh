@@ -63,9 +63,9 @@
             </span>
         </el-dialog>
         <div class="first-login">
-            <Argeement :show1="show1" @show="show($event)"/>
-            <Privacy :show2="show2" @show="show($event)" />
-            <Setpwd :show3="show3" />
+            <Argeement :show1="show1" :fatherMethod="logout" @show="show($event)"/>
+            <Privacy :fatherMethod="logout" :show2="show2" @show="show($event)" />
+            <Setpwd :fatherMethod="logout" :show3="show3" />
         </div>
     </div>
 </template>
@@ -204,7 +204,7 @@ export default {
             })
         },
         show(n){
-            console.log(n)
+            // console.log(n)
             if(n==2){
                 this.show1=false;
                 this.show2=true;
@@ -263,8 +263,6 @@ export default {
 }
 .epwd {
     font-size: 18px;
-    padding: 2px 4px;
-    vertical-align: 2px;
     margin-left: 10px;
     cursor: pointer;
 }

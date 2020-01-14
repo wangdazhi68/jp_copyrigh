@@ -6,6 +6,8 @@
             width="50%"
             :modal-append-to-body="false"
             top="15vh"
+            :showClose="false"
+            :close-on-click-modal="false"
         >
             <el-form
                 :model="pwdForm"
@@ -35,7 +37,7 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="edipwd = false">戻 る</el-button>
+                <el-button @click="childMethod">取消</el-button>
                 <el-button type="primary" @click="confimpwd('pwdForm')">進 む</el-button>
             </span>
         </el-dialog>
@@ -81,7 +83,7 @@ export default {
             }
         };
     },
-    props: ["show3"],
+    props: ["show3","fatherMethod"],
     components: {},
     watch: {
         'show3': function (n, o) {
@@ -95,6 +97,11 @@ export default {
     mounted() {},
 
     methods: {
+        childMethod(){
+            if (this.fatherMethod) {
+                this.fatherMethod();
+            }
+        },
         updata(){
             if (this.show3) {
                 this.edipwd = true;
@@ -151,14 +158,14 @@ export default {
                 .then(res => {
                     that.$store.commit("setuserinfo", "");
                     localStorage.removeItem("userinfo");
-                    that.$router.replace({ name: "lgindex" });
+                    that.$router.replace({ name: "login" });
                     return true;
                 })
                 .catch(err => {
                     console.log(err);
                     that.$store.commit("setuserinfo", "");
                     localStorage.removeItem("userinfo");
-                    that.$router.replace({ name: "lgindex" });
+                    that.$router.replace({ name: "login" });
                 });
             
         },

@@ -16,6 +16,7 @@ const service = axios.create({
         headers: {
             //'token': '',
             //'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            //"Content-Type": "multipart/form-data"
             'content-type': "application/json;charset=UTF-8"
         }
 
@@ -26,7 +27,7 @@ service.interceptors.request.use(
         let localdata = Vue.prototype.$getlocalStorage('userinfo')
         if (config.url == "/register/sendValidateCode") {
             //console.log('不需要加token')
-        } else {
+        }else {
             if (localdata) {
                 config.headers.token = localdata.sessionId;
             }
@@ -51,6 +52,16 @@ service.interceptors.response.use(
                     router.replace({
                         path: '/page/login',
                         query: { redirect: router.currentRoute.fullPath }
+                    })
+                }
+
+            }
+            if (response.data.code == -3) {
+                store.commit('setuserinfo', '')
+                localStorage.removeItem('userinfo')
+                if (router.currentRoute.fullPath !== '/page/login') {
+                    router.replace({
+                        path: '/page/login',
                     })
                 }
 
