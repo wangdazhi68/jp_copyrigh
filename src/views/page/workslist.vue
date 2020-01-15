@@ -214,9 +214,11 @@ export default {
                 if (res.data.code == 0) {
                     that.tableData = res.data.data,
                     that.totalCount = res.data.totalCount;
+                }else if(res.data.code == -2){
+                    console.log(res.data.msg)
                 } else {
                     that.$message.error(res.data.msg);
-                }
+                } 
             })
             .catch(err => {
                 that.$message.error(err);
@@ -230,9 +232,11 @@ export default {
             this.endTime = e;
         },
         clickpage(e) {
+            console.log(e)
             this.requestdata={
                 page: e,
                 rows: this.pageSize,
+                workName:this.worksname,
                 startTime:this.startTime,
                 endTime:this.endTime,
             }
@@ -241,6 +245,9 @@ export default {
             }
             if(!this.endTime){
                 delete this.requestdata.endTime;
+            }
+            if(!this.worksname){
+                delete this.requestdata.workName;
             }
             this.creatrequest();
         },

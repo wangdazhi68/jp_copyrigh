@@ -51,7 +51,7 @@ export default {
                     let currentTime=this.userinfo.currentTime;
                     that.timeFn(currentTime,expireTime)
                 }else{
-                    //this.$message.error(res.data.msg);
+                    this.$message.error(res.data.msg);
                     return false;
                 }
             }).catch((err) => {

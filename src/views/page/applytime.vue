@@ -472,7 +472,8 @@ export default {
                     that.certificateType = res.data.data.identityType;
                     // that.$store.commit('setuserdetail',res.data.data);
                 }else{
-                    this.$message.error(res.data.msg);
+                    // this.$message.error(res.data.msg);
+                    console.log(res.data.msg)
                 }
             }).catch((err) => {
                 console.log(err);

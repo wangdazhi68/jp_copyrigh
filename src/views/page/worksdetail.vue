@@ -251,6 +251,8 @@ export default {
                 //console.log(res);
                 if (res.data.code == 0) {
                     this.dataobj=res.data.data
+                }else if(res.data.code == -2){
+                    return false;
                 } else {
                     that.$message.error(res.data.msg);
                 }

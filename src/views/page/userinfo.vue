@@ -185,6 +185,8 @@ export default {
                 if(res.data.code==0){
                     that.userinfo=res.data.data;
                     // that.$store.commit('setuserdetail',res.data.data);
+                }else if(res.data.code==-2){
+                    return false
                 }else{
                     this.$message.error(res.data.msg);
                 }
