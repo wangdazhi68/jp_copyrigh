@@ -9,7 +9,7 @@
                     <dd>{{dataobj.realName}}</dd>
                 </dl>
                 <dl>
-                    <dt>識別情報：</dt>
+                    <dt>識別番号の種別：</dt>
                     <dd>{{identityType}}</dd>
                 </dl>
                 <dl>
@@ -317,7 +317,7 @@ export default {
     float: left;
 }
 .one dt{
-    width:105px;
+    width:115px;
 }
 .one dd{
     height:30px;

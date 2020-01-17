@@ -8,30 +8,30 @@
                     <li>
                         <dl>
                             <dt>有効期間</dt>
-                            <dd>{{userinfo.createTime}} 至 {{userinfo.expireTime}}</dd>
+                            <dd>{{userinfo.createTime}} ～ {{userinfo.expireTime}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>ユーザID</dt>
+                            <dt>ユーザーID</dt>
                             <dd>{{loginCode}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>アカウント名</dt>
+                            <dt>会社名</dt>
                             <dd>{{userinfo.realName}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>識別情報</dt>
+                            <dt>識別番号の種別</dt>
                             <dd>{{identityType}}</dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>会社法人等番号</dt>
+                            <dt>識別番号</dt>
                             <dd>{{userinfo.identityId}}</dd>
                         </dl>
                     </li>

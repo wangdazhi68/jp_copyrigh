@@ -10,19 +10,19 @@
                     @drop="drop($event)"
                     @dragover="allowDrop($event)"
                     >
-                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="">
+                    <input class="lookipt" type="text" disabled="" v-model="name1" placeholder="選択またはドラッグ">
                     <span class="choosebtn" @click="$refs.fileone.click()">選択</span>
                 </dd>
             </dl>
             <dl>
                 <!-- 选择时间戳证书 -->
-                <dt>タイムスタンプトークン：</dt>
+                <dt>タイムスタンプトークン（.tsa）：</dt>
                 <dd>
                     <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo"
                     @drop="droptwo($event)"
                     @dragover="allowDroptwo($event)"
                     >
-                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="">
+                    <input class="lookipt" type="text" disabled="" v-model="name2" placeholder="選択またはドラッグ">
                     <span class="choosebtn" @click="$refs.filetwo.click()">選択</span>
                 </dd>
             </dl>
@@ -37,9 +37,9 @@
         <div class="section">
             <h4>注意事項</h4>
             <div class="prompt">
-                <p><b>1、</b>タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。</p>
-                <p><b>2、</b>タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。</p>
-                <p><b>3、</b>タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。</p>        
+                <p><b>1.</b>タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。</p>
+                <p><b>2.</b>タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。</p>
+                <p><b>3.</b>タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。</p>        
             </div>
         </div>
         <div class="zhe" v-if="zhe">
@@ -244,13 +244,13 @@ export default {
         },
         check(){
             this.formData = new FormData();
-            console.log(this.fileName)
+            //console.log(this.fileName)
             if(!this.fileName[0]){
                this.$message.error('認証する資料を選択してください');
                return false;
             }
             if(!this.tsa[0]){
-                this.$message.error('認証証書を選択してください');
+                this.$message.error('認証証書を選択してください→タイムスタンプトークン（.tsa）を選択してください');
                 return false;
             }
             // let size1 = Math.floor(this.fileName[0].size);

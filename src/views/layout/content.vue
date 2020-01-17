@@ -2,7 +2,7 @@
     <div class="wrap" ref="ContentHeight">
         <div class="content">
             <div v-if="day <= 30" class="deadline">
-                残り {{day}} 日
+                アカウント利用期間は残り {{day}} 日です
             </div>
             <router-view></router-view>
         </div>  

@@ -72,13 +72,13 @@
                             <el-button class="myicon"  type="text"  @click="download(scope.row)" size="medium"><i class="el-icon-download"></i><b>.pdf</b></el-button>
                         </el-tooltip>
                         <b class="sline">|</b>
-                        <el-tooltip class="item" effect="light" content="ダウンロードtsa" placement="bottom" popper-class="mytitle">
-                            <el-button class="myicon" type="text" size="medium" @click="downloadtsa(scope.row)"><i class="el-icon-bottom"></i><b>.tsa</b></el-button>
+                        <el-tooltip class="item" effect="light" content="タイムスタンプトークンをダウンロード" placement="bottom" popper-class="mytitle">
+                            <el-button class="myicon" type="text" size="medium" @click="downloadtsa(scope.row)"><i class="el-icon-download"></i><b>.tsa</b></el-button>
                         </el-tooltip>
                         <b class="sline">|</b>
-                        <el-tooltip class="item" effect="light" content="詳細" placement="bottom" popper-class="mytitle">
-                            <el-button class="myicon" type="text" size="medium" @click="lookdetail(scope.row)"><b>詳細</b></el-button>
-                        </el-tooltip>
+                        
+                        <el-button class="myicon" type="text" size="medium" @click="lookdetail(scope.row)"><b>詳細</b></el-button>
+                       
                     </template>
                 </el-table-column>
             </el-table>
@@ -187,7 +187,7 @@ export default {
                 },
                 url:'/customer/detail',
             }).then((res) => {
-                console.log(res);
+                //console.log(res);
                 if(res.data.code==0){
                     that.userinfo=res.data.data;
                     // that.$store.commit('setuserdetail',res.data.data);

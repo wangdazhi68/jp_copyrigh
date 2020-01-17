@@ -3,7 +3,7 @@
         <div class="body">
             <div class="china-time">
                 <div class="china-time-cnt">
-                    中国授时中心标准时间：
+                    中国科学院国家授時センター標準時間：
                     <span>{{cTime}}(UTC+8:00)</span>
                 </div>
             </div>
@@ -16,10 +16,10 @@
                     </div>
                     <div class="userinfo">
                         <span class="apply" @click="applyuse()">アカウント申請</span>
-                        <span v-if="loginstate"  class="login logincode" @click="$router.push({name:'index'})">{{loginCode}}</span>
+                        <span v-if="loginstate"  class="login logincode" @click="$router.push({name:'index'})">{{loginCode}}様</span>
                         <span v-else class="login" @click="taglogin()">ログイン</span>
                         <b v-if="loginstate">&nbsp;&nbsp;|&nbsp;&nbsp;</b>
-                        <span v-if="loginstate" class="logout" @click="logout()">ログオフ</span>
+                        <span v-if="loginstate" class="logout" @click="logout()">ログアウト</span>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <div class="des-cnt" v-show="curactive==1">
                         <h3>トラステッド・タイムスタンプ</h3>
                         <p>
-                            トラステッド・タイムスタンプ®は北京聯合信任技術服務有限公司（Beijing UniTrust Tech Service Co., Ltd.）が提供する電子認証型タイムスタンプサービスであり、認証に利用される時間は中国の国家時刻標準機関である中国科学院国家授時センター（NTSC）の付与する中国標準時間を採用し、多くの中国の司法機関において認められた実績があります。
+                            トラステッド・タイムスタンプは北京聯合信任技術服務有限公司（Beijing UniTrust Tech Service Co., Ltd.）が提供する電子認証型タイムスタンプサービスであり、認証に利用される時間は中国の国家時刻標準機関である中国科学院国家授時センター（NTSC）の付与する中国標準時間を採用し、多くの中国の司法機関において認められた実績があります。
                         </p>
                     </div>
                     <!-- <div class="des-cnt" v-show="curactive==2">
@@ -46,7 +46,7 @@
             <div class="apply-process">
                 <h3>トラステッド・タイムスタンプの申請と認証の仕組み</h3>
                 <p>
-                    <img src="@/assets/images/Principle.png" alt="">
+                    <img src="@/assets/images/Principle.jpg" alt="">
                 </p>
             </div>
             <!-- <div class="auth-process">
@@ -183,8 +183,20 @@
                                 <img src="@/assets/images/prooftwo.png" alt="">
                             </dd>
                         </dl> -->
-                        <div style="text-indent:1em; padding-top:55px;">
-                            2018年6月29日、杭州のインターネット法院が著作権をめぐる裁判において「当事者が提出した電子データは、電子署名、トラステッド・タイムスタンプ、ハッシュツール、ブロックチェーン等証拠収集、固定と改竄防止技術または電子証拠保管プラットホームの認証を通じ、その真実性が証明できるものについては、インターネット法院で証拠として認められる。」と表明しました。また、その表明を追認するように2018年9月7日、中国最高人民法院は「インターネット法院による事件審理に係る若干の問題に関する規定」を公布、施行し、ブロックチェーンを用いた証拠は法的効力を有すると認めています。
+                        <div style="width:678px; margin:0 auto; font-size:18px; padding-top:35px;">
+                            <p style="text-indent:1em">
+                                2018年6月29日、杭州のインターネット法院が著作権をめぐる裁判において<br>
+                            「当事者が提出した電子データは、電子署名、トラステッド・タイムスタンプ、<br>
+                            ハッシュツール、ブロックチェーン等証拠収集、固定と改竄防止技術または<br>
+                            電子証拠保管プラットホームの認証を通じ、その真実性が証明できるものに<br>
+                            ついては、インターネット法院で証拠として認められる。」と表明しました。<br>
+                            </p>
+                            <p style="text-indent:1em">
+                                また、その表明を追認するように2018年9月7日、中国最高人民法院は<br>
+                                「インターネット法院による事件審理に係る若干の問題に関する規定」を公布、<br>
+                                施行し、ブロックチェーンを用いた証拠は法的効力を有すると認めています。<br>
+                            </p>
+
                         </div>
                     </div>
                 </div>
@@ -727,7 +739,7 @@ export default {
                 if(res.data.code==0){
                     //console.log(res.data.data);
                     that.$message({
-                        message: '成功したアプリケーション',
+                        message: '成功したアプリケーション→アカウント申請情報を送信しました。',
                         type: 'success'
                     });
                     this.apply=false;
@@ -948,7 +960,7 @@ export default {
     line-height: 32px;
     background:#6a91f0;
     border-radius: 8px;
-    margin-right: 32px;
+    margin-right: 30px;
     cursor: pointer;
 }
 .logout{

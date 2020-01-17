@@ -20,7 +20,7 @@ export default new Router({
             name: 'login',
             path: '/page/login',
             meta: {
-                name: '时间戳登录',
+                name: 'トラステッド・タイムスタンプ',
             },
             component: () =>
                 import ('./views/page/login.vue')
@@ -30,7 +30,7 @@ export default new Router({
             name: 'lgindex',
             path: '/page/index',
             meta: {
-                name: '时间戳',
+                name: 'トラステッド・タイムスタンプ',
             },
             component: () =>
                 import ('./views/page/index.vue')
@@ -47,7 +47,7 @@ export default new Router({
                     path: '/page/applytime',
                     name: 'applytime',
                     meta: {
-                        name: '申请时间戳',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>
@@ -57,7 +57,7 @@ export default new Router({
                     path: '/page/applysuccess',
                     name: 'applysuccess',
                     meta: {
-                        name: '申请时间戳',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>
@@ -67,7 +67,7 @@ export default new Router({
                     path: '/page/workslist',
                     name: 'workslist',
                     meta: {
-                        name: '作品列表',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>
@@ -77,7 +77,7 @@ export default new Router({
                     path: '/page/worksdetail',
                     name: 'worksdetail',
                     meta: {
-                        name: '作品详情',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>
@@ -87,7 +87,7 @@ export default new Router({
                     path: '/page/verification',
                     name: 'verification',
                     meta: {
-                        name: '验证时间戳',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>
@@ -97,7 +97,7 @@ export default new Router({
                     path: '/page/verificatresult',
                     name: 'verificatresult',
                     meta: {
-                        name: '验证时间戳',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>
@@ -107,7 +107,7 @@ export default new Router({
                     path: '/page/userinfo',
                     name: 'userinfo',
                     meta: {
-                        name: '验证时间戳',
+                        name: 'トラステッド・タイムスタンプ',
                         requiresAuth: true,
                     },
                     component: () =>

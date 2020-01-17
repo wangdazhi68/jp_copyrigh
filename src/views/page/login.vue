@@ -70,7 +70,10 @@
             <div class="form1" v-if="one">
                 <ul>
                     <li>
-                        <input type="text" v-model="email" placeholder="ユーザID/メールアドレスを入力してください" />
+                        <input type="text" v-model="userId" placeholder="ユーザーＩＤを入力してください" />
+                    </li>
+                    <li>
+                        <input type="text" v-model="email" placeholder="メールアドレスを入力してください" />
                     </li>
                     <li>
                         <input type="text" v-model="yzm" placeholder="検証コードを入力してください" />
@@ -121,6 +124,7 @@ export default {
             identifyCodes: "1234567890",
             identifyCode: "",
             username:'',
+            userId:'',
             password:'',
             newpwd:'',
             confirmpwd:'',
@@ -154,8 +158,42 @@ export default {
             this.one=true;
         },
         next(){
+            if(this.userId.trim().length==''){
+                this.$message.error('ユーザーＩＤを入力してください');
+                return false 
+            }
+            if(this.email.trim().length==''){
+                this.$message.error('ユーザメールアドレスを入力してください');
+                return false 
+            }
             if(this.yzm==this.sucyzm && this.yzm.length>0){
-                this.one=false 
+                var that=this;
+                this.$request({
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json;charset=UTF-8"
+                    },
+                    data:{
+                        userId:this.userId,
+                        email:this.email
+                    },
+                    url: "/register/validateEmail"
+                })
+                .then(res => {
+                    //console.log(res);
+                    if(res.data.code==0){
+                        this.one=false 
+                    }else{
+                        that.$message.error('登録されたメールアドレスを入力してください');
+                    }
+                })
+                .catch(err => {
+                    that.$message.error(err);
+                    console.log(err);
+                });
+
+
+                
             }else{
                 this.$message.error('検証コードエラー');
                 return false 
@@ -350,7 +388,7 @@ export default {
                     "content-type": "application/json;charset=UTF-8"
                 },
                 data:{
-                    email:this.email,
+                    userId:this.userId,
                     password:hexMD5(this.newpwd)
                 },
                 url: "/register/resetPassword"

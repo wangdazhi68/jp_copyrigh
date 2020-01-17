@@ -196,9 +196,9 @@ export default {
             template: false,
             copycur: 0,
             copycnt: "",
-            applyPerson: "吴亦凡",
-            certificateType: "身份证",
-            certificateNo: "210654199001236547",
+            applyPerson: "",
+            certificateType: "",
+            certificateNo: "",
             workstype: [
                 {
                     value: 101,
@@ -576,7 +576,7 @@ export default {
             });
         },
         copy() {
-            console.log(this.mobanfont[this.copycur].cnt);
+            //console.log(this.mobanfont[this.copycur].cnt);
             this.copycnt = this.mobanfont[this.copycur].cnt;
             var clipboard = new this.Clipboard(".copybtn");
             var that = this;
@@ -601,9 +601,7 @@ export default {
         },
 
         submit() {
-            console.log(this.sha256);
             this.formData = new FormData();
-            console.log(this.fil[0].name);
             this.formData.append("originalFileName", this.fil[0].name);
             this.formData.append("workName", (this.applyForm.workName).replace(/(^\s*)|(\s*$)/g, ""));
             //this.formData.append('workNature', this.applyForm.workNature);
@@ -625,7 +623,7 @@ export default {
                 url: "/personal/timestampApply"
             })
                 .then(res => {
-                    console.log(res);
+                    //console.log(res);
                     that.$nextTick(() => {
                         // 以服务的方式调用的 Loading 需要异步关闭
                         loadingInstance.close();
@@ -640,7 +638,7 @@ export default {
                         });
                     }else if(res.data.code == -200){
                         this.$message.error(
-                            "試用アカウントの無料使用回数がなくなりました。トライアルアカウントの利用制限に達しました。"
+                            "試用アカウントの無料使用回数がなくなりました。"
                         );
                     } else {
                         this.$message.error(
@@ -684,7 +682,7 @@ export default {
                 } else {
                     that.sha1=sha1.finalize().toString().toUpperCase();
                     that.sha256=sha256.finalize().toString().toUpperCase();
-                    console.log(that.sha1)
+                    //console.log(that.sha1)
                     setTimeout(function(){
                         that.zhe=false;
                         that.percentage=0;

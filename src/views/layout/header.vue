@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="userinfo">
-                <span class="account">{{loginCode}}</span>
+                <span class="account">{{loginCode}}様</span>
                 <span class="epwd" @click="epwd()">パスワード変更</span>
                 <b class="sline">|</b>
                 <span class="logout" @click="logout()">ログアウト</span>
@@ -59,7 +59,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="edipwd = false">戻 る</el-button>
-                <el-button type="primary" @click="confimpwd('pwdForm')">進 む</el-button>
+                <el-button type="primary" @click="confimpwd('pwdForm')">次へ</el-button>
             </span>
         </el-dialog>
         <div class="first-login">
@@ -79,7 +79,7 @@ export default {
     data() {
         var validatePass2 = (rule, value, callback) => {
             if (value !== this.pwdForm.password) {
-                callback(new Error("一貫性のない2回の入力パスワード!"));
+                callback(new Error("入力されたパスワードが異なります"));
             } else {
                 callback();
             }

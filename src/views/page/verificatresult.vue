@@ -35,7 +35,7 @@
                     </li>
                     <li>
                         <dl>
-                            <dt>タイムスタンプの認証日時：</dt>
+                            <dt>タイムスタンプの申請日時：</dt>
                             <dd>{{resultdata.confirmTime}}</dd>
                         </dl>
                     </li>
