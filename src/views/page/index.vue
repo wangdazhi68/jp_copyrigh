@@ -46,7 +46,7 @@
             <div class="apply-process">
                 <h3>トラステッド・タイムスタンプの申請と認証の仕組み</h3>
                 <p>
-                    <img src="@/assets/images/Principle.jpg" alt="">
+                    <img src="@/assets/images/Principle.png" alt="">
                 </p>
             </div>
             <!-- <div class="auth-process">
