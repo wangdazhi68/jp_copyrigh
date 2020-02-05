@@ -494,7 +494,7 @@ export default {
                 this.$refs.inputer.value=null;
                 return false;
             }
-            if(size > 4000 * 1024 * 1024){
+            if(size > 4000 * 1024 * 1000){
                 this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
                 this.fil={};
                 this.$refs.inputer.value=null;
@@ -528,7 +528,7 @@ export default {
                 this.fil={};
                 return false;
             }
-            if(size > 4000 * 1024 * 1024){
+            if(size > 4000 * 1024 * 1000){
                 this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
                 this.fil={};
                 return false;
@@ -682,7 +682,8 @@ export default {
                 } else {
                     that.sha1=sha1.finalize().toString().toUpperCase();
                     that.sha256=sha256.finalize().toString().toUpperCase();
-                    //console.log(that.sha1)
+                    // console.log(that.sha1)
+                    // console.log(that.sha256)
                     setTimeout(function(){
                         that.zhe=false;
                         that.percentage=0;

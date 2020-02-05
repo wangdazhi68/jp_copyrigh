@@ -46,7 +46,7 @@
             <div class="apply-process">
                 <h3>トラステッド・タイムスタンプの申請と認証の仕組み</h3>
                 <p>
-                    <img src="@/assets/images/Principle.jpg" alt="">
+                    <img src="@/assets/images/Principle.png" alt="">
                 </p>
             </div>
             <!-- <div class="auth-process">
@@ -194,7 +194,7 @@
                             <p style="text-indent:1em">
                                 また、その表明を追認するように2018年9月7日、中国最高人民法院は<br>
                                 「インターネット法院による事件審理に係る若干の問題に関する規定」を公布、<br>
-                                施行し、ブロックチェーンを用いた証拠は法的効力を有すると認めています。<br>
+                                施行し、トラステッド・タイムスタンプを用いた証拠は法的効力を有すると認めています。<br>
                             </p>
 
                         </div>
@@ -892,6 +892,7 @@ export default {
 <style scoped>
 .china-time{
     background:#000;
+    min-width:1200px;
     color: #fff;
     height: 30px;
     line-height: 30px;
@@ -923,7 +924,7 @@ export default {
     line-height: 100px;
 }
 .logo-index{
-    width:60%;
+    width:50%;
     float: left;
     font-size: 22px;
     color:#fff;

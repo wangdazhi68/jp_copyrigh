@@ -30,7 +30,7 @@
                     <li>
                         <dl>
                             <dt>資料の名称：</dt>
-                            <dd>{{resultdata.originalFileName}}</dd>
+                            <dd>{{resultdata.workName}}</dd>
                         </dl>
                     </li>
                     <li>
