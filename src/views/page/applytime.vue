@@ -607,7 +607,7 @@ export default {
             //this.formData.append('workNature', this.applyForm.workNature);
             //this.formData.append('creationType', this.applyForm.creationType);
             //this.formData.append('workType', this.applyForm.workType);
-            this.formData.append("workSpec", (this.applyForm.workSpec).replace(/(^\s*)|(\s*$)/g, ""));
+            this.formData.append("workSpec", (this.applyForm.workSpec).replace(/(^\s*)|(\s*$)/g, "").replace(/[\r\n]/g,""));
             this.formData.append("hashCode", this.sha1);
             this.formData.append("hashCode256", this.sha256);
             let loadingInstance = Loading.service();
@@ -642,7 +642,8 @@ export default {
                         );
                     } else {
                         this.$message.error(
-                            "送信に失敗しました。更新してもう一度お試しください"
+                            // "送信に失敗しました。更新してもう一度お試しください"
+                            res.data.masg
                         );
                         console.log("请求成功，返回出错");
                     }

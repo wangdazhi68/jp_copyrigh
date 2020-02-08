@@ -250,11 +250,7 @@ export default {
                return false;
             }
             if(!this.tsa[0]){
-<<<<<<< HEAD
-                this.$message.error('タイムスタンプトークン（.tsa）を選択してください');
-=======
                 this.$message.error('タイムスタンプトークン(.tsa)を選択してください');
->>>>>>> 99731faad65854277083d862bdcc1badc241cbb7
                 return false;
             }
             // let size1 = Math.floor(this.fileName[0].size);
