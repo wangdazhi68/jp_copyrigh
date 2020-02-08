@@ -3,7 +3,7 @@
         <div class="h3-title">資料リスト > 詳細情報</div>
         <div class="section">
             <h4>資料情報</h4>
-            <div class="one">
+            <!-- <div class="one">
                 <dl>
                     <dt>申請者：</dt>
                     <dd>{{dataobj.realName}}</dd>
@@ -12,6 +12,25 @@
                     <dt>識別番号の種別：</dt>
                     <dd>{{identityType}}</dd>
                 </dl>
+                <dl>
+                    <dt>識別番号：</dt>
+                    <dd>{{dataobj.identityId}}</dd>
+                </dl>
+            </div> -->
+            
+            <div class="two">
+                <dl>
+                    <dt>申請者：</dt>
+                    <dd>{{dataobj.realName}}</dd>
+                </dl>
+            </div>
+            <div class="two">
+                <dl>
+                    <dt>識別番号の種別：</dt>
+                    <dd>{{identityType}}</dd>
+                </dl>
+            </div>
+            <div class="two">
                 <dl>
                     <dt>識別番号：</dt>
                     <dd>{{dataobj.identityId}}</dd>
@@ -61,7 +80,7 @@
             <div class="two">
                 <dl>
                     <dt>申請日時：</dt>
-                    <dd>{{dataobj.confirmTime}}</dd>
+                    <dd>{{dataobj.confirmTime}} (UTC+8:00)</dd>
                 </dl>
             </div>
         </div>
@@ -77,7 +96,7 @@
                     </el-image>
                 </div>
                 <span @click="download" class="download">認証証書をダウンロードする >></span>
-                <span style="top:200px;" @click="downloadtsa" class="download">TSA証明書をダウンロードする >></span>
+                <span style="top:200px;" @click="downloadtsa" class="download">タイムスタンプトークンをダウンロードする >></span>
             </div>
         </div>
     </div>
@@ -323,7 +342,7 @@ export default {
     height:30px;
 }
 .two dt{
-    width:105px;
+    width:120px;
 }
 .two dl{
     display: flex;
@@ -340,7 +359,7 @@ export default {
 .download{
     position: absolute;
     top:150px;
-    right:10%;
+    right:0;
     color:#7499F5;
     font-size: 16px;
     cursor: pointer;

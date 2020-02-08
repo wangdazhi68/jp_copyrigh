@@ -16,7 +16,7 @@
             </dl>
             <dl>
                 <!-- 选择时间戳证书 -->
-                <dt>タイムスタンプトークン（.tsa）：</dt>
+                <dt>タイムスタンプトークン(.tsa)：</dt>
                 <dd>
                     <input type="file" ref="filetwo" name="" class="upfile" @change="addtwo"
                     @drop="droptwo($event)"
@@ -37,9 +37,9 @@
         <div class="section">
             <h4>注意事項</h4>
             <div class="prompt">
-                <p><b>1.</b>タイムスタンプを申請した対象資料の内容は如何なる修正もしないでください。データの内容に少しでも変更があった場合は認証が成功しません。ファイルを開く場合は必ずバックアップを取ってください。</p>
-                <p><b>2.</b>タイムスタンプトークンは「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。</p>
-                <p><b>3.</b>タイムスタンプ認証証書はタイムスタンプの申請時の詳細情報を示すためのファイルです。</p>        
+                <p><b>1.</b>対象資料を厳重に保管し、データの内容に対して如何なる修正もしないでください。データを操作する場合は、あらかじめバックアップを行うことをお勧めいたします。</p>
+                <p><b>2.</b>タイムスタンプトークン（*.tsa）は「中華人民共和国電子署名法」に規定する要件を満たしている電子的証拠です。</p>
+                <p><b>3.</b>タイムスタンプ認証証書（*.pdf）はタイムスタンプの申請時の詳細情報を示すためのファイルです。</p>        
             </div>
         </div>
         <div class="zhe" v-if="zhe">
@@ -104,7 +104,7 @@ export default {
                 this.$refs.fileone.value=null;
                 return false;
             }
-            if(size > 4000 * 1024 * 1024){  
+            if(size > 4000 * 1024 * 1000){  
                 this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
                 this.$refs.fileone.value=''
                 this.fileName={};
@@ -136,7 +136,7 @@ export default {
                 this.fileName={};
                 return false;
             }
-            if(size > 4000 * 1024 * 1024){
+            if(size > 4000 * 1024 * 1000){
                 this.$message.error("資料のサイズは４ＧＢ以内を推奨しています。");
                 that.fileName={};
                 return false;
@@ -210,7 +210,7 @@ export default {
                 return false; 
             }
             let size = Math.floor(this.tsa[0].size);
-            if(size > 10 * 1024 * 1024){
+            if(size > 10 * 1024 * 1000){
                 this.$message.error("資料のサイズが10MBを超えています");
                 this.tsa={};
                 this.$refs.filetwo.value=null;
@@ -232,7 +232,7 @@ export default {
                 return false; 
             }
             let size = Math.floor(this.tsa[0].size);
-            if(size > 10 * 1024 * 1024){
+            if(size > 10 * 1024 * 1000){
                 this.$message.error("資料のサイズが10MBを超えています");
                 this.tsa={};
                 return false;
@@ -250,7 +250,11 @@ export default {
                return false;
             }
             if(!this.tsa[0]){
+<<<<<<< HEAD
                 this.$message.error('タイムスタンプトークン（.tsa）を選択してください');
+=======
+                this.$message.error('タイムスタンプトークン(.tsa)を選択してください');
+>>>>>>> 99731faad65854277083d862bdcc1badc241cbb7
                 return false;
             }
             // let size1 = Math.floor(this.fileName[0].size);

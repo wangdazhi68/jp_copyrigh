@@ -156,6 +156,7 @@ export default {
         gologin(){
             this.forget=false;
             this.one=true;
+
         },
         next(){
             if(this.userId.trim().length==''){
@@ -175,31 +176,42 @@ export default {
                     },
                     data:{
                         userId:this.userId,
-                        email:this.email
+                        email:this.email,
+                        verifyCode:this.yzm
                     },
-                    url: "/register/validateEmail"
+                    url: "/register/validateEmailAndCode"
                 })
                 .then(res => {
-                    //console.log(res);
+                    console.log(res);
                     if(res.data.code==0){
                         this.one=false 
-                    }else{
+                    }else if(res.data.code==-300){
+                        this.$message.error('検証コードエラー');
+                    }else if(res.data.code==-400){
                         that.$message.error('登録されたメールアドレスを入力してください');
+                    }else{
+                        that.$message.error(res.data.msg);
                     }
                 })
                 .catch(err => {
                     that.$message.error(err);
                     console.log(err);
                 });
-
-
-                
             }else{
                 this.$message.error('検証コードエラー');
                 return false 
             } 
         },
         forgetpwd(){
+            this.email='',
+            this.userId='',
+            this.yzm='',
+            this.newpwd='',
+            this.confirmpwd='',
+            clearInterval(interval)
+            this.yzmtext="検証コードを取得する",
+            this.currentTime= 61,
+            this.disabled=false,
             this.forget=true;
             this.one=true;
         },
@@ -293,26 +305,51 @@ export default {
                 return false;
             }
             var that = this
-            let data=qs.stringify({
-                    loginName:this.email,
+            // let data=qs.stringify({
+            //         loginName:this.email,
+            //     });
+            var ison=false;
+			// await this.$request({
+            //     method:'post',
+            //     data:data,
+            //     headers:{
+			// 		'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            //     },
+            //     url:'/register/validate',
+            // }).then((res) => {
+            //     //console.log(res);
+            //     if(res.data.code==0){
+            //        that.$message.error('このIDは存在しません！');
+            //        ison=false;
+            //     }
+            // }).catch((err) => {
+            //     console.log(err);
+            // });
+            await this.$request({
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json;charset=UTF-8"
+                    },
+                    data:{
+                        userId:this.userId,
+                        email:this.email
+                    },
+                    url: "/register/validateEmail"
+                })
+                .then(res => {
+                    console.log(res);
+                    if(res.data.code==0){
+                        ison=true
+                    }else{
+                        ison=false
+                        that.$message.error('登録されたメールアドレスを入力してください');
+                    }
+                })
+                .catch(err => {
+                    ison=false
+                    that.$message.error(err);
+                    console.log(err);
                 });
-            var ison=true;
-			await this.$request({
-                method:'post',
-                data:data,
-                headers:{
-					'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                },
-                url:'/register/validate',
-            }).then((res) => {
-                //console.log(res);
-                if(res.data.code==0){
-                   that.$message.error('このIDは存在しません！');
-                   ison=false;
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
             if(!ison){
                 return false;
             }
@@ -326,10 +363,12 @@ export default {
                 "timestamp": timestamp,
                 "loginName":this.email,
                 "loginType":"2",
+                "userId":this.userId,
             }
             var signature=getSign(res);
             var json=JSON.stringify({
                     "loginName":this.email,
+                    "userId":this.userId,
                     "loginType":"2",
                     "signature":signature.toUpperCase(),
                     "timestamp":timestamp.toString()
@@ -343,9 +382,13 @@ export default {
                 },
                 url:'/register/sendValidateCode',
             }).then((res) => {
-                //console.log(res);
+                console.log(res);
                 if(res.data.code==-1){
                     that.$message.error('検証コードを送信できませんでした。メールアドレスをご確認ください');
+                    clearInterval(interval)
+                    that.yzmtext='検証コードを取得する';
+                    that.currentTime=61;
+                    that.disabled=false;
                     return false
                 }
                 that.$message({

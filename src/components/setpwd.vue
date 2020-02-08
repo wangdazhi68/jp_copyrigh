@@ -38,7 +38,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="childMethod">取消</el-button>
-                <el-button type="primary" @click="confimpwd('pwdForm')">進 む</el-button>
+                <el-button type="primary" @click="confimpwd('pwdForm')">次へ</el-button>
             </span>
         </el-dialog>
     </div>
@@ -51,7 +51,7 @@ export default {
     data() {
         var validatePass2 = (rule, value, callback) => {
             if (value !== this.pwdForm.password) {
-                callback(new Error("一貫性のない2回の入力パスワード!"));
+                callback(new Error("入力されたパスワードが異なります"));
             } else {
                 callback();
             }
