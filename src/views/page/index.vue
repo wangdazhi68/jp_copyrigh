@@ -739,7 +739,7 @@ export default {
                 if(res.data.code==0){
                     //console.log(res.data.data);
                     that.$message({
-                        message: '成功したアプリケーション→アカウント申請情報を送信しました。',
+                        message: 'アカウント申請情報を送信しました。',
                         type: 'success'
                     });
                     this.apply=false;

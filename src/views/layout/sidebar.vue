@@ -51,7 +51,7 @@ export default {
                     ]
                 },
                 {
-                    title:"ユーザ情報",
+                    title:"アカウント情報",
                     path:"/page/userinfo"
                 }
             ],

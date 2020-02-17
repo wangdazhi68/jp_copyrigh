@@ -50,7 +50,7 @@
                     <el-input disabled v-model="certificateNo"></el-input>
                 </el-form-item>
                 <el-form-item label="資料の名称：" prop="workName" label-width="130px">
-                    <el-input type="textarea" v-model="applyForm.workName"></el-input>
+                    <el-input type="textarea" show-word-limit maxlength="36" v-model="applyForm.workName"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="创作性质：" label-width="130px">
                     <el-radio-group v-model="applyForm.workNature">
@@ -69,7 +69,7 @@
                     </el-select>
                 </el-form-item>-->
                 <el-form-item label="資料の説明：" prop="workSpec" label-width="130px">
-                    <el-input class="mytext" type="textarea" v-model="applyForm.workSpec"></el-input>
+                    <el-input class="mytext" show-word-limit type="textarea" maxlength="400" v-model="applyForm.workSpec"></el-input>
                     <!-- <span class="looktem" @click="choosetemplate()">选择模板</span>     -->
                 </el-form-item>
 
@@ -643,7 +643,7 @@ export default {
                     } else {
                         this.$message.error(
                             // "送信に失敗しました。更新してもう一度お試しください"
-                            res.data.masg
+                            res.data.msg
                         );
                         console.log("请求成功，返回出错");
                     }
@@ -865,6 +865,9 @@ export default {
 }
 .layout .mytext .el-textarea__inner {
     height: 120px;
+}
+.layout .el-textarea__inner {
+    padding-bottom:45px;
 }
 .el-progress__text{
     color:#fff;
