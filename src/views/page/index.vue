@@ -277,17 +277,17 @@
                     :rules="applyrules"
                     ref="applyForm"
                 > 
-                    <el-form-item label="担当者名:" prop="applyer">
-                        <el-input type="text" v-model="applyForm.applyer"></el-input>
-                    </el-form-item>
-                    <el-form-item label="電話番号:">
-                        <el-input type="text" v-model="applyForm.mobile"></el-input>
-                    </el-form-item>
                     <el-form-item label="会社名:" prop="company">
                         <el-input type="text" v-model="applyForm.company"></el-input>
                     </el-form-item>
+                    <el-form-item label="担当者名:" prop="applyer">
+                        <el-input type="text" v-model="applyForm.applyer"></el-input>
+                    </el-form-item>
                     <el-form-item label="メールアドレス:" prop="email">
                         <el-input type="text" v-model="applyForm.email"></el-input>
+                    </el-form-item>
+                    <el-form-item label="電話番号:">
+                        <el-input type="text" v-model="applyForm.mobile"></el-input>
                     </el-form-item>
                     <el-form-item label="お問い合わせ内容:" prop="inqueryInfo">
                         <el-input class="mytext" show-word-limit maxlength="100" type="textarea" v-model="applyForm.inqueryInfo"></el-input>
