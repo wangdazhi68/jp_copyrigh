@@ -311,20 +311,20 @@
             :modal-append-to-body="false"
             >
             <dl class="dl">
-                <dt>担当者名：</dt>
-                <dd>{{applyForm.applyer}}</dd>
-            </dl>
-            <dl class="dl">
-                <dt>電話番号：</dt>
-                <dd>{{applyForm.mobile}}</dd>
-            </dl>
-            <dl class="dl">
                 <dt>会社名：</dt>
                 <dd>{{applyForm.company}}</dd>
             </dl>
             <dl class="dl">
+                <dt>担当者名：</dt>
+                <dd>{{applyForm.applyer}}</dd>
+            </dl>
+            <dl class="dl">
                 <dt>メールアドレス：</dt>
                 <dd>{{applyForm.email}}</dd>
+            </dl>
+            <dl class="dl">
+                <dt>電話番号：</dt>
+                <dd>{{applyForm.mobile}}</dd>
             </dl>
             <dl class="dl">
                 <dt>お問い合わせ内容：</dt>
