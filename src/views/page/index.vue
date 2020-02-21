@@ -4,7 +4,7 @@
             <div class="china-time">
                 <div class="china-time-cnt">
                     中国科学院国家授時センター標準時間：
-                    <span>{{cTime}}(UTC+8:00)</span>
+                    <span>{{cTime}}</span>
                 </div>
             </div>
             <div :class="[headershow ? 'header header-fixed' : 'header']">
